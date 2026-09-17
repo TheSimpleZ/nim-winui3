@@ -21,8 +21,21 @@
   How long to wait for each suite before giving up. Each exits by itself via
   Application.Exit; the budget is generous because tsoak runs 60,000
   build-and-teardown cycles.
+
+.PARAMETER Suites
+  Which suites to run. The default is all of them. CI uses this to run a
+  subset when the rest cannot work on a runner.
+
+.PARAMETER BuildOnly
+  Compile every suite and stop. Enough to catch a broken API on a machine
+  that cannot host a window.
 #>
-param([int]$Seconds = 300)
+param(
+  [int]$Seconds = 300,
+  [string[]]$Suites = @("tui", "tgenerated", "tstructs", "tlifetime",
+                        "tgenerics", "terrors", "tsoak"),
+  [switch]$BuildOnly
+)
 
 $ErrorActionPreference = "Stop"
 $root = Split-Path $PSScriptRoot
@@ -31,16 +44,14 @@ $bin = Join-Path $root "bin"
 # No precondition about the runtime: building a suite stages it, because
 # importing winui3 stages it. A clean checkout works.
 
-$suites = @("tui", "tgenerated", "tstructs", "tlifetime", "tgenerics", "terrors", "tsoak")
-
 # tleakhunt prints bytes-per-iteration rather than assertions, so it is built
 # but not run — building it is what stops it rotting.
-$buildOnly = @("tleakhunt")
+$alsoBuild = @("tleakhunt")
 
 # Importing winui3 stages the SDK into the output directory and links the
 # manifest, so there is nothing to set up here beyond saying where to build.
 # That is the same path a consumer of this library gets.
-foreach ($s in $suites + $buildOnly) {
+foreach ($s in $Suites + $alsoBuild) {
   Write-Host "building $s..."
   nim c --path:(Join-Path $root "src") --outdir:$bin -d:release --hints:off `
     (Join-Path $PSScriptRoot "$s.nim")
@@ -48,6 +59,8 @@ foreach ($s in $suites + $buildOnly) {
   $stale = Join-Path $bin "$s.exe.manifest"
   if (Test-Path $stale) { Remove-Item -LiteralPath $stale -Force }
 }
+
+if ($BuildOnly) { Write-Host ""; Write-Host "built, not run"; exit 0 }
 
 Add-Type -TypeDefinition @'
 using System;using System.Runtime.InteropServices;
@@ -75,7 +88,7 @@ $desk = [Desk]::CreateDesktopW($deskName, [IntPtr]::Zero, [IntPtr]::Zero, 0, 0x0
 $shell = Join-Path $env:SystemRoot "System32\cmd.exe"
 $overall = 0
 
-foreach ($s in $suites) {
+foreach ($s in $Suites) {
   Write-Host ""
   Write-Host "=== $s ==="
   $exe = Join-Path $bin "$s.exe"

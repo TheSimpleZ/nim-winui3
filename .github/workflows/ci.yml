@@ -1,0 +1,90 @@
+name: CI
+
+# Two jobs, because they answer different questions.
+#
+# `build` asks whether the code is sound: it type-checks the package, builds
+# all three examples and compiles every test suite, on a runner with no
+# Windows App SDK at all. That is deliberate — a build with nothing to stage
+# from is supposed to succeed with a notice, and this is what proves it.
+#
+# `test` asks whether WinUI actually works, which needs the real runtime. A
+# fresh runner does not have it, so the job installs it from the official
+# WindowsAppRuntimeInstall-x64.exe. The suites then run the same way they do
+# locally: each on a Windows desktop of its own, asserting on what the layout
+# engine did rather than on pixels, and exiting by themselves.
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    name: Build and type-check
+    runs-on: windows-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: jiro4989/setup-nim-action@v2
+        with:
+          nim-version: "2.2.x"
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+
+      # Resolves `winrt` from its repository; see the comment in winui3.nimble.
+      - name: Install dependencies
+        run: nimble install --depsOnly -y
+
+      # `-d:winui3NoAutoStage` because staging is not what this step is about,
+      # and `nim check` does not run external commands anyway.
+      - name: Type-check the package
+        run: nim check --path:src --hints:off -d:winui3NoAutoStage src/winui3.nim
+
+      - name: Build the examples
+        run: nimble examples
+
+      - name: Build the test suites
+        run: powershell -ExecutionPolicy Bypass -File tests/run.ps1 -BuildOnly
+
+  test:
+    name: GUI test suite
+    runs-on: windows-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: jiro4989/setup-nim-action@v2
+        with:
+          nim-version: "2.2.x"
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Install dependencies
+        run: nimble install --depsOnly -y
+
+      # The build stages the runtime out of the installed framework package,
+      # so it has to be a real MSIX registration rather than a folder of DLLs.
+      - name: Install the Windows App SDK runtime
+        shell: pwsh
+        run: |
+          $exe = Join-Path $env:RUNNER_TEMP "WindowsAppRuntimeInstall-x64.exe"
+          curl.exe -sSL -o $exe https://aka.ms/windowsappsdk/2.4/latest/windowsappruntimeinstall-x64.exe
+          & $exe --quiet
+          Write-Host "installer exit code: $LASTEXITCODE"
+          Get-AppxPackage -Name Microsoft.WindowsAppRuntime.2 |
+            Format-List Name, Version, Architecture, InstallLocation
+
+      - name: Run the suites
+        run: nimble test
+
+      # Each suite writes its own log; on a failure they say far more than the
+      # console tail does.
+      - name: Suite logs
+        if: failure()
+        shell: pwsh
+        run: Get-ChildItem bin/*.log | ForEach-Object {
+               Write-Host "=== $($_.Name) ==="; Get-Content $_.FullName }
