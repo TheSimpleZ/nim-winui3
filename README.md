@@ -1,15 +1,14 @@
 # winui3
 
-WinUI 3 desktop applications in Nim, straight against the WinRT ABI.
+Build WinUI 3 desktop apps in Nim.
 
-No C++, no C#, no XAML markup, no projection toolchain — a Nim program calls
-`RoGetActivationFactory`, dispatches through COM vtables, and implements the
-callbacks WinUI invokes.
+No C++, no C#, no XAML files, no project templates, no bootstrapper. A Nim
+program, `nim c -r`, and a native Windows 11 window.
 
 ![A WinUI 3 window created from Nim](docs/generated.png)
 
-*Mica, Fluent controls, a translucent rounded card and a working click
-handler — `examples/generated.nim`, written against generated bindings.*
+*Mica, Fluent controls, a translucent rounded card and a working click handler
+— that is `examples/generated.nim`, and there is no XAML anywhere in it.*
 
 ```nim
 import winui3
@@ -22,372 +21,330 @@ start proc() =
   window.activate()
 ```
 
-## Status: v1.6.0
+The whole of `Microsoft.UI.Xaml` is here — 894 classes with their properties,
+methods and events, generated from Microsoft's own metadata — so if WinUI 3 has
+a control, this has it, whether or not this README mentions it.
 
-One import, a generated API covering the whole of `Microsoft.UI.Xaml`, objects
-whose lifetimes the compiler manages, and a test suite that runs a real window
-on its own Windows desktop.
+## Install
 
-**Working**
+```
+nimble install https://github.com/TheSimpleZ/winui3-nim
+```
 
-- **The whole `Microsoft.UI.Xaml` surface, generated.** 894 classes, 4980
-  procs, 510 constructors and 635 events, emitted from
-  `Microsoft.UI.Xaml.winmd` — properties as properties, `string` rather than
-  `HSTRING`, typed enums, structs by value, typed event handlers, and WinUI's
-  real inheritance chain. Under it, 1917 IIDs and 8995 vtable slots covering
-  **99%** of all signatures, plus 231 enums and 32 structs. Nothing in this
-  library transcribes a GUID, a slot number or an enum value by hand.
-- **Computed IIDs for parameterised interfaces.** `IVector<UIElement>` has no
-  GUID in any metadata file; WinRT derives one by hashing a signature string.
-  `tools/piid.nim` reproduces that, which is what makes 218 of those 635 events
-  generatable at all. It is checked against a live object rather than by
-  eye — a wrong hash is a well-formed GUID that simply matches nothing.
-- **Lifetimes the compiler handles.** Every object is one pointer wide and
-  reference-counted through `=destroy` and `=copy`. Reading a property does not
-  leak, storing a reference does not dangle, and nothing needs releasing by
-  hand. 60,000 build-and-teardown cycles move private bytes, kernel handles,
-  GDI and USER objects by exactly zero.
-- **Fluent styles, Mica and Acrylic** — the materials that make a window look
-  like Windows 11 rather than a blank rectangle. A themed `Button` measures 32
-  effective pixels tall; an unstyled one collapses to nothing, which is how the
-  tests tell the difference.
-- **Events**, with a typed handler and an unsubscribe token. An exception in a
-  handler is contained and reported rather than ending the process.
-- **COM aggregation** for deriving from `Application`, and composable
-  construction for the rest of the visual tree.
-- **Registration-free deployment**: no installer, no framework package, no
-  bootstrapper. The manifest embeds into the executable.
-- **UI Automation**, so a GUI can be driven and asserted on without a person
-  at the keyboard.
+Then in your own `.nimble`:
 
-**Not yet**
+```
+requires "https://github.com/TheSimpleZ/winui3-nim >= 1.6.0"
+```
 
-- **27 of 8995 ABI signatures are unmapped** — all of them methods taking or
-  returning an array. Those still get a slot constant and can be called with a
-  hand-written signature.
-- **465 wrapper procs are skipped**, and the generator says why:
+> The dependency names a repository rather than a package because `winui3` and
+> the `winrt` package underneath it are not in the nimble directory yet. Once
+> they are, this becomes `requires "winui3"`.
 
-  | count | reason |
-  |---|---|
-  | 191 | an interface declared in another winmd |
-  | 117 | `IReference<T>` — a nullable value, which wants an `Option[T]` |
-  |  97 | `IVector`/`IVectorView`/`IIterable`/`IObservableVector` |
-  |  21 | `IAsyncOperation`, `IMap`, `IMapView` |
-  |  17 | an array |
-  |  13 | a second out-parameter |
+**Requirements**
 
-  A generic is deliberately *not* mapped to a bare `pointer` at this level,
-  even though the ABI layer spells it that way: it would read as a typed API
-  while giving none of the safety. The honest mapping is a typed collection or
-  an optional, and that is work this does not do yet.
-- **Data binding, and XAML markup of any kind.** This library builds trees in
-  code. `x:Bind`, `{Binding}` and `.xaml` files are not read.
-- **Only `UIElementCollection` has a typed collection wrapper.** The other
-  `IVector<T>`s work through the same slots and need the same sixty lines.
-- **One window per process.** `start` runs a single XAML application and
-  refuses a second.
+- Windows 10 version 1809 or later, x64
+- Nim 2.0 or later
+- The Windows App SDK runtime, which a stock Windows 11 already has —
+  see [Deployment](#deployment)
 
-## Requirements
+## Your first app
 
-- Windows 10 1809 or later, x64
-- Nim 2.0+
-
-The Windows App SDK is staged for you at build time; see Deployment.
-
-## Deployment
-
-Nothing to do. Write a file, build it, run it:
+Put this in `hello.nim`:
 
 ```nim
 import winui3
 
 start proc() =
   let window = newWindow()
-  window.title = "Just works"
+  window.title = "Counter"
   window.backdrop = mica
-  window.content = newTextBlock("No configuration, no staging step.")
+
+  let panel = newStackPanel(Orientation_Vertical, spacing = 12.0)
+  panel.margin = Thickness(left: 40.0, top: 32.0, right: 40.0, bottom: 32.0)
+
+  let label = newTextBlock("Clicked 0 times")
+  label.fontSize = 28.0
+
+  var clicks = 0
+  let button = newButton("Click me")
+  button.onClick proc() =
+    clicks.inc
+    label.text = "Clicked " & $clicks & (if clicks == 1: " time" else: " times")
+
+  panel.add label, button
+  window.content = panel
   window.activate()
 ```
 
 ```
-nim c -r myapp.nim
+nim c -r hello.nim
 ```
 
-Importing `winui3` does the two things a WinUI 3 app needs and no one enjoys
-doing by hand:
+That is the whole setup. The first build takes a moment longer than you expect,
+because it copies the Windows App SDK into the output directory beside your
+executable; see [Deployment](#deployment) for what it puts there and why.
 
-- **stages the Windows App SDK** into your output directory — 31 files, ~54 MB
-- **links the manifest** naming the ~1840 classes it activates, as a resource
-  inside your executable
+A few things worth naming in that program:
 
-Both happen at compile time. The first build copies the runtime; later builds
-skip what is already current. `-d:winui3NoAutoStage` turns the staging off if
-you want to manage it yourself.
+- **`start`** takes the callback that builds your UI, runs the message loop,
+  and returns when the app exits. Everything XAML must happen inside it —
+  constructing a control earlier fails with `RPC_E_WRONG_THREAD`. Call
+  `exitApp()` to end it.
+- **`window.backdrop = mica`** is what makes the window look like Windows 11
+  rather than a grey rectangle. `acrylic` and `noBackdrop` are the alternatives.
+- **The closure captures `clicks` and `label`**, and stays alive as long as the
+  subscription does. You do not manage that.
+- **Nothing is released by hand.** Every object is reference-counted by the
+  compiler.
 
-Shipping is then a folder: your exe and the DLLs beside it. Nothing is
-installed on the user's machine, and it runs on any Windows 10 1809 or later.
+## Finding your way around
 
-### Where those 54 MB come from
+The API is generated from `Microsoft.UI.Xaml.winmd`, so it is Microsoft's
+documentation with a mechanical renaming. Learn the six rules and any
+[WinUI 3 API page](https://learn.microsoft.com/windows/windows-app-sdk/api/winrt/)
+tells you what to write.
 
-The Windows App SDK, not this library — WinUI 3 is not part of Windows. Every
-WinUI 3 app pays it one way or another; the Rust `windows-reactor` crate
-advertises a "single ~3 MB binary" and its build script stages 28 DLLs and
-50 MB beside that binary, which is the same arrangement.
+| in Microsoft's docs | in Nim |
+|---|---|
+| class `Microsoft.UI.Xaml.Controls.Slider` | type `Slider`, constructed by `newSlider()` |
+| property `Slider.Value` | `slider.value` and `slider.value = 0.5` |
+| event `ButtonBase.Click` | `button.onClick(handler)`, undone by `button.removeClick(token)` |
+| method `UIElement.UpdateLayout()` | `element.updateLayout()` |
+| enum member `Orientation.Vertical` | `Orientation_Vertical` |
+| struct `Thickness` | `Thickness(left: 8.0, top: 8.0, right: 8.0, bottom: 8.0)` |
 
-The staging source is the framework package Windows has already put on the
-machine (`C:\Program Files\WindowsApps`), so there is no download. On a stock
-Windows 11 it is present because the inbox Photos app depends on it; if it is
-absent, the build says so and tells you what to install.
+Inheritance is real Nim inheritance, so a `Button` is a `ButtonBase` is a
+`Control` is a `FrameworkElement` is a `UIElement`, and every inherited member
+resolves. `margin` is declared on `FrameworkElement` and works on anything.
 
-### What this costs you
+When in doubt, grep the generated file — it is the authoritative list:
 
-The SDK travels with your app, so a security fix in it reaches your users when
-you rebuild, not before. Letting Windows service the runtime instead means
-packaging as MSIX with a framework dependency — real, documented, and a
-different project: it needs a signing certificate, and it is not what this
-library sets up for you.
+```
+grep "proc newInfoBar" src/winui3/generated/xaml_api.nim
+grep "self: ProgressRing" src/winui3/generated/xaml_api.nim
+```
 
-## Testing
+Two rough edges to know about:
+
+- A handful of properties are typed `pointer`, because WinRT declares them as
+  `IInspectable` — `ContentControl.Content` is the one you will hit. Pass a
+  wrapper's raw pointer with `.p`: `button.content = myPanel.p`. The
+  `newButton("text")` convenience does this for you.
+- Attached properties (`Grid.Row`, `Canvas.Left`) and most generic collections
+  are not wrapped yet. See [docs/coverage.md](docs/coverage.md).
+
+## Events
+
+Every WinUI event becomes an `onX` proc that returns a token, and a `removeX`
+that takes one back.
+
+```nim
+import winui3
+
+start proc() =
+  let window = newWindow()
+  let box = newTextBox()
+  box.placeholderText = "Type here"
+
+  let echoed = newTextBlock("")
+  box.onTextChanged proc(sender: pointer, args: TextChangedEventArgs) =
+    echoed.text = box.text
+
+  let panel = newStackPanel(Orientation_Vertical, spacing = 8.0)
+  panel.add box, echoed
+  window.content = panel
+  window.activate()
+```
+
+The generated handler always takes the sender and the typed event arguments.
+For `Click` and `Loaded`, where most handlers want neither, there is a shorter
+form:
+
+```nim
+import winui3
+
+start proc() =
+  let button = newButton("Press")
+
+  # the short form
+  button.onClick proc() =
+    echo "pressed"
+
+  # the full form, and unsubscribing
+  let token = button.onClick(proc(sender: pointer, args: RoutedEventArgs) =
+    echo "pressed again")
+  button.removeClick(token)
+
+  let window = newWindow()
+  window.content = button
+  window.activate()
+```
+
+An exception raised inside a handler is caught, printed to stderr and reported
+as handled. It does not unwind into WinUI's C++ and it does not end your
+process — one bad handler is a logged message, not a crash.
+
+## Layout
+
+Trees are built in code. There is no XAML parser here, so a `StackPanel` with
+children is `newStackPanel()` and `add`.
+
+```nim
+import winui3
+
+start proc() =
+  let window = newWindow()
+  window.title = "Layout"
+  window.backdrop = mica
+
+  let page = newStackPanel(Orientation_Vertical, spacing = 16.0)
+  page.margin = Thickness(left: 40.0, top: 32.0, right: 40.0, bottom: 32.0)
+
+  let heading = newTextBlock("A card")
+  heading.fontSize = 32.0
+
+  # A Border is the usual way to draw a card: one child, a background,
+  # rounded corners and padding.
+  let card = newBorder()
+  card.cornerRadius = CornerRadius(topLeft: 8.0, topRight: 8.0,
+                                   bottomRight: 8.0, bottomLeft: 8.0)
+  card.padding = Thickness(left: 20.0, top: 16.0, right: 20.0, bottom: 16.0)
+
+  let fill = newSolidColorBrush()
+  fill.color = Color(a: 255, r: 255, g: 255, b: 255)
+  fill.opacity = 0.06          # on the brush, not the element: Opacity on a
+  card.background = fill       # UIElement would fade its own text too
+
+  let body = newStackPanel(Orientation_Vertical, spacing = 12.0)
+  body.add newTextBlock("Contents"), newButton("Do the thing")
+  card.child = body
+
+  page.add heading, card
+  window.content = page
+  window.activate()
+```
+
+The pieces you will reach for most:
+
+| | |
+|---|---|
+| `newStackPanel(Orientation_Vertical, spacing = 12.0)` | children in a row or a column |
+| `newGrid()` | rows and columns, with `newRowDefinition()` / `newColumnDefinition()` |
+| `newBorder()` | one child, a background, a corner radius |
+| `newScrollViewer()` | scrolling |
+| `margin`, `padding` | `Thickness(left:, top:, right:, bottom:)` in effective pixels |
+| `horizontalAlignment`, `verticalAlignment` | `HorizontalAlignment_Center` and friends |
+
+`panel.children` behaves like a sequence: `len`, `[]`, `add`, `insert`,
+`delete`, `clear`, and `for child in panel.children`.
+
+Sizes are in *effective* pixels, so a control is the same physical size on a
+4K display as on a 1080p one. Windows does the scaling.
+
+## Deployment
+
+Nothing to do. Build, and ship the output directory.
+
+WinUI 3 is not part of Windows — it ships in the Windows App SDK — so an app
+needs two things beside it that have nothing to do with its own code: the SDK's
+DLLs, and a manifest naming the ~1,840 classes they activate. Importing
+`winui3` does both, at compile time:
+
+- **stages the Windows App SDK** into your output directory — 31 files, ~54 MB,
+  copied from the framework package Windows has already installed, so there is
+  no download
+- **links the manifest** into your executable as a resource
+
+The first build copies the runtime; later builds skip what is already current
+and cost a fraction of a second. What you ship is a folder: your exe and the
+DLLs beside it. Nothing is installed on the user's machine, and it runs on any
+Windows 10 1809 or later.
+
+**Why 54 MB?** The Windows App SDK, not this library. Every WinUI 3 app pays it
+one way or another — the Rust `windows-reactor` crate advertises a "single
+~3 MB binary" and its build script stages 28 DLLs and 50 MB beside that binary.
+The alternative is packaging as MSIX with a framework dependency, which needs a
+signing certificate and an installer.
+
+**To manage it yourself:** `-d:winui3NoAutoStage` turns the staging off, and
+`RuntimeFiles` names the files to copy.
+
+[docs/deployment.md](docs/deployment.md) has the whole mechanism, including
+what to do when activation fails anyway.
+
+## Troubleshooting
+
+**`REGDB_E_CLASSNOTREG`, or "could not be activated".** The Windows App SDK is
+not beside your executable, or the manifest is not inside it. The error message
+names both paths and says which it found. The usual cause is that the build
+could not find an installed Windows App SDK runtime to stage from — the
+compiler printed a notice saying so at the time. Install it from
+[the Windows App SDK downloads](https://learn.microsoft.com/windows/apps/windows-app-sdk/downloads)
+and rebuild.
+
+**A stale `myapp.exe.manifest` beside the binary.** An external manifest takes
+precedence over the embedded one. Delete it and rebuild. Windows caches the
+activation context by executable path *and timestamp*, so a fix only takes
+effect once the executable is rebuilt.
+
+**`RPC_E_WRONG_THREAD`.** A XAML object was created outside the `start`
+callback, or touched from another thread. Everything XAML lives on the UI
+thread.
+
+**"this thread is already in a multi-threaded apartment".** Something called
+`CoInitializeEx(COINIT_MULTITHREADED)` before `start`. XAML needs a
+single-threaded apartment, so call `start` from `main`, or from a thread that
+has not initialised COM.
+
+**The window appears but the controls are invisible.** The Fluent theme did not
+merge, so templated controls have no template and collapse to nothing while a
+`TextBlock` still draws itself. `mergedDictionaryCount(application())` should
+be at least 1.
+
+**A screenshot of the window is black.** Usually not a bug. A WinUI window is
+composited, so `PrintWindow` returns a black client area whenever the display
+is asleep — under a title bar that captures perfectly, because DWM draws that.
+Ask the layout engine instead: `actualSize` inside `onLoaded`.
+
+**32-bit build errors in `nimbase.h`.** WinUI 3 is x64 (and arm64) only. This
+repository pins `--cpu:amd64`; do the same in your own `nim.cfg`.
+
+## Examples
+
+```
+nimble examples
+```
+
+| | |
+|---|---|
+| [`examples/hello.nim`](examples/hello.nim) | the smallest complete app |
+| [`examples/counter.nim`](examples/counter.nim) | a panel, a button and an event handler |
+| [`examples/generated.nim`](examples/generated.nim) | the screenshot above, written straight against the generated API |
+
+## Tests
 
 ```
 nimble test
 ```
 
-`tests/run.ps1` builds each suite and runs it on a Windows desktop of its own,
-so the windows never take your focus. Each exits by itself, and the runner
-reports **the process exit code as well as the output** — a suite can print
-`PASS` and still corrupt the heap on the way out, and only the exit code
-catches that.
+Seven suites, 78 checks: each builds a real WinUI 3 window and runs it on a
+Windows desktop of its own, so they never take your keyboard, and asserts on
+what the layout engine did rather than on pixels.
+See [docs/testing.md](docs/testing.md).
 
-| suite | what it holds down |
+## Documentation
+
+| | |
 |---|---|
-| `tui` | an app as the README writes one: theme, layout, events |
-| `tgenerated` | the generated layer: constructors, properties, enums, inheritance |
-| `tstructs` | every by-value struct, round-tripped — a layout mismatch here is silent |
-| `tlifetime` | reference counts, measured exactly, and delegate slot reuse |
-| `tgenerics` | computed IIDs, against a live object, with a negative control |
-| `terrors` | nil objects, wrong interfaces, and exceptions thrown in user callbacks |
-| `tsoak` | 60,000 build-and-teardown cycles against private bytes, handles, GDI and USER |
-
-`tests/tleakhunt.nim` is not part of the suite: it is a measuring instrument
-that prints bytes-per-iteration for each operation on its own, which is how you
-find *which* call leaks once `tsoak` says something does.
-
-Three techniques make a GUI testable unattended, and all three are worth
-stealing:
-
-**Assert on layout, not on pixels.** A composited WinUI window captures as a
-black rectangle whenever the display is asleep — under a title bar that
-captures perfectly, because DWM draws that. So a screenshot cannot tell "the
-control did not render" from "the monitor is off". `actualSize` inside
-`onLoaded` reports what the layout engine actually did, and is true regardless.
-A `Button` measuring 32 effective pixels tall is also proof the Fluent template
-loaded, since an unstyled one collapses to nothing.
-
-**Click through UI Automation.** Synthetic mouse input cannot reach a window on
-a desktop that is not the active input desktop: `SetCursorPos` there silently
-leaves the cursor at 0,0. `invoke` goes through XAML's own invoke pattern, so a
-`Button` raises a real `Click` and every handler runs — it is not a shortcut
-around the event system, it is the event system.
-
-**Measure three phases, not two.** A before-and-after memory reading cannot
-tell a leak from an allocator holding freed pages. A leak is *linear*: the
-third phase costs what the second did. That distinction is what turned "4 MB,
-probably fine" into a real missing `WindowsDeleteString`.
-
-## Design notes
-
-**Everything is positional.** A WinRT interface is a pointer to a pointer to a
-table of function pointers, and which method you called is decided by counting.
-No IID or slot index is written by hand: both come from
-`generated/xaml_abi.nim`, emitted from the winmd. Slots are stable within an
-SDK major version and are not guaranteed across one, so a new SDK means
-regenerating rather than auditing call sites.
-
-**The WinRT layer knows nothing about XAML.** `core.nim` imports only the
-standard library and `delegate.nim` imports only `core`; the generators take a
-namespace prefix as an argument. Pointing them at `Windows.winmd` with
-`Windows.Gaming.Input` produces working gamepad bindings — `IID_IGamepad`,
-`getCurrentReading` — with no change to any of it. That is the
-`winim`/`wNim` shape: a binding layer that happens to have a GUI framework
-built on it, rather than one thing that only does XAML.
-
-**Delegates are `IUnknown`, not `IInspectable`.** A WinRT delegate's vtable is
-four slots — QueryInterface, AddRef, Release, Invoke. Assuming the usual six
-puts `Invoke` at slot 6 and calls into whatever follows the table.
-
-**Nim closures are kept in a module-level table**, not inside the manually
-allocated COM object. A closure's environment is GC-managed and the COM object
-is not; burying one in the other gives you a callback into freed memory some
-minutes after it starts working. Slots are recycled through a free list, so
-subscribing and unsubscribing in a loop does not grow the table.
-
-**Reference counting is the compiler's job.** `=destroy` releases and `=copy`
-retains, on the root of each hierarchy, which every derived type inherits.
-There are 633 getters that hand back a reference; leaving those to the caller
-would mean a GUI leaks one per property read. `owned[T]` and `borrowed[T]` say
-which of the two kinds of raw pointer you have — anything a getter, factory or
-QueryInterface returned is *owned*, an event's sender and arguments are *lent*
-— and getting that backwards is the one remaining way to corrupt the heap.
-
-**An event handler never returns a failing HRESULT.** A Nim exception must not
-unwind into WinUI's C++, so the obvious design is to catch it and return
-`E_FAIL`. XAML treats a failure out of its own event dispatch as fatal and
-tears the process down, so one bug in one handler would end the application
-with nothing in the log. The exception is caught, reported to stderr, flushed,
-and the event reported as handled.
-
-**Nothing is released after the runtime shuts down.** A wrapper captured by a
-handler's closure outlives the message loop: the closure sits in that
-module-level table, which Nim destroys at *process* exit, by which point XAML
-has freed its objects. Releasing then exits with `STATUS_HEAP_CORRUPTION`
-*after* the program has printed its successful output. `start` marks the
-runtime gone on the way out, and destructors stop releasing.
-
-**XAML objects may only be created on the UI thread**, inside the `start`
-callback. Earlier construction fails with `RPC_E_WRONG_THREAD`.
-
-**Exceptions never cross the ABI.** Handler bodies are wrapped; a Nim exception
-unwinding into WinUI's C++ is undefined behaviour.
-
-**Slots are per-interface, not per-object.** `Children` lives on `IPanel`, so
-calling `Slot_IPanel_get_Children` through an `IStackPanel` pointer reaches
-slot 6 of the *wrong* vtable — `get_AreScrollSnapPointsRegular` — which returns
-`S_OK` while writing a bool where a pointer was expected. Nothing reports an
-error; you just get nothing back. QueryInterface first, always.
-
-**Structs cross by value, so the layout has to be exact.** `Thickness` is four
-`float64`s and `Color` is four bytes with alpha first; a wrong field order or
-width does not raise, it silently shifts every field. The in-namespace ones are
-read straight out of the metadata. `Point`, `Rect`, `Color` and the rest live in
-winmd files this project does not ship, so `tools/foreign.nim` writes them out
-once, with their source named — 2,553 methods take or return one, so leaving
-them unmapped was not an option. Nim emits them as plain C structs, which means
-the C compiler applies the same x64 convention WinUI's own C++ was built with.
-
-**Generic collections stay hand-written.** A generic interface's IID is
-*computed* from its type arguments rather than declared, so there is nothing in
-the metadata for a generator to emit. `collections.nim` covers it in sixty
-lines, because the pointer a property like `Children` returns already *is* the
-correctly-parameterised interface — only the slot is needed, and `IVector<T>`
-numbers its slots the same way whatever `T` is.
-
-**A parameterised interface's IID is computed, not declared.** `IVector<T>`
-appears in no metadata file, so there is nothing to read. WinRT builds a
-signature string for the instantiation — `pinterface({913337e9-...};rc(
-Microsoft.UI.Xaml.UIElement;{c3c01020-...}))` — and takes a version-5 UUID of
-it. Getting a character wrong yields a perfectly well-formed GUID that no
-object implements, so `QueryInterface` answers `E_NOINTERFACE` and the call
-site looks like an unimplemented feature rather than a wrong hash. That is why
-`tests/tgenerics.nim` asks a live `Panel.Children` rather than comparing
-against a table, and why it includes a one-digit-different GUID as a control.
-
-**The class hierarchy is Nim's own inheritance, not converters.** Modelling
-894 classes as `distinct pointer` plus a `converter` to each ancestor is the
-obvious first design and is unusable: Nim considers every converter in scope at
-every type mismatch, and 1,715 of them took one module from 3.6 seconds to over
-seven minutes to compile. Plain object inheritance costs nothing, passes a
-derived value where a base is expected, and resolves inherited methods; with
-`{.inheritable, pure.}` there is no runtime type field, so each wrapper is
-exactly one pointer wide.
-
-**The generated API is emitted per declaring class, not per class.** A method
-lives on whichever class's own interfaces declare it and reaches subclasses
-through inheritance. Emitting the full inherited surface for every class
-instead would mean 94,521 procs rather than 4,458, for exactly the same API.
-
-**Interface parameters name the interface they want.** Every WinRT interface
-is a bare `pointer` at the ABI, so nothing in the type system stops you passing
-`IButton` where `UIElement` was declared — and a callee is entitled to use the
-pointer as exactly what it declared, so the wrong vtable is not an error, it is
-a crash. The generator therefore names such parameters after their interface:
-`Fn_IWindow_put_Content` reads `a1UIElement: pointer`, not `a1: pointer`. Use
-`withInterface` to satisfy them.
-
-**Enum values come from the winmd too.** XAML numbers `Orientation` as
-`Vertical = 0, Horizontal = 1`; WPF numbers the same-named enum the other way
-round. Writing one out by hand costs a panel that lays out sideways and reports
-nothing wrong — `get_Orientation` reads back exactly what you set. All 231
-enums are generated as `distinct int32` rather than Nim `enum`s, because WinRT
-enums are sparse, sometimes flags, and sometimes give one value two names.
-
-**A black screenshot is usually not a rendering bug.** A WinUI window is
-composited, so `PrintWindow` returns a black client area whenever the display
-is asleep — under a title bar that captures perfectly, because DWM draws that.
-Ask the layout engine instead: `actualSize` inside `onLoaded` is true whatever
-the display is doing, and a `Button` reporting 32px tall is also proof the
-Fluent styles loaded.
-
-**Most of XAML is composable, not activatable.** Types designed to be derived
-from — `MicaBackdrop`, and most of the visual tree — answer `RoActivateInstance`
-with `E_NOTIMPL`. They are built through their factory's
-`CreateInstance(outer, inner, value)`, and the `inner` pointer it hands back
-carries its own reference that has to be released.
-
-## Roadmap
-
-The path to broad coverage is a generator, not more hand-writing. Every real
-WinRT projection — C++/WinRT, C#/WinRT, windows-rs, swift-winui — is a code
-generator reading `.winmd`, and this should be too.
-
-1. `IReference<T>` as `Option[T]` — 117 methods, and the machinery it needs
-   (computed IIDs) is already here and verified
-2. Typed wrappers for `IVector<T>` and the rest of the collection family
-3. A table of IIDs for interfaces declared in neighbouring winmds, the way
-   `tools/foreign.nim` already does for structs and enums
-4. Arrays, and methods with a second out-parameter
-5. Manifest generation from `package.appxfragment`
-
-4. Data binding, and reading `.xaml` markup
-
-Done: the ECMA-335 reader (`src/winui3/winmd.nim`), the ABI generator
-(`tools/generate.nim`) covering IIDs, slots, enums, structs and 99% of
-signatures, the API generator (`tools/wrappers.nim`) covering 894 classes and 635 events,
-computed IIDs for parameterised interfaces, compiler-managed lifetimes, system
-backdrops, COM aggregation, Fluent styles, UI Automation, and a suite of 77
-checks across seven binaries.
-
-## Regenerating
-
-```
-nimble bindings
-```
-
-which runs both generators against `vendor/Microsoft.UI.Xaml.winmd`:
-
-```
-nim c -r tools/generate.nim <winmd> <prefix> src/winui3/generated/xaml_abi.nim
-nim c -r tools/wrappers.nim <winmd> <prefix> src/winui3/generated/xaml_api.nim
-```
-
-The other tools answer questions about the metadata rather than emitting
-anything: `dump.nim` lists namespaces, or the IIDs and slots of a named type;
-`inspect.nim` shows one type's bases, interfaces and activation attributes;
-`stats.nim` counts the surface; `structs.nim` reports which structs block the
-most signatures.
-
-## Layout
-
-```
-src/winui3.nim            the one import
-src/winui3/
-  core.nim                HRESULT, GUID, HSTRING, activation, refcounts
-  delegate.nim            COM objects WinUI calls back into
-  lifecycle.nim           start, exitApp, the Fluent theme
-  deploy.nim              stages the SDK and links the manifest, at build time
-  app.nim                 the aggregated Application
-  controls.nim            conveniences over the generated types
-  collections.nim         IVector<T>
-  automation.nim          UI Automation, actualSize
-  generated/xaml_abi.nim  IIDs, slots, enums, structs   (32k lines, generated)
-  generated/xaml_api.nim  894 classes and their members (46k lines, generated)
-tools/                    the generators, the ECMA-335 reader they use, and
-                          tools for asking the winmd things
-tests/                    six suites, plus a leak-measuring instrument
-vendor/                   the winmd, the manifest, and its compiled resource
-docs/                     screenshots
-```
+| [How the library is put together](docs/architecture.md) | the two generated layers, and why each decision went the way it did |
+| [Regenerating the bindings](docs/bindings.md) | the winmd, the generators, and moving to a newer SDK |
+| [Lifetimes, threading and the ABI boundary](docs/lifetimes.md) | reference counting, `owned` and `borrowed`, shutdown, exceptions |
+| [Deployment, in detail](docs/deployment.md) | staging, the manifest, opting out, CI |
+| [What is and is not mapped](docs/coverage.md) | the 465 skipped members, and the roadmap |
+| [How the tests work](docs/testing.md) | the isolated desktop, and three techniques for testing a GUI unattended |
 
 ## Licence
 
-MIT
+MIT. The Windows App SDK binaries it stages are Microsoft's, under
+[their own licence](https://learn.microsoft.com/windows/apps/windows-app-sdk/downloads).
