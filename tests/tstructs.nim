@@ -18,7 +18,7 @@ when isMainModule:
     window.title = "struct tests"
 
     let panel = newStackPanel()
-    panel.orientation = Orientation_Vertical
+    panel.orientation = Orientation.Vertical
 
     # Four float64s, 32 bytes: too large for a register, so the x64 ABI passes
     # it by hidden pointer. Nim emits a plain C struct, so the C compiler makes
@@ -52,10 +52,10 @@ when isMainModule:
 
     # A float64 and an enum in one struct — the mixed-field case.
     let col0 = newColumnDefinition()
-    col0.width = GridLength(value: 2.0, gridUnitType: GridUnitType_Star)
+    col0.width = GridLength(value: 2.0, gridUnitType: GridUnitType.Star)
     let w = col0.width
     check("GridLength round-trips",
-          w.value == 2.0 and w.gridUnitType == GridUnitType_Star,
+          w.value == 2.0 and w.gridUnitType == GridUnitType.Star,
           $w.value & " " & $w.gridUnitType)
 
     let label = newTextBlock()

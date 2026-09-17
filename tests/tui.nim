@@ -34,7 +34,7 @@ when isMainModule:
     window.title = "winui3 tests"
     window.backdrop = mica
 
-    let panel = newStackPanel(Orientation_Vertical, spacing = 16.0)
+    let panel = newStackPanel(Orientation.Vertical, spacing = 16.0)
     let label = newTextBlock("Clicked 0 times")
     label.fontSize = 28.0
 

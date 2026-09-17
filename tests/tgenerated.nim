@@ -36,11 +36,11 @@ when isMainModule:
     # XAML numbers this enum Vertical-first; WPF numbers it the other way. The
     # value comes from the winmd, so this catches the generator reading it
     # backwards.
-    panel.orientation = Orientation_Vertical
-    check("enum round-trips", panel.orientation == Orientation_Vertical,
+    panel.orientation = Orientation.Vertical
+    check("enum round-trips", panel.orientation == Orientation.Vertical,
           $panel.orientation)
-    check("Orientation.Vertical is 0", int32(Orientation_Vertical) == 0,
-          $int32(Orientation_Vertical))
+    check("Orientation.Vertical is 0", int32(Orientation.Vertical) == 0,
+          $int32(Orientation.Vertical))
 
     panel.spacing = 16.0
     check("spacing round-trips", panel.spacing == 16.0, $panel.spacing)

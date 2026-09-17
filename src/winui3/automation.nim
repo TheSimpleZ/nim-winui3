@@ -71,7 +71,7 @@ proc invoke*(element: UIElement) =
     vcall(ap, Slot_IAutomationPeer_GetPattern,
           proc(self: pointer, a1: int32,
                value: ptr pointer): HRESULT {.stdcall.})(
-            ap, int32(PatternInterface_Invoke), pattern.addr)
+            ap, int32(PatternInterface.Invoke), pattern.addr)
       .check("AutomationPeer.GetPattern(Invoke)")
   finally:
     release(ap)

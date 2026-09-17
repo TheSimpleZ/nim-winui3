@@ -2,7 +2,6 @@
 ##
 ## Source:    Microsoft.UI.Xaml.winmd
 ## Namespace: Microsoft.UI.Xaml
-## Generated: 2026-09-17
 ##
 ## Each class is a Nim object in a real inheritance chain, so an
 ## inherited method resolves without being emitted again for every
@@ -59,7 +58,7 @@ proc composeAs*(classId: string, factoryIid, iid: GUID,
   ## `outer` says we are not deriving from it, and the `inner` handed back
   ## carries its own reference that is not ours to keep.
   type FnCompose = proc(self: pointer, outer: pointer, inner: ptr pointer,
-                        value: ptr pointer): HRESULT {.stdcall.}
+                        value: ptr pointer): HRESULT {.stdcall, raises: [], gcsafe.}
   let factory = activationFactory(classId, factoryIid)
   var inner, instance: pointer
   try:
@@ -6686,38 +6685,38 @@ proc debugSettings*(self: Application): DebugSettings =
 proc requestedTheme*(self: Application): ApplicationTheme =
   ## Microsoft.UI.Xaml.Application.get_RequestedTheme
   withIface(self.p, IID_IApplication, "IApplication", it):
-    var tmp: int32
+    var tmp: ApplicationTheme
     vcall(it, Slot_IApplication_get_RequestedTheme, Fn_IApplication_get_RequestedTheme)(it, tmp.addr).check("Application.get_RequestedTheme")
-    result = ApplicationTheme(tmp)
+    result = tmp
 
 proc `requestedTheme=`*(self: Application, value: ApplicationTheme) =
   ## Microsoft.UI.Xaml.Application.put_RequestedTheme
   withIface(self.p, IID_IApplication, "IApplication", it):
-    vcall(it, Slot_IApplication_put_RequestedTheme, Fn_IApplication_put_RequestedTheme)(it, int32(value)).check("Application.put_RequestedTheme")
+    vcall(it, Slot_IApplication_put_RequestedTheme, Fn_IApplication_put_RequestedTheme)(it, value).check("Application.put_RequestedTheme")
 
 proc focusVisualKind*(self: Application): FocusVisualKind =
   ## Microsoft.UI.Xaml.Application.get_FocusVisualKind
   withIface(self.p, IID_IApplication, "IApplication", it):
-    var tmp: int32
+    var tmp: FocusVisualKind
     vcall(it, Slot_IApplication_get_FocusVisualKind, Fn_IApplication_get_FocusVisualKind)(it, tmp.addr).check("Application.get_FocusVisualKind")
-    result = FocusVisualKind(tmp)
+    result = tmp
 
 proc `focusVisualKind=`*(self: Application, value: FocusVisualKind) =
   ## Microsoft.UI.Xaml.Application.put_FocusVisualKind
   withIface(self.p, IID_IApplication, "IApplication", it):
-    vcall(it, Slot_IApplication_put_FocusVisualKind, Fn_IApplication_put_FocusVisualKind)(it, int32(value)).check("Application.put_FocusVisualKind")
+    vcall(it, Slot_IApplication_put_FocusVisualKind, Fn_IApplication_put_FocusVisualKind)(it, value).check("Application.put_FocusVisualKind")
 
 proc highContrastAdjustment*(self: Application): ApplicationHighContrastAdjustment =
   ## Microsoft.UI.Xaml.Application.get_HighContrastAdjustment
   withIface(self.p, IID_IApplication, "IApplication", it):
-    var tmp: int32
+    var tmp: ApplicationHighContrastAdjustment
     vcall(it, Slot_IApplication_get_HighContrastAdjustment, Fn_IApplication_get_HighContrastAdjustment)(it, tmp.addr).check("Application.get_HighContrastAdjustment")
-    result = ApplicationHighContrastAdjustment(tmp)
+    result = tmp
 
 proc `highContrastAdjustment=`*(self: Application, value: ApplicationHighContrastAdjustment) =
   ## Microsoft.UI.Xaml.Application.put_HighContrastAdjustment
   withIface(self.p, IID_IApplication, "IApplication", it):
-    vcall(it, Slot_IApplication_put_HighContrastAdjustment, Fn_IApplication_put_HighContrastAdjustment)(it, int32(value)).check("Application.put_HighContrastAdjustment")
+    vcall(it, Slot_IApplication_put_HighContrastAdjustment, Fn_IApplication_put_HighContrastAdjustment)(it, value).check("Application.put_HighContrastAdjustment")
 
 proc onUnhandledException*(self: Application,
     handler: proc(sender: pointer, args: UnhandledExceptionEventArgs)): EventRegistrationToken {.discardable.} =
@@ -6767,14 +6766,14 @@ proc removeResourceManagerRequested*(self: Application, token: EventRegistration
 proc dispatcherShutdownMode*(self: Application): DispatcherShutdownMode =
   ## Microsoft.UI.Xaml.Application.get_DispatcherShutdownMode
   withIface(self.p, IID_IApplication3, "IApplication3", it):
-    var tmp: int32
+    var tmp: DispatcherShutdownMode
     vcall(it, Slot_IApplication3_get_DispatcherShutdownMode, Fn_IApplication3_get_DispatcherShutdownMode)(it, tmp.addr).check("Application.get_DispatcherShutdownMode")
-    result = DispatcherShutdownMode(tmp)
+    result = tmp
 
 proc `dispatcherShutdownMode=`*(self: Application, value: DispatcherShutdownMode) =
   ## Microsoft.UI.Xaml.Application.put_DispatcherShutdownMode
   withIface(self.p, IID_IApplication3, "IApplication3", it):
-    vcall(it, Slot_IApplication3_put_DispatcherShutdownMode, Fn_IApplication3_put_DispatcherShutdownMode)(it, int32(value)).check("Application.put_DispatcherShutdownMode")
+    vcall(it, Slot_IApplication3_put_DispatcherShutdownMode, Fn_IApplication3_put_DispatcherShutdownMode)(it, value).check("Application.put_DispatcherShutdownMode")
 
 proc onLaunched*(self: Application, a1: LaunchActivatedEventArgs) =
   ## Microsoft.UI.Xaml.Application.OnLaunched
@@ -6789,14 +6788,14 @@ proc newAutomationAnnotation*(): AutomationAnnotation =
 proc `type`*(self: AutomationAnnotation): AnnotationType =
   ## Microsoft.UI.Xaml.Automation.AutomationAnnotation.get_Type
   withIface(self.p, IID_IAutomationAnnotation, "IAutomationAnnotation", it):
-    var tmp: int32
+    var tmp: AnnotationType
     vcall(it, Slot_IAutomationAnnotation_get_Type, Fn_IAutomationAnnotation_get_Type)(it, tmp.addr).check("AutomationAnnotation.get_Type")
-    result = AnnotationType(tmp)
+    result = tmp
 
 proc `type=`*(self: AutomationAnnotation, value: AnnotationType) =
   ## Microsoft.UI.Xaml.Automation.AutomationAnnotation.put_Type
   withIface(self.p, IID_IAutomationAnnotation, "IAutomationAnnotation", it):
-    vcall(it, Slot_IAutomationAnnotation_put_Type, Fn_IAutomationAnnotation_put_Type)(it, int32(value)).check("AutomationAnnotation.put_Type")
+    vcall(it, Slot_IAutomationAnnotation_put_Type, Fn_IAutomationAnnotation_put_Type)(it, value).check("AutomationAnnotation.put_Type")
 
 proc element*(self: AutomationAnnotation): UIElement =
   ## Microsoft.UI.Xaml.Automation.AutomationAnnotation.get_Element
@@ -6833,13 +6832,13 @@ proc getPattern*(self: AutomationPeer, a1: PatternInterface): pointer =
   ## Microsoft.UI.Xaml.Automation.Peers.AutomationPeer.GetPattern
   withIface(self.p, IID_IAutomationPeer, "IAutomationPeer", it):
     var tmp: pointer
-    vcall(it, Slot_IAutomationPeer_GetPattern, Fn_IAutomationPeer_GetPattern)(it, int32(a1), tmp.addr).check("AutomationPeer.GetPattern")
+    vcall(it, Slot_IAutomationPeer_GetPattern, Fn_IAutomationPeer_GetPattern)(it, a1, tmp.addr).check("AutomationPeer.GetPattern")
     result = tmp
 
 proc raiseAutomationEvent*(self: AutomationPeer, a1: AutomationEvents) =
   ## Microsoft.UI.Xaml.Automation.Peers.AutomationPeer.RaiseAutomationEvent
   withIface(self.p, IID_IAutomationPeer, "IAutomationPeer", it):
-    vcall(it, Slot_IAutomationPeer_RaiseAutomationEvent, Fn_IAutomationPeer_RaiseAutomationEvent)(it, int32(a1)).check("AutomationPeer.RaiseAutomationEvent")
+    vcall(it, Slot_IAutomationPeer_RaiseAutomationEvent, Fn_IAutomationPeer_RaiseAutomationEvent)(it, a1).check("AutomationPeer.RaiseAutomationEvent")
 
 proc raisePropertyChangedEvent*(self: AutomationPeer, a1: AutomationProperty, a2: pointer, a3: pointer) =
   ## Microsoft.UI.Xaml.Automation.Peers.AutomationPeer.RaisePropertyChangedEvent
@@ -6864,9 +6863,9 @@ proc getAccessKey*(self: AutomationPeer): string =
 proc getAutomationControlType*(self: AutomationPeer): AutomationControlType =
   ## Microsoft.UI.Xaml.Automation.Peers.AutomationPeer.GetAutomationControlType
   withIface(self.p, IID_IAutomationPeer, "IAutomationPeer", it):
-    var tmp: int32
+    var tmp: AutomationControlType
     vcall(it, Slot_IAutomationPeer_GetAutomationControlType, Fn_IAutomationPeer_GetAutomationControlType)(it, tmp.addr).check("AutomationPeer.GetAutomationControlType")
-    result = AutomationControlType(tmp)
+    result = tmp
 
 proc getAutomationId*(self: AutomationPeer): string =
   ## Microsoft.UI.Xaml.Automation.Peers.AutomationPeer.GetAutomationId
@@ -6886,7 +6885,7 @@ proc navigate*(self: AutomationPeer, a1: AutomationNavigationDirection): pointer
   ## Microsoft.UI.Xaml.Automation.Peers.AutomationPeer.Navigate
   withIface(self.p, IID_IAutomationPeer, "IAutomationPeer", it):
     var tmp: pointer
-    vcall(it, Slot_IAutomationPeer_Navigate, Fn_IAutomationPeer_Navigate)(it, int32(a1), tmp.addr).check("AutomationPeer.Navigate")
+    vcall(it, Slot_IAutomationPeer_Navigate, Fn_IAutomationPeer_Navigate)(it, a1, tmp.addr).check("AutomationPeer.Navigate")
     result = tmp
 
 proc getClassName*(self: AutomationPeer): string =
@@ -6948,9 +6947,9 @@ proc getName*(self: AutomationPeer): string =
 proc getOrientation*(self: AutomationPeer): AutomationOrientation =
   ## Microsoft.UI.Xaml.Automation.Peers.AutomationPeer.GetOrientation
   withIface(self.p, IID_IAutomationPeer, "IAutomationPeer", it):
-    var tmp: int32
+    var tmp: AutomationOrientation
     vcall(it, Slot_IAutomationPeer_GetOrientation, Fn_IAutomationPeer_GetOrientation)(it, tmp.addr).check("AutomationPeer.GetOrientation")
-    result = AutomationOrientation(tmp)
+    result = tmp
 
 proc hasKeyboardFocus*(self: AutomationPeer): bool =
   ## Microsoft.UI.Xaml.Automation.Peers.AutomationPeer.HasKeyboardFocus
@@ -7049,9 +7048,9 @@ proc getFocusedElement*(self: AutomationPeer): pointer =
 proc getLiveSetting*(self: AutomationPeer): AutomationLiveSetting =
   ## Microsoft.UI.Xaml.Automation.Peers.AutomationPeer.GetLiveSetting
   withIface(self.p, IID_IAutomationPeer, "IAutomationPeer", it):
-    var tmp: int32
+    var tmp: AutomationLiveSetting
     vcall(it, Slot_IAutomationPeer_GetLiveSetting, Fn_IAutomationPeer_GetLiveSetting)(it, tmp.addr).check("AutomationPeer.GetLiveSetting")
-    result = AutomationLiveSetting(tmp)
+    result = tmp
 
 proc showContextMenu*(self: AutomationPeer) =
   ## Microsoft.UI.Xaml.Automation.Peers.AutomationPeer.ShowContextMenu
@@ -7089,14 +7088,14 @@ proc raiseStructureChangedEvent*(self: AutomationPeer, a1: AutomationStructureCh
   ## Microsoft.UI.Xaml.Automation.Peers.AutomationPeer.RaiseStructureChangedEvent
   withIface(self.p, IID_IAutomationPeer, "IAutomationPeer", it):
     withIface(a2.p, IID_IAutomationPeer, "IAutomationPeer", p1):
-      vcall(it, Slot_IAutomationPeer_RaiseStructureChangedEvent, Fn_IAutomationPeer_RaiseStructureChangedEvent)(it, int32(a1), p1).check("AutomationPeer.RaiseStructureChangedEvent")
+      vcall(it, Slot_IAutomationPeer_RaiseStructureChangedEvent, Fn_IAutomationPeer_RaiseStructureChangedEvent)(it, a1, p1).check("AutomationPeer.RaiseStructureChangedEvent")
 
 proc getLandmarkType*(self: AutomationPeer): AutomationLandmarkType =
   ## Microsoft.UI.Xaml.Automation.Peers.AutomationPeer.GetLandmarkType
   withIface(self.p, IID_IAutomationPeer, "IAutomationPeer", it):
-    var tmp: int32
+    var tmp: AutomationLandmarkType
     vcall(it, Slot_IAutomationPeer_GetLandmarkType, Fn_IAutomationPeer_GetLandmarkType)(it, tmp.addr).check("AutomationPeer.GetLandmarkType")
-    result = AutomationLandmarkType(tmp)
+    result = tmp
 
 proc getLocalizedLandmarkType*(self: AutomationPeer): string =
   ## Microsoft.UI.Xaml.Automation.Peers.AutomationPeer.GetLocalizedLandmarkType
@@ -7138,14 +7137,14 @@ proc raiseNotificationEvent*(self: AutomationPeer, a1: AutomationNotificationKin
   withIface(self.p, IID_IAutomationPeer, "IAutomationPeer", it):
     withHString(a3, h2):
       withHString(a4, h3):
-        vcall(it, Slot_IAutomationPeer_RaiseNotificationEvent, Fn_IAutomationPeer_RaiseNotificationEvent)(it, int32(a1), int32(a2), h2, h3).check("AutomationPeer.RaiseNotificationEvent")
+        vcall(it, Slot_IAutomationPeer_RaiseNotificationEvent, Fn_IAutomationPeer_RaiseNotificationEvent)(it, a1, a2, h2, h3).check("AutomationPeer.RaiseNotificationEvent")
 
 proc getHeadingLevel*(self: AutomationPeer): AutomationHeadingLevel =
   ## Microsoft.UI.Xaml.Automation.Peers.AutomationPeer.GetHeadingLevel
   withIface(self.p, IID_IAutomationPeer, "IAutomationPeer", it):
-    var tmp: int32
+    var tmp: AutomationHeadingLevel
     vcall(it, Slot_IAutomationPeer_GetHeadingLevel, Fn_IAutomationPeer_GetHeadingLevel)(it, tmp.addr).check("AutomationPeer.GetHeadingLevel")
-    result = AutomationHeadingLevel(tmp)
+    result = tmp
 
 proc isDialog*(self: AutomationPeer): bool =
   ## Microsoft.UI.Xaml.Automation.Peers.AutomationPeer.IsDialog
@@ -7174,7 +7173,7 @@ proc getPatternCore*(self: AutomationPeer, a1: PatternInterface): pointer =
   ## Microsoft.UI.Xaml.Automation.Peers.AutomationPeer.GetPatternCore
   withIface(self.p, IID_IAutomationPeerOverrides, "IAutomationPeerOverrides", it):
     var tmp: pointer
-    vcall(it, Slot_IAutomationPeerOverrides_GetPatternCore, Fn_IAutomationPeerOverrides_GetPatternCore)(it, int32(a1), tmp.addr).check("AutomationPeer.GetPatternCore")
+    vcall(it, Slot_IAutomationPeerOverrides_GetPatternCore, Fn_IAutomationPeerOverrides_GetPatternCore)(it, a1, tmp.addr).check("AutomationPeer.GetPatternCore")
     result = tmp
 
 proc getAcceleratorKeyCore*(self: AutomationPeer): string =
@@ -7194,9 +7193,9 @@ proc getAccessKeyCore*(self: AutomationPeer): string =
 proc getAutomationControlTypeCore*(self: AutomationPeer): AutomationControlType =
   ## Microsoft.UI.Xaml.Automation.Peers.AutomationPeer.GetAutomationControlTypeCore
   withIface(self.p, IID_IAutomationPeerOverrides, "IAutomationPeerOverrides", it):
-    var tmp: int32
+    var tmp: AutomationControlType
     vcall(it, Slot_IAutomationPeerOverrides_GetAutomationControlTypeCore, Fn_IAutomationPeerOverrides_GetAutomationControlTypeCore)(it, tmp.addr).check("AutomationPeer.GetAutomationControlTypeCore")
-    result = AutomationControlType(tmp)
+    result = tmp
 
 proc getAutomationIdCore*(self: AutomationPeer): string =
   ## Microsoft.UI.Xaml.Automation.Peers.AutomationPeer.GetAutomationIdCore
@@ -7216,7 +7215,7 @@ proc navigateCore*(self: AutomationPeer, a1: AutomationNavigationDirection): poi
   ## Microsoft.UI.Xaml.Automation.Peers.AutomationPeer.NavigateCore
   withIface(self.p, IID_IAutomationPeerOverrides, "IAutomationPeerOverrides", it):
     var tmp: pointer
-    vcall(it, Slot_IAutomationPeerOverrides_NavigateCore, Fn_IAutomationPeerOverrides_NavigateCore)(it, int32(a1), tmp.addr).check("AutomationPeer.NavigateCore")
+    vcall(it, Slot_IAutomationPeerOverrides_NavigateCore, Fn_IAutomationPeerOverrides_NavigateCore)(it, a1, tmp.addr).check("AutomationPeer.NavigateCore")
     result = tmp
 
 proc getClassNameCore*(self: AutomationPeer): string =
@@ -7278,9 +7277,9 @@ proc getNameCore*(self: AutomationPeer): string =
 proc getOrientationCore*(self: AutomationPeer): AutomationOrientation =
   ## Microsoft.UI.Xaml.Automation.Peers.AutomationPeer.GetOrientationCore
   withIface(self.p, IID_IAutomationPeerOverrides, "IAutomationPeerOverrides", it):
-    var tmp: int32
+    var tmp: AutomationOrientation
     vcall(it, Slot_IAutomationPeerOverrides_GetOrientationCore, Fn_IAutomationPeerOverrides_GetOrientationCore)(it, tmp.addr).check("AutomationPeer.GetOrientationCore")
-    result = AutomationOrientation(tmp)
+    result = tmp
 
 proc hasKeyboardFocusCore*(self: AutomationPeer): bool =
   ## Microsoft.UI.Xaml.Automation.Peers.AutomationPeer.HasKeyboardFocusCore
@@ -7367,9 +7366,9 @@ proc getFocusedElementCore*(self: AutomationPeer): pointer =
 proc getLiveSettingCore*(self: AutomationPeer): AutomationLiveSetting =
   ## Microsoft.UI.Xaml.Automation.Peers.AutomationPeer.GetLiveSettingCore
   withIface(self.p, IID_IAutomationPeerOverrides, "IAutomationPeerOverrides", it):
-    var tmp: int32
+    var tmp: AutomationLiveSetting
     vcall(it, Slot_IAutomationPeerOverrides_GetLiveSettingCore, Fn_IAutomationPeerOverrides_GetLiveSettingCore)(it, tmp.addr).check("AutomationPeer.GetLiveSettingCore")
-    result = AutomationLiveSetting(tmp)
+    result = tmp
 
 proc showContextMenuCore*(self: AutomationPeer) =
   ## Microsoft.UI.Xaml.Automation.Peers.AutomationPeer.ShowContextMenuCore
@@ -7400,9 +7399,9 @@ proc getLevelCore*(self: AutomationPeer): int32 =
 proc getLandmarkTypeCore*(self: AutomationPeer): AutomationLandmarkType =
   ## Microsoft.UI.Xaml.Automation.Peers.AutomationPeer.GetLandmarkTypeCore
   withIface(self.p, IID_IAutomationPeerOverrides, "IAutomationPeerOverrides", it):
-    var tmp: int32
+    var tmp: AutomationLandmarkType
     vcall(it, Slot_IAutomationPeerOverrides_GetLandmarkTypeCore, Fn_IAutomationPeerOverrides_GetLandmarkTypeCore)(it, tmp.addr).check("AutomationPeer.GetLandmarkTypeCore")
-    result = AutomationLandmarkType(tmp)
+    result = tmp
 
 proc getLocalizedLandmarkTypeCore*(self: AutomationPeer): string =
   ## Microsoft.UI.Xaml.Automation.Peers.AutomationPeer.GetLocalizedLandmarkTypeCore
@@ -7442,9 +7441,9 @@ proc getCultureCore*(self: AutomationPeer): int32 =
 proc getHeadingLevelCore*(self: AutomationPeer): AutomationHeadingLevel =
   ## Microsoft.UI.Xaml.Automation.Peers.AutomationPeer.GetHeadingLevelCore
   withIface(self.p, IID_IAutomationPeerOverrides, "IAutomationPeerOverrides", it):
-    var tmp: int32
+    var tmp: AutomationHeadingLevel
     vcall(it, Slot_IAutomationPeerOverrides_GetHeadingLevelCore, Fn_IAutomationPeerOverrides_GetHeadingLevelCore)(it, tmp.addr).check("AutomationPeer.GetHeadingLevelCore")
-    result = AutomationHeadingLevel(tmp)
+    result = tmp
 
 proc isDialogCore*(self: AutomationPeer): bool =
   ## Microsoft.UI.Xaml.Automation.Peers.AutomationPeer.IsDialogCore
@@ -7468,9 +7467,9 @@ proc newAnimatedVisualPlayerAutomationPeer*(): AnimatedVisualPlayerAutomationPee
 proc expandCollapseState*(self: AppBarAutomationPeer): ExpandCollapseState =
   ## Microsoft.UI.Xaml.Automation.Peers.AppBarAutomationPeer.get_ExpandCollapseState
   withIface(self.p, IID_IExpandCollapseProvider, "IExpandCollapseProvider", it):
-    var tmp: int32
+    var tmp: ExpandCollapseState
     vcall(it, Slot_IExpandCollapseProvider_get_ExpandCollapseState, Fn_IExpandCollapseProvider_get_ExpandCollapseState)(it, tmp.addr).check("AppBarAutomationPeer.get_ExpandCollapseState")
-    result = ExpandCollapseState(tmp)
+    result = tmp
 
 proc collapse*(self: AppBarAutomationPeer) =
   ## Microsoft.UI.Xaml.Automation.Peers.AppBarAutomationPeer.Collapse
@@ -7485,9 +7484,9 @@ proc expand*(self: AppBarAutomationPeer) =
 proc toggleState*(self: AppBarAutomationPeer): ToggleState =
   ## Microsoft.UI.Xaml.Automation.Peers.AppBarAutomationPeer.get_ToggleState
   withIface(self.p, IID_IToggleProvider, "IToggleProvider", it):
-    var tmp: int32
+    var tmp: ToggleState
     vcall(it, Slot_IToggleProvider_get_ToggleState, Fn_IToggleProvider_get_ToggleState)(it, tmp.addr).check("AppBarAutomationPeer.get_ToggleState")
-    result = ToggleState(tmp)
+    result = tmp
 
 proc toggle*(self: AppBarAutomationPeer) =
   ## Microsoft.UI.Xaml.Automation.Peers.AppBarAutomationPeer.Toggle
@@ -7525,16 +7524,16 @@ proc minimizable*(self: AppBarAutomationPeer): bool =
 proc interactionState*(self: AppBarAutomationPeer): WindowInteractionState =
   ## Microsoft.UI.Xaml.Automation.Peers.AppBarAutomationPeer.get_InteractionState
   withIface(self.p, IID_IWindowProvider, "IWindowProvider", it):
-    var tmp: int32
+    var tmp: WindowInteractionState
     vcall(it, Slot_IWindowProvider_get_InteractionState, Fn_IWindowProvider_get_InteractionState)(it, tmp.addr).check("AppBarAutomationPeer.get_InteractionState")
-    result = WindowInteractionState(tmp)
+    result = tmp
 
 proc visualState*(self: AppBarAutomationPeer): WindowVisualState =
   ## Microsoft.UI.Xaml.Automation.Peers.AppBarAutomationPeer.get_VisualState
   withIface(self.p, IID_IWindowProvider, "IWindowProvider", it):
-    var tmp: int32
+    var tmp: WindowVisualState
     vcall(it, Slot_IWindowProvider_get_VisualState, Fn_IWindowProvider_get_VisualState)(it, tmp.addr).check("AppBarAutomationPeer.get_VisualState")
-    result = WindowVisualState(tmp)
+    result = tmp
 
 proc close*(self: AppBarAutomationPeer) =
   ## Microsoft.UI.Xaml.Automation.Peers.AppBarAutomationPeer.Close
@@ -7544,7 +7543,7 @@ proc close*(self: AppBarAutomationPeer) =
 proc setVisualState*(self: AppBarAutomationPeer, a1: WindowVisualState) =
   ## Microsoft.UI.Xaml.Automation.Peers.AppBarAutomationPeer.SetVisualState
   withIface(self.p, IID_IWindowProvider, "IWindowProvider", it):
-    vcall(it, Slot_IWindowProvider_SetVisualState, Fn_IWindowProvider_SetVisualState)(it, int32(a1)).check("AppBarAutomationPeer.SetVisualState")
+    vcall(it, Slot_IWindowProvider_SetVisualState, Fn_IWindowProvider_SetVisualState)(it, a1).check("AppBarAutomationPeer.SetVisualState")
 
 proc waitForInputIdle*(self: AppBarAutomationPeer, a1: int32): bool =
   ## Microsoft.UI.Xaml.Automation.Peers.AppBarAutomationPeer.WaitForInputIdle
@@ -7561,9 +7560,9 @@ proc invoke*(self: ButtonAutomationPeer) =
 proc expandCollapseState*(self: AppBarButtonAutomationPeer): ExpandCollapseState =
   ## Microsoft.UI.Xaml.Automation.Peers.AppBarButtonAutomationPeer.get_ExpandCollapseState
   withIface(self.p, IID_IExpandCollapseProvider, "IExpandCollapseProvider", it):
-    var tmp: int32
+    var tmp: ExpandCollapseState
     vcall(it, Slot_IExpandCollapseProvider_get_ExpandCollapseState, Fn_IExpandCollapseProvider_get_ExpandCollapseState)(it, tmp.addr).check("AppBarButtonAutomationPeer.get_ExpandCollapseState")
-    result = ExpandCollapseState(tmp)
+    result = tmp
 
 proc collapse*(self: AppBarButtonAutomationPeer) =
   ## Microsoft.UI.Xaml.Automation.Peers.AppBarButtonAutomationPeer.Collapse
@@ -7578,9 +7577,9 @@ proc expand*(self: AppBarButtonAutomationPeer) =
 proc toggleState*(self: ToggleButtonAutomationPeer): ToggleState =
   ## Microsoft.UI.Xaml.Automation.Peers.ToggleButtonAutomationPeer.get_ToggleState
   withIface(self.p, IID_IToggleProvider, "IToggleProvider", it):
-    var tmp: int32
+    var tmp: ToggleState
     vcall(it, Slot_IToggleProvider_get_ToggleState, Fn_IToggleProvider_get_ToggleState)(it, tmp.addr).check("ToggleButtonAutomationPeer.get_ToggleState")
-    result = ToggleState(tmp)
+    result = tmp
 
 proc toggle*(self: ToggleButtonAutomationPeer) =
   ## Microsoft.UI.Xaml.Automation.Peers.ToggleButtonAutomationPeer.Toggle
@@ -7603,14 +7602,14 @@ proc newAutomationPeerAnnotation*(): AutomationPeerAnnotation =
 proc `type`*(self: AutomationPeerAnnotation): AnnotationType =
   ## Microsoft.UI.Xaml.Automation.Peers.AutomationPeerAnnotation.get_Type
   withIface(self.p, IID_IAutomationPeerAnnotation, "IAutomationPeerAnnotation", it):
-    var tmp: int32
+    var tmp: AnnotationType
     vcall(it, Slot_IAutomationPeerAnnotation_get_Type, Fn_IAutomationPeerAnnotation_get_Type)(it, tmp.addr).check("AutomationPeerAnnotation.get_Type")
-    result = AnnotationType(tmp)
+    result = tmp
 
 proc `type=`*(self: AutomationPeerAnnotation, value: AnnotationType) =
   ## Microsoft.UI.Xaml.Automation.Peers.AutomationPeerAnnotation.put_Type
   withIface(self.p, IID_IAutomationPeerAnnotation, "IAutomationPeerAnnotation", it):
-    vcall(it, Slot_IAutomationPeerAnnotation_put_Type, Fn_IAutomationPeerAnnotation_put_Type)(it, int32(value)).check("AutomationPeerAnnotation.put_Type")
+    vcall(it, Slot_IAutomationPeerAnnotation_put_Type, Fn_IAutomationPeerAnnotation_put_Type)(it, value).check("AutomationPeerAnnotation.put_Type")
 
 proc peer*(self: AutomationPeerAnnotation): AutomationPeer =
   ## Microsoft.UI.Xaml.Automation.Peers.AutomationPeerAnnotation.get_Peer
@@ -7767,9 +7766,9 @@ proc setValue*(self: ComboBoxAutomationPeer, a1: string) =
 proc expandCollapseState*(self: ComboBoxAutomationPeer): ExpandCollapseState =
   ## Microsoft.UI.Xaml.Automation.Peers.ComboBoxAutomationPeer.get_ExpandCollapseState
   withIface(self.p, IID_IExpandCollapseProvider, "IExpandCollapseProvider", it):
-    var tmp: int32
+    var tmp: ExpandCollapseState
     vcall(it, Slot_IExpandCollapseProvider_get_ExpandCollapseState, Fn_IExpandCollapseProvider_get_ExpandCollapseState)(it, tmp.addr).check("ComboBoxAutomationPeer.get_ExpandCollapseState")
-    result = ExpandCollapseState(tmp)
+    result = tmp
 
 proc collapse*(self: ComboBoxAutomationPeer) =
   ## Microsoft.UI.Xaml.Automation.Peers.ComboBoxAutomationPeer.Collapse
@@ -7812,16 +7811,16 @@ proc minimizable*(self: ComboBoxAutomationPeer): bool =
 proc interactionState*(self: ComboBoxAutomationPeer): WindowInteractionState =
   ## Microsoft.UI.Xaml.Automation.Peers.ComboBoxAutomationPeer.get_InteractionState
   withIface(self.p, IID_IWindowProvider, "IWindowProvider", it):
-    var tmp: int32
+    var tmp: WindowInteractionState
     vcall(it, Slot_IWindowProvider_get_InteractionState, Fn_IWindowProvider_get_InteractionState)(it, tmp.addr).check("ComboBoxAutomationPeer.get_InteractionState")
-    result = WindowInteractionState(tmp)
+    result = tmp
 
 proc visualState*(self: ComboBoxAutomationPeer): WindowVisualState =
   ## Microsoft.UI.Xaml.Automation.Peers.ComboBoxAutomationPeer.get_VisualState
   withIface(self.p, IID_IWindowProvider, "IWindowProvider", it):
-    var tmp: int32
+    var tmp: WindowVisualState
     vcall(it, Slot_IWindowProvider_get_VisualState, Fn_IWindowProvider_get_VisualState)(it, tmp.addr).check("ComboBoxAutomationPeer.get_VisualState")
-    result = WindowVisualState(tmp)
+    result = tmp
 
 proc close*(self: ComboBoxAutomationPeer) =
   ## Microsoft.UI.Xaml.Automation.Peers.ComboBoxAutomationPeer.Close
@@ -7831,7 +7830,7 @@ proc close*(self: ComboBoxAutomationPeer) =
 proc setVisualState*(self: ComboBoxAutomationPeer, a1: WindowVisualState) =
   ## Microsoft.UI.Xaml.Automation.Peers.ComboBoxAutomationPeer.SetVisualState
   withIface(self.p, IID_IWindowProvider, "IWindowProvider", it):
-    vcall(it, Slot_IWindowProvider_SetVisualState, Fn_IWindowProvider_SetVisualState)(it, int32(a1)).check("ComboBoxAutomationPeer.SetVisualState")
+    vcall(it, Slot_IWindowProvider_SetVisualState, Fn_IWindowProvider_SetVisualState)(it, a1).check("ComboBoxAutomationPeer.SetVisualState")
 
 proc waitForInputIdle*(self: ComboBoxAutomationPeer, a1: int32): bool =
   ## Microsoft.UI.Xaml.Automation.Peers.ComboBoxAutomationPeer.WaitForInputIdle
@@ -7901,9 +7900,9 @@ proc newDropDownButtonAutomationPeer*(): DropDownButtonAutomationPeer =
 proc expandCollapseState*(self: DropDownButtonAutomationPeer): ExpandCollapseState =
   ## Microsoft.UI.Xaml.Automation.Peers.DropDownButtonAutomationPeer.get_ExpandCollapseState
   withIface(self.p, IID_IExpandCollapseProvider, "IExpandCollapseProvider", it):
-    var tmp: int32
+    var tmp: ExpandCollapseState
     vcall(it, Slot_IExpandCollapseProvider_get_ExpandCollapseState, Fn_IExpandCollapseProvider_get_ExpandCollapseState)(it, tmp.addr).check("DropDownButtonAutomationPeer.get_ExpandCollapseState")
-    result = ExpandCollapseState(tmp)
+    result = tmp
 
 proc collapse*(self: DropDownButtonAutomationPeer) =
   ## Microsoft.UI.Xaml.Automation.Peers.DropDownButtonAutomationPeer.Collapse
@@ -7923,9 +7922,9 @@ proc newExpanderAutomationPeer*(): ExpanderAutomationPeer =
 proc expandCollapseState*(self: ExpanderAutomationPeer): ExpandCollapseState =
   ## Microsoft.UI.Xaml.Automation.Peers.ExpanderAutomationPeer.get_ExpandCollapseState
   withIface(self.p, IID_IExpandCollapseProvider, "IExpandCollapseProvider", it):
-    var tmp: int32
+    var tmp: ExpandCollapseState
     vcall(it, Slot_IExpandCollapseProvider_get_ExpandCollapseState, Fn_IExpandCollapseProvider_get_ExpandCollapseState)(it, tmp.addr).check("ExpanderAutomationPeer.get_ExpandCollapseState")
-    result = ExpandCollapseState(tmp)
+    result = tmp
 
 proc collapse*(self: ExpanderAutomationPeer) =
   ## Microsoft.UI.Xaml.Automation.Peers.ExpanderAutomationPeer.Collapse
@@ -8105,7 +8104,7 @@ proc verticalViewSize*(self: LoopingSelectorAutomationPeer): float64 =
 proc scroll*(self: LoopingSelectorAutomationPeer, a1: ScrollAmount, a2: ScrollAmount) =
   ## Microsoft.UI.Xaml.Automation.Peers.LoopingSelectorAutomationPeer.Scroll
   withIface(self.p, IID_IScrollProvider, "IScrollProvider", it):
-    vcall(it, Slot_IScrollProvider_Scroll, Fn_IScrollProvider_Scroll)(it, int32(a1), int32(a2)).check("LoopingSelectorAutomationPeer.Scroll")
+    vcall(it, Slot_IScrollProvider_Scroll, Fn_IScrollProvider_Scroll)(it, a1, a2).check("LoopingSelectorAutomationPeer.Scroll")
 
 proc setScrollPercent*(self: LoopingSelectorAutomationPeer, a1: float64, a2: float64) =
   ## Microsoft.UI.Xaml.Automation.Peers.LoopingSelectorAutomationPeer.SetScrollPercent
@@ -8164,9 +8163,9 @@ proc newMenuBarItemAutomationPeer*(): MenuBarItemAutomationPeer =
 proc expandCollapseState*(self: MenuBarItemAutomationPeer): ExpandCollapseState =
   ## Microsoft.UI.Xaml.Automation.Peers.MenuBarItemAutomationPeer.get_ExpandCollapseState
   withIface(self.p, IID_IExpandCollapseProvider, "IExpandCollapseProvider", it):
-    var tmp: int32
+    var tmp: ExpandCollapseState
     vcall(it, Slot_IExpandCollapseProvider_get_ExpandCollapseState, Fn_IExpandCollapseProvider_get_ExpandCollapseState)(it, tmp.addr).check("MenuBarItemAutomationPeer.get_ExpandCollapseState")
-    result = ExpandCollapseState(tmp)
+    result = tmp
 
 proc collapse*(self: MenuBarItemAutomationPeer) =
   ## Microsoft.UI.Xaml.Automation.Peers.MenuBarItemAutomationPeer.Collapse
@@ -8196,9 +8195,9 @@ proc newNavigationViewAutomationPeer*(): NavigationViewAutomationPeer =
 proc expandCollapseState*(self: NavigationViewItemAutomationPeer): ExpandCollapseState =
   ## Microsoft.UI.Xaml.Automation.Peers.NavigationViewItemAutomationPeer.get_ExpandCollapseState
   withIface(self.p, IID_IExpandCollapseProvider, "IExpandCollapseProvider", it):
-    var tmp: int32
+    var tmp: ExpandCollapseState
     vcall(it, Slot_IExpandCollapseProvider_get_ExpandCollapseState, Fn_IExpandCollapseProvider_get_ExpandCollapseState)(it, tmp.addr).check("NavigationViewItemAutomationPeer.get_ExpandCollapseState")
-    result = ExpandCollapseState(tmp)
+    result = tmp
 
 proc collapse*(self: NavigationViewItemAutomationPeer) =
   ## Microsoft.UI.Xaml.Automation.Peers.NavigationViewItemAutomationPeer.Collapse
@@ -8283,7 +8282,7 @@ proc verticalViewSize*(self: PivotAutomationPeer): float64 =
 proc scroll*(self: PivotAutomationPeer, a1: ScrollAmount, a2: ScrollAmount) =
   ## Microsoft.UI.Xaml.Automation.Peers.PivotAutomationPeer.Scroll
   withIface(self.p, IID_IScrollProvider, "IScrollProvider", it):
-    vcall(it, Slot_IScrollProvider_Scroll, Fn_IScrollProvider_Scroll)(it, int32(a1), int32(a2)).check("PivotAutomationPeer.Scroll")
+    vcall(it, Slot_IScrollProvider_Scroll, Fn_IScrollProvider_Scroll)(it, a1, a2).check("PivotAutomationPeer.Scroll")
 
 proc setScrollPercent*(self: PivotAutomationPeer, a1: float64, a2: float64) =
   ## Microsoft.UI.Xaml.Automation.Peers.PivotAutomationPeer.SetScrollPercent
@@ -8488,7 +8487,7 @@ proc verticalViewSize*(self: ScrollViewerAutomationPeer): float64 =
 proc scroll*(self: ScrollViewerAutomationPeer, a1: ScrollAmount, a2: ScrollAmount) =
   ## Microsoft.UI.Xaml.Automation.Peers.ScrollViewerAutomationPeer.Scroll
   withIface(self.p, IID_IScrollProvider, "IScrollProvider", it):
-    vcall(it, Slot_IScrollProvider_Scroll, Fn_IScrollProvider_Scroll)(it, int32(a1), int32(a2)).check("ScrollViewerAutomationPeer.Scroll")
+    vcall(it, Slot_IScrollProvider_Scroll, Fn_IScrollProvider_Scroll)(it, a1, a2).check("ScrollViewerAutomationPeer.Scroll")
 
 proc setScrollPercent*(self: ScrollViewerAutomationPeer, a1: float64, a2: float64) =
   ## Microsoft.UI.Xaml.Automation.Peers.ScrollViewerAutomationPeer.SetScrollPercent
@@ -8498,9 +8497,9 @@ proc setScrollPercent*(self: ScrollViewerAutomationPeer, a1: float64, a2: float6
 proc toggleState*(self: SemanticZoomAutomationPeer): ToggleState =
   ## Microsoft.UI.Xaml.Automation.Peers.SemanticZoomAutomationPeer.get_ToggleState
   withIface(self.p, IID_IToggleProvider, "IToggleProvider", it):
-    var tmp: int32
+    var tmp: ToggleState
     vcall(it, Slot_IToggleProvider_get_ToggleState, Fn_IToggleProvider_get_ToggleState)(it, tmp.addr).check("SemanticZoomAutomationPeer.get_ToggleState")
-    result = ToggleState(tmp)
+    result = tmp
 
 proc toggle*(self: SemanticZoomAutomationPeer) =
   ## Microsoft.UI.Xaml.Automation.Peers.SemanticZoomAutomationPeer.Toggle
@@ -8515,9 +8514,9 @@ proc newSplitButtonAutomationPeer*(): SplitButtonAutomationPeer =
 proc expandCollapseState*(self: SplitButtonAutomationPeer): ExpandCollapseState =
   ## Microsoft.UI.Xaml.Automation.Peers.SplitButtonAutomationPeer.get_ExpandCollapseState
   withIface(self.p, IID_IExpandCollapseProvider, "IExpandCollapseProvider", it):
-    var tmp: int32
+    var tmp: ExpandCollapseState
     vcall(it, Slot_IExpandCollapseProvider_get_ExpandCollapseState, Fn_IExpandCollapseProvider_get_ExpandCollapseState)(it, tmp.addr).check("SplitButtonAutomationPeer.get_ExpandCollapseState")
-    result = ExpandCollapseState(tmp)
+    result = tmp
 
 proc collapse*(self: SplitButtonAutomationPeer) =
   ## Microsoft.UI.Xaml.Automation.Peers.SplitButtonAutomationPeer.Collapse
@@ -8542,9 +8541,9 @@ proc invoke*(self: SplitMenuFlyoutItemAutomationPeer) =
 proc expandCollapseState*(self: SplitMenuFlyoutItemAutomationPeer): ExpandCollapseState =
   ## Microsoft.UI.Xaml.Automation.Peers.SplitMenuFlyoutItemAutomationPeer.get_ExpandCollapseState
   withIface(self.p, IID_IExpandCollapseProvider, "IExpandCollapseProvider", it):
-    var tmp: int32
+    var tmp: ExpandCollapseState
     vcall(it, Slot_IExpandCollapseProvider_get_ExpandCollapseState, Fn_IExpandCollapseProvider_get_ExpandCollapseState)(it, tmp.addr).check("SplitMenuFlyoutItemAutomationPeer.get_ExpandCollapseState")
-    result = ExpandCollapseState(tmp)
+    result = tmp
 
 proc collapse*(self: SplitMenuFlyoutItemAutomationPeer) =
   ## Microsoft.UI.Xaml.Automation.Peers.SplitMenuFlyoutItemAutomationPeer.Collapse
@@ -8574,9 +8573,9 @@ proc newTeachingTipAutomationPeer*(): TeachingTipAutomationPeer =
 proc toggleState*(self: ToggleMenuFlyoutItemAutomationPeer): ToggleState =
   ## Microsoft.UI.Xaml.Automation.Peers.ToggleMenuFlyoutItemAutomationPeer.get_ToggleState
   withIface(self.p, IID_IToggleProvider, "IToggleProvider", it):
-    var tmp: int32
+    var tmp: ToggleState
     vcall(it, Slot_IToggleProvider_get_ToggleState, Fn_IToggleProvider_get_ToggleState)(it, tmp.addr).check("ToggleMenuFlyoutItemAutomationPeer.get_ToggleState")
-    result = ToggleState(tmp)
+    result = tmp
 
 proc toggle*(self: ToggleMenuFlyoutItemAutomationPeer) =
   ## Microsoft.UI.Xaml.Automation.Peers.ToggleMenuFlyoutItemAutomationPeer.Toggle
@@ -8591,9 +8590,9 @@ proc newToggleSplitButtonAutomationPeer*(): ToggleSplitButtonAutomationPeer =
 proc expandCollapseState*(self: ToggleSplitButtonAutomationPeer): ExpandCollapseState =
   ## Microsoft.UI.Xaml.Automation.Peers.ToggleSplitButtonAutomationPeer.get_ExpandCollapseState
   withIface(self.p, IID_IExpandCollapseProvider, "IExpandCollapseProvider", it):
-    var tmp: int32
+    var tmp: ExpandCollapseState
     vcall(it, Slot_IExpandCollapseProvider_get_ExpandCollapseState, Fn_IExpandCollapseProvider_get_ExpandCollapseState)(it, tmp.addr).check("ToggleSplitButtonAutomationPeer.get_ExpandCollapseState")
-    result = ExpandCollapseState(tmp)
+    result = tmp
 
 proc collapse*(self: ToggleSplitButtonAutomationPeer) =
   ## Microsoft.UI.Xaml.Automation.Peers.ToggleSplitButtonAutomationPeer.Collapse
@@ -8608,9 +8607,9 @@ proc expand*(self: ToggleSplitButtonAutomationPeer) =
 proc toggleState*(self: ToggleSplitButtonAutomationPeer): ToggleState =
   ## Microsoft.UI.Xaml.Automation.Peers.ToggleSplitButtonAutomationPeer.get_ToggleState
   withIface(self.p, IID_IToggleProvider, "IToggleProvider", it):
-    var tmp: int32
+    var tmp: ToggleState
     vcall(it, Slot_IToggleProvider_get_ToggleState, Fn_IToggleProvider_get_ToggleState)(it, tmp.addr).check("ToggleSplitButtonAutomationPeer.get_ToggleState")
-    result = ToggleState(tmp)
+    result = tmp
 
 proc toggle*(self: ToggleSplitButtonAutomationPeer) =
   ## Microsoft.UI.Xaml.Automation.Peers.ToggleSplitButtonAutomationPeer.Toggle
@@ -8620,9 +8619,9 @@ proc toggle*(self: ToggleSplitButtonAutomationPeer) =
 proc toggleState*(self: ToggleSwitchAutomationPeer): ToggleState =
   ## Microsoft.UI.Xaml.Automation.Peers.ToggleSwitchAutomationPeer.get_ToggleState
   withIface(self.p, IID_IToggleProvider, "IToggleProvider", it):
-    var tmp: int32
+    var tmp: ToggleState
     vcall(it, Slot_IToggleProvider_get_ToggleState, Fn_IToggleProvider_get_ToggleState)(it, tmp.addr).check("ToggleSwitchAutomationPeer.get_ToggleState")
-    result = ToggleState(tmp)
+    result = tmp
 
 proc toggle*(self: ToggleSwitchAutomationPeer) =
   ## Microsoft.UI.Xaml.Automation.Peers.ToggleSwitchAutomationPeer.Toggle
@@ -8632,9 +8631,9 @@ proc toggle*(self: ToggleSwitchAutomationPeer) =
 proc expandCollapseState*(self: TreeViewItemAutomationPeer): ExpandCollapseState =
   ## Microsoft.UI.Xaml.Automation.Peers.TreeViewItemAutomationPeer.get_ExpandCollapseState
   withIface(self.p, IID_IExpandCollapseProvider, "IExpandCollapseProvider", it):
-    var tmp: int32
+    var tmp: ExpandCollapseState
     vcall(it, Slot_IExpandCollapseProvider_get_ExpandCollapseState, Fn_IExpandCollapseProvider_get_ExpandCollapseState)(it, tmp.addr).check("TreeViewItemAutomationPeer.get_ExpandCollapseState")
-    result = ExpandCollapseState(tmp)
+    result = tmp
 
 proc collapse*(self: TreeViewItemAutomationPeer) =
   ## Microsoft.UI.Xaml.Automation.Peers.TreeViewItemAutomationPeer.Collapse
@@ -8649,9 +8648,9 @@ proc expand*(self: TreeViewItemAutomationPeer) =
 proc expandCollapseState*(self: TreeViewItemDataAutomationPeer): ExpandCollapseState =
   ## Microsoft.UI.Xaml.Automation.Peers.TreeViewItemDataAutomationPeer.get_ExpandCollapseState
   withIface(self.p, IID_IExpandCollapseProvider, "IExpandCollapseProvider", it):
-    var tmp: int32
+    var tmp: ExpandCollapseState
     vcall(it, Slot_IExpandCollapseProvider_get_ExpandCollapseState, Fn_IExpandCollapseProvider_get_ExpandCollapseState)(it, tmp.addr).check("TreeViewItemDataAutomationPeer.get_ExpandCollapseState")
-    result = ExpandCollapseState(tmp)
+    result = tmp
 
 proc collapse*(self: TreeViewItemDataAutomationPeer) =
   ## Microsoft.UI.Xaml.Automation.Peers.TreeViewItemDataAutomationPeer.Collapse
@@ -8988,14 +8987,14 @@ proc `isHitTestVisible=`*(self: UIElement, value: bool) =
 proc visibility*(self: UIElement): Visibility =
   ## Microsoft.UI.Xaml.UIElement.get_Visibility
   withIface(self.p, IID_IUIElement, "IUIElement", it):
-    var tmp: int32
+    var tmp: Visibility
     vcall(it, Slot_IUIElement_get_Visibility, Fn_IUIElement_get_Visibility)(it, tmp.addr).check("UIElement.get_Visibility")
-    result = Visibility(tmp)
+    result = tmp
 
 proc `visibility=`*(self: UIElement, value: Visibility) =
   ## Microsoft.UI.Xaml.UIElement.put_Visibility
   withIface(self.p, IID_IUIElement, "IUIElement", it):
-    vcall(it, Slot_IUIElement_put_Visibility, Fn_IUIElement_put_Visibility)(it, int32(value)).check("UIElement.put_Visibility")
+    vcall(it, Slot_IUIElement_put_Visibility, Fn_IUIElement_put_Visibility)(it, value).check("UIElement.put_Visibility")
 
 proc renderSize*(self: UIElement): Size =
   ## Microsoft.UI.Xaml.UIElement.get_RenderSize
@@ -9092,14 +9091,14 @@ proc `isHoldingEnabled=`*(self: UIElement, value: bool) =
 proc manipulationMode*(self: UIElement): ManipulationModes =
   ## Microsoft.UI.Xaml.UIElement.get_ManipulationMode
   withIface(self.p, IID_IUIElement, "IUIElement", it):
-    var tmp: int32
+    var tmp: ManipulationModes
     vcall(it, Slot_IUIElement_get_ManipulationMode, Fn_IUIElement_get_ManipulationMode)(it, tmp.addr).check("UIElement.get_ManipulationMode")
-    result = ManipulationModes(tmp)
+    result = tmp
 
 proc `manipulationMode=`*(self: UIElement, value: ManipulationModes) =
   ## Microsoft.UI.Xaml.UIElement.put_ManipulationMode
   withIface(self.p, IID_IUIElement, "IUIElement", it):
-    vcall(it, Slot_IUIElement_put_ManipulationMode, Fn_IUIElement_put_ManipulationMode)(it, int32(value)).check("UIElement.put_ManipulationMode")
+    vcall(it, Slot_IUIElement_put_ManipulationMode, Fn_IUIElement_put_ManipulationMode)(it, value).check("UIElement.put_ManipulationMode")
 
 proc contextFlyout*(self: UIElement): FlyoutBase =
   ## Microsoft.UI.Xaml.UIElement.get_ContextFlyout
@@ -9117,14 +9116,14 @@ proc `contextFlyout=`*(self: UIElement, value: FlyoutBase) =
 proc compositeMode*(self: UIElement): ElementCompositeMode =
   ## Microsoft.UI.Xaml.UIElement.get_CompositeMode
   withIface(self.p, IID_IUIElement, "IUIElement", it):
-    var tmp: int32
+    var tmp: ElementCompositeMode
     vcall(it, Slot_IUIElement_get_CompositeMode, Fn_IUIElement_get_CompositeMode)(it, tmp.addr).check("UIElement.get_CompositeMode")
-    result = ElementCompositeMode(tmp)
+    result = tmp
 
 proc `compositeMode=`*(self: UIElement, value: ElementCompositeMode) =
   ## Microsoft.UI.Xaml.UIElement.put_CompositeMode
   withIface(self.p, IID_IUIElement, "IUIElement", it):
-    vcall(it, Slot_IUIElement_put_CompositeMode, Fn_IUIElement_put_CompositeMode)(it, int32(value)).check("UIElement.put_CompositeMode")
+    vcall(it, Slot_IUIElement_put_CompositeMode, Fn_IUIElement_put_CompositeMode)(it, value).check("UIElement.put_CompositeMode")
 
 proc canBeScrollAnchor*(self: UIElement): bool =
   ## Microsoft.UI.Xaml.UIElement.get_CanBeScrollAnchor
@@ -9191,14 +9190,14 @@ proc `accessKey=`*(self: UIElement, value: string) =
 proc keyTipPlacementMode*(self: UIElement): KeyTipPlacementMode =
   ## Microsoft.UI.Xaml.UIElement.get_KeyTipPlacementMode
   withIface(self.p, IID_IUIElement, "IUIElement", it):
-    var tmp: int32
+    var tmp: KeyTipPlacementMode
     vcall(it, Slot_IUIElement_get_KeyTipPlacementMode, Fn_IUIElement_get_KeyTipPlacementMode)(it, tmp.addr).check("UIElement.get_KeyTipPlacementMode")
-    result = KeyTipPlacementMode(tmp)
+    result = tmp
 
 proc `keyTipPlacementMode=`*(self: UIElement, value: KeyTipPlacementMode) =
   ## Microsoft.UI.Xaml.UIElement.put_KeyTipPlacementMode
   withIface(self.p, IID_IUIElement, "IUIElement", it):
-    vcall(it, Slot_IUIElement_put_KeyTipPlacementMode, Fn_IUIElement_put_KeyTipPlacementMode)(it, int32(value)).check("UIElement.put_KeyTipPlacementMode")
+    vcall(it, Slot_IUIElement_put_KeyTipPlacementMode, Fn_IUIElement_put_KeyTipPlacementMode)(it, value).check("UIElement.put_KeyTipPlacementMode")
 
 proc keyTipHorizontalOffset*(self: UIElement): float64 =
   ## Microsoft.UI.Xaml.UIElement.get_KeyTipHorizontalOffset
@@ -9240,62 +9239,62 @@ proc `keyTipTarget=`*(self: UIElement, value: DependencyObject) =
 proc xYFocusKeyboardNavigation*(self: UIElement): XYFocusKeyboardNavigationMode =
   ## Microsoft.UI.Xaml.UIElement.get_XYFocusKeyboardNavigation
   withIface(self.p, IID_IUIElement, "IUIElement", it):
-    var tmp: int32
+    var tmp: XYFocusKeyboardNavigationMode
     vcall(it, Slot_IUIElement_get_XYFocusKeyboardNavigation, Fn_IUIElement_get_XYFocusKeyboardNavigation)(it, tmp.addr).check("UIElement.get_XYFocusKeyboardNavigation")
-    result = XYFocusKeyboardNavigationMode(tmp)
+    result = tmp
 
 proc `xYFocusKeyboardNavigation=`*(self: UIElement, value: XYFocusKeyboardNavigationMode) =
   ## Microsoft.UI.Xaml.UIElement.put_XYFocusKeyboardNavigation
   withIface(self.p, IID_IUIElement, "IUIElement", it):
-    vcall(it, Slot_IUIElement_put_XYFocusKeyboardNavigation, Fn_IUIElement_put_XYFocusKeyboardNavigation)(it, int32(value)).check("UIElement.put_XYFocusKeyboardNavigation")
+    vcall(it, Slot_IUIElement_put_XYFocusKeyboardNavigation, Fn_IUIElement_put_XYFocusKeyboardNavigation)(it, value).check("UIElement.put_XYFocusKeyboardNavigation")
 
 proc xYFocusUpNavigationStrategy*(self: UIElement): XYFocusNavigationStrategy =
   ## Microsoft.UI.Xaml.UIElement.get_XYFocusUpNavigationStrategy
   withIface(self.p, IID_IUIElement, "IUIElement", it):
-    var tmp: int32
+    var tmp: XYFocusNavigationStrategy
     vcall(it, Slot_IUIElement_get_XYFocusUpNavigationStrategy, Fn_IUIElement_get_XYFocusUpNavigationStrategy)(it, tmp.addr).check("UIElement.get_XYFocusUpNavigationStrategy")
-    result = XYFocusNavigationStrategy(tmp)
+    result = tmp
 
 proc `xYFocusUpNavigationStrategy=`*(self: UIElement, value: XYFocusNavigationStrategy) =
   ## Microsoft.UI.Xaml.UIElement.put_XYFocusUpNavigationStrategy
   withIface(self.p, IID_IUIElement, "IUIElement", it):
-    vcall(it, Slot_IUIElement_put_XYFocusUpNavigationStrategy, Fn_IUIElement_put_XYFocusUpNavigationStrategy)(it, int32(value)).check("UIElement.put_XYFocusUpNavigationStrategy")
+    vcall(it, Slot_IUIElement_put_XYFocusUpNavigationStrategy, Fn_IUIElement_put_XYFocusUpNavigationStrategy)(it, value).check("UIElement.put_XYFocusUpNavigationStrategy")
 
 proc xYFocusDownNavigationStrategy*(self: UIElement): XYFocusNavigationStrategy =
   ## Microsoft.UI.Xaml.UIElement.get_XYFocusDownNavigationStrategy
   withIface(self.p, IID_IUIElement, "IUIElement", it):
-    var tmp: int32
+    var tmp: XYFocusNavigationStrategy
     vcall(it, Slot_IUIElement_get_XYFocusDownNavigationStrategy, Fn_IUIElement_get_XYFocusDownNavigationStrategy)(it, tmp.addr).check("UIElement.get_XYFocusDownNavigationStrategy")
-    result = XYFocusNavigationStrategy(tmp)
+    result = tmp
 
 proc `xYFocusDownNavigationStrategy=`*(self: UIElement, value: XYFocusNavigationStrategy) =
   ## Microsoft.UI.Xaml.UIElement.put_XYFocusDownNavigationStrategy
   withIface(self.p, IID_IUIElement, "IUIElement", it):
-    vcall(it, Slot_IUIElement_put_XYFocusDownNavigationStrategy, Fn_IUIElement_put_XYFocusDownNavigationStrategy)(it, int32(value)).check("UIElement.put_XYFocusDownNavigationStrategy")
+    vcall(it, Slot_IUIElement_put_XYFocusDownNavigationStrategy, Fn_IUIElement_put_XYFocusDownNavigationStrategy)(it, value).check("UIElement.put_XYFocusDownNavigationStrategy")
 
 proc xYFocusLeftNavigationStrategy*(self: UIElement): XYFocusNavigationStrategy =
   ## Microsoft.UI.Xaml.UIElement.get_XYFocusLeftNavigationStrategy
   withIface(self.p, IID_IUIElement, "IUIElement", it):
-    var tmp: int32
+    var tmp: XYFocusNavigationStrategy
     vcall(it, Slot_IUIElement_get_XYFocusLeftNavigationStrategy, Fn_IUIElement_get_XYFocusLeftNavigationStrategy)(it, tmp.addr).check("UIElement.get_XYFocusLeftNavigationStrategy")
-    result = XYFocusNavigationStrategy(tmp)
+    result = tmp
 
 proc `xYFocusLeftNavigationStrategy=`*(self: UIElement, value: XYFocusNavigationStrategy) =
   ## Microsoft.UI.Xaml.UIElement.put_XYFocusLeftNavigationStrategy
   withIface(self.p, IID_IUIElement, "IUIElement", it):
-    vcall(it, Slot_IUIElement_put_XYFocusLeftNavigationStrategy, Fn_IUIElement_put_XYFocusLeftNavigationStrategy)(it, int32(value)).check("UIElement.put_XYFocusLeftNavigationStrategy")
+    vcall(it, Slot_IUIElement_put_XYFocusLeftNavigationStrategy, Fn_IUIElement_put_XYFocusLeftNavigationStrategy)(it, value).check("UIElement.put_XYFocusLeftNavigationStrategy")
 
 proc xYFocusRightNavigationStrategy*(self: UIElement): XYFocusNavigationStrategy =
   ## Microsoft.UI.Xaml.UIElement.get_XYFocusRightNavigationStrategy
   withIface(self.p, IID_IUIElement, "IUIElement", it):
-    var tmp: int32
+    var tmp: XYFocusNavigationStrategy
     vcall(it, Slot_IUIElement_get_XYFocusRightNavigationStrategy, Fn_IUIElement_get_XYFocusRightNavigationStrategy)(it, tmp.addr).check("UIElement.get_XYFocusRightNavigationStrategy")
-    result = XYFocusNavigationStrategy(tmp)
+    result = tmp
 
 proc `xYFocusRightNavigationStrategy=`*(self: UIElement, value: XYFocusNavigationStrategy) =
   ## Microsoft.UI.Xaml.UIElement.put_XYFocusRightNavigationStrategy
   withIface(self.p, IID_IUIElement, "IUIElement", it):
-    vcall(it, Slot_IUIElement_put_XYFocusRightNavigationStrategy, Fn_IUIElement_put_XYFocusRightNavigationStrategy)(it, int32(value)).check("UIElement.put_XYFocusRightNavigationStrategy")
+    vcall(it, Slot_IUIElement_put_XYFocusRightNavigationStrategy, Fn_IUIElement_put_XYFocusRightNavigationStrategy)(it, value).check("UIElement.put_XYFocusRightNavigationStrategy")
 
 proc keyboardAcceleratorPlacementTarget*(self: UIElement): DependencyObject =
   ## Microsoft.UI.Xaml.UIElement.get_KeyboardAcceleratorPlacementTarget
@@ -9313,38 +9312,38 @@ proc `keyboardAcceleratorPlacementTarget=`*(self: UIElement, value: DependencyOb
 proc keyboardAcceleratorPlacementMode*(self: UIElement): KeyboardAcceleratorPlacementMode =
   ## Microsoft.UI.Xaml.UIElement.get_KeyboardAcceleratorPlacementMode
   withIface(self.p, IID_IUIElement, "IUIElement", it):
-    var tmp: int32
+    var tmp: KeyboardAcceleratorPlacementMode
     vcall(it, Slot_IUIElement_get_KeyboardAcceleratorPlacementMode, Fn_IUIElement_get_KeyboardAcceleratorPlacementMode)(it, tmp.addr).check("UIElement.get_KeyboardAcceleratorPlacementMode")
-    result = KeyboardAcceleratorPlacementMode(tmp)
+    result = tmp
 
 proc `keyboardAcceleratorPlacementMode=`*(self: UIElement, value: KeyboardAcceleratorPlacementMode) =
   ## Microsoft.UI.Xaml.UIElement.put_KeyboardAcceleratorPlacementMode
   withIface(self.p, IID_IUIElement, "IUIElement", it):
-    vcall(it, Slot_IUIElement_put_KeyboardAcceleratorPlacementMode, Fn_IUIElement_put_KeyboardAcceleratorPlacementMode)(it, int32(value)).check("UIElement.put_KeyboardAcceleratorPlacementMode")
+    vcall(it, Slot_IUIElement_put_KeyboardAcceleratorPlacementMode, Fn_IUIElement_put_KeyboardAcceleratorPlacementMode)(it, value).check("UIElement.put_KeyboardAcceleratorPlacementMode")
 
 proc highContrastAdjustment*(self: UIElement): ElementHighContrastAdjustment =
   ## Microsoft.UI.Xaml.UIElement.get_HighContrastAdjustment
   withIface(self.p, IID_IUIElement, "IUIElement", it):
-    var tmp: int32
+    var tmp: ElementHighContrastAdjustment
     vcall(it, Slot_IUIElement_get_HighContrastAdjustment, Fn_IUIElement_get_HighContrastAdjustment)(it, tmp.addr).check("UIElement.get_HighContrastAdjustment")
-    result = ElementHighContrastAdjustment(tmp)
+    result = tmp
 
 proc `highContrastAdjustment=`*(self: UIElement, value: ElementHighContrastAdjustment) =
   ## Microsoft.UI.Xaml.UIElement.put_HighContrastAdjustment
   withIface(self.p, IID_IUIElement, "IUIElement", it):
-    vcall(it, Slot_IUIElement_put_HighContrastAdjustment, Fn_IUIElement_put_HighContrastAdjustment)(it, int32(value)).check("UIElement.put_HighContrastAdjustment")
+    vcall(it, Slot_IUIElement_put_HighContrastAdjustment, Fn_IUIElement_put_HighContrastAdjustment)(it, value).check("UIElement.put_HighContrastAdjustment")
 
 proc tabFocusNavigation*(self: UIElement): KeyboardNavigationMode =
   ## Microsoft.UI.Xaml.UIElement.get_TabFocusNavigation
   withIface(self.p, IID_IUIElement, "IUIElement", it):
-    var tmp: int32
+    var tmp: KeyboardNavigationMode
     vcall(it, Slot_IUIElement_get_TabFocusNavigation, Fn_IUIElement_get_TabFocusNavigation)(it, tmp.addr).check("UIElement.get_TabFocusNavigation")
-    result = KeyboardNavigationMode(tmp)
+    result = tmp
 
 proc `tabFocusNavigation=`*(self: UIElement, value: KeyboardNavigationMode) =
   ## Microsoft.UI.Xaml.UIElement.put_TabFocusNavigation
   withIface(self.p, IID_IUIElement, "IUIElement", it):
-    vcall(it, Slot_IUIElement_put_TabFocusNavigation, Fn_IUIElement_put_TabFocusNavigation)(it, int32(value)).check("UIElement.put_TabFocusNavigation")
+    vcall(it, Slot_IUIElement_put_TabFocusNavigation, Fn_IUIElement_put_TabFocusNavigation)(it, value).check("UIElement.put_TabFocusNavigation")
 
 proc opacityTransition*(self: UIElement): ScalarTransition =
   ## Microsoft.UI.Xaml.UIElement.get_OpacityTransition
@@ -9525,9 +9524,9 @@ proc `rasterizationScale=`*(self: UIElement, value: float64) =
 proc focusState*(self: UIElement): FocusState =
   ## Microsoft.UI.Xaml.UIElement.get_FocusState
   withIface(self.p, IID_IUIElement, "IUIElement", it):
-    var tmp: int32
+    var tmp: FocusState
     vcall(it, Slot_IUIElement_get_FocusState, Fn_IUIElement_get_FocusState)(it, tmp.addr).check("UIElement.get_FocusState")
-    result = FocusState(tmp)
+    result = tmp
 
 proc useSystemFocusVisuals*(self: UIElement): bool =
   ## Microsoft.UI.Xaml.UIElement.get_UseSystemFocusVisuals
@@ -10509,7 +10508,7 @@ proc focus*(self: UIElement, a1: FocusState): bool =
   ## Microsoft.UI.Xaml.UIElement.Focus
   withIface(self.p, IID_IUIElement, "IUIElement", it):
     var tmp: bool
-    vcall(it, Slot_IUIElement_Focus, Fn_IUIElement_Focus)(it, int32(a1), tmp.addr).check("UIElement.Focus")
+    vcall(it, Slot_IUIElement_Focus, Fn_IUIElement_Focus)(it, a1, tmp.addr).check("UIElement.Focus")
     result = tmp
 
 proc onCreateAutomationPeer*(self: UIElement): AutomationPeer =
@@ -10674,26 +10673,26 @@ proc `maxHeight=`*(self: FrameworkElement, value: float64) =
 proc horizontalAlignment*(self: FrameworkElement): HorizontalAlignment =
   ## Microsoft.UI.Xaml.FrameworkElement.get_HorizontalAlignment
   withIface(self.p, IID_IFrameworkElement, "IFrameworkElement", it):
-    var tmp: int32
+    var tmp: HorizontalAlignment
     vcall(it, Slot_IFrameworkElement_get_HorizontalAlignment, Fn_IFrameworkElement_get_HorizontalAlignment)(it, tmp.addr).check("FrameworkElement.get_HorizontalAlignment")
-    result = HorizontalAlignment(tmp)
+    result = tmp
 
 proc `horizontalAlignment=`*(self: FrameworkElement, value: HorizontalAlignment) =
   ## Microsoft.UI.Xaml.FrameworkElement.put_HorizontalAlignment
   withIface(self.p, IID_IFrameworkElement, "IFrameworkElement", it):
-    vcall(it, Slot_IFrameworkElement_put_HorizontalAlignment, Fn_IFrameworkElement_put_HorizontalAlignment)(it, int32(value)).check("FrameworkElement.put_HorizontalAlignment")
+    vcall(it, Slot_IFrameworkElement_put_HorizontalAlignment, Fn_IFrameworkElement_put_HorizontalAlignment)(it, value).check("FrameworkElement.put_HorizontalAlignment")
 
 proc verticalAlignment*(self: FrameworkElement): VerticalAlignment =
   ## Microsoft.UI.Xaml.FrameworkElement.get_VerticalAlignment
   withIface(self.p, IID_IFrameworkElement, "IFrameworkElement", it):
-    var tmp: int32
+    var tmp: VerticalAlignment
     vcall(it, Slot_IFrameworkElement_get_VerticalAlignment, Fn_IFrameworkElement_get_VerticalAlignment)(it, tmp.addr).check("FrameworkElement.get_VerticalAlignment")
-    result = VerticalAlignment(tmp)
+    result = tmp
 
 proc `verticalAlignment=`*(self: FrameworkElement, value: VerticalAlignment) =
   ## Microsoft.UI.Xaml.FrameworkElement.put_VerticalAlignment
   withIface(self.p, IID_IFrameworkElement, "IFrameworkElement", it):
-    vcall(it, Slot_IFrameworkElement_put_VerticalAlignment, Fn_IFrameworkElement_put_VerticalAlignment)(it, int32(value)).check("FrameworkElement.put_VerticalAlignment")
+    vcall(it, Slot_IFrameworkElement_put_VerticalAlignment, Fn_IFrameworkElement_put_VerticalAlignment)(it, value).check("FrameworkElement.put_VerticalAlignment")
 
 proc margin*(self: FrameworkElement): Thickness =
   ## Microsoft.UI.Xaml.FrameworkElement.get_Margin
@@ -10841,26 +10840,26 @@ proc parent*(self: FrameworkElement): DependencyObject =
 proc flowDirection*(self: FrameworkElement): FlowDirection =
   ## Microsoft.UI.Xaml.FrameworkElement.get_FlowDirection
   withIface(self.p, IID_IFrameworkElement, "IFrameworkElement", it):
-    var tmp: int32
+    var tmp: FlowDirection
     vcall(it, Slot_IFrameworkElement_get_FlowDirection, Fn_IFrameworkElement_get_FlowDirection)(it, tmp.addr).check("FrameworkElement.get_FlowDirection")
-    result = FlowDirection(tmp)
+    result = tmp
 
 proc `flowDirection=`*(self: FrameworkElement, value: FlowDirection) =
   ## Microsoft.UI.Xaml.FrameworkElement.put_FlowDirection
   withIface(self.p, IID_IFrameworkElement, "IFrameworkElement", it):
-    vcall(it, Slot_IFrameworkElement_put_FlowDirection, Fn_IFrameworkElement_put_FlowDirection)(it, int32(value)).check("FrameworkElement.put_FlowDirection")
+    vcall(it, Slot_IFrameworkElement_put_FlowDirection, Fn_IFrameworkElement_put_FlowDirection)(it, value).check("FrameworkElement.put_FlowDirection")
 
 proc requestedTheme*(self: FrameworkElement): ElementTheme =
   ## Microsoft.UI.Xaml.FrameworkElement.get_RequestedTheme
   withIface(self.p, IID_IFrameworkElement, "IFrameworkElement", it):
-    var tmp: int32
+    var tmp: ElementTheme
     vcall(it, Slot_IFrameworkElement_get_RequestedTheme, Fn_IFrameworkElement_get_RequestedTheme)(it, tmp.addr).check("FrameworkElement.get_RequestedTheme")
-    result = ElementTheme(tmp)
+    result = tmp
 
 proc `requestedTheme=`*(self: FrameworkElement, value: ElementTheme) =
   ## Microsoft.UI.Xaml.FrameworkElement.put_RequestedTheme
   withIface(self.p, IID_IFrameworkElement, "IFrameworkElement", it):
-    vcall(it, Slot_IFrameworkElement_put_RequestedTheme, Fn_IFrameworkElement_put_RequestedTheme)(it, int32(value)).check("FrameworkElement.put_RequestedTheme")
+    vcall(it, Slot_IFrameworkElement_put_RequestedTheme, Fn_IFrameworkElement_put_RequestedTheme)(it, value).check("FrameworkElement.put_RequestedTheme")
 
 proc isLoaded*(self: FrameworkElement): bool =
   ## Microsoft.UI.Xaml.FrameworkElement.get_IsLoaded
@@ -10872,9 +10871,9 @@ proc isLoaded*(self: FrameworkElement): bool =
 proc actualTheme*(self: FrameworkElement): ElementTheme =
   ## Microsoft.UI.Xaml.FrameworkElement.get_ActualTheme
   withIface(self.p, IID_IFrameworkElement, "IFrameworkElement", it):
-    var tmp: int32
+    var tmp: ElementTheme
     vcall(it, Slot_IFrameworkElement_get_ActualTheme, Fn_IFrameworkElement_get_ActualTheme)(it, tmp.addr).check("FrameworkElement.get_ActualTheme")
-    result = ElementTheme(tmp)
+    result = tmp
 
 proc onLoaded*(self: FrameworkElement,
     handler: proc(sender: pointer, args: RoutedEventArgs)): EventRegistrationToken {.discardable.} =
@@ -11308,14 +11307,14 @@ proc `playbackRate=`*(self: AnimatedVisualPlayer, value: float64) =
 proc stretch*(self: AnimatedVisualPlayer): Stretch =
   ## Microsoft.UI.Xaml.Controls.AnimatedVisualPlayer.get_Stretch
   withIface(self.p, IID_IAnimatedVisualPlayer, "IAnimatedVisualPlayer", it):
-    var tmp: int32
+    var tmp: Stretch
     vcall(it, Slot_IAnimatedVisualPlayer_get_Stretch, Fn_IAnimatedVisualPlayer_get_Stretch)(it, tmp.addr).check("AnimatedVisualPlayer.get_Stretch")
-    result = Stretch(tmp)
+    result = tmp
 
 proc `stretch=`*(self: AnimatedVisualPlayer, value: Stretch) =
   ## Microsoft.UI.Xaml.Controls.AnimatedVisualPlayer.put_Stretch
   withIface(self.p, IID_IAnimatedVisualPlayer, "IAnimatedVisualPlayer", it):
-    vcall(it, Slot_IAnimatedVisualPlayer_put_Stretch, Fn_IAnimatedVisualPlayer_put_Stretch)(it, int32(value)).check("AnimatedVisualPlayer.put_Stretch")
+    vcall(it, Slot_IAnimatedVisualPlayer_put_Stretch, Fn_IAnimatedVisualPlayer_put_Stretch)(it, value).check("AnimatedVisualPlayer.put_Stretch")
 
 proc pause*(self: AnimatedVisualPlayer) =
   ## Microsoft.UI.Xaml.Controls.AnimatedVisualPlayer.Pause
@@ -11340,14 +11339,14 @@ proc stop*(self: AnimatedVisualPlayer) =
 proc animationOptimization*(self: AnimatedVisualPlayer): PlayerAnimationOptimization =
   ## Microsoft.UI.Xaml.Controls.AnimatedVisualPlayer.get_AnimationOptimization
   withIface(self.p, IID_IAnimatedVisualPlayer2, "IAnimatedVisualPlayer2", it):
-    var tmp: int32
+    var tmp: PlayerAnimationOptimization
     vcall(it, Slot_IAnimatedVisualPlayer2_get_AnimationOptimization, Fn_IAnimatedVisualPlayer2_get_AnimationOptimization)(it, tmp.addr).check("AnimatedVisualPlayer.get_AnimationOptimization")
-    result = PlayerAnimationOptimization(tmp)
+    result = tmp
 
 proc `animationOptimization=`*(self: AnimatedVisualPlayer, value: PlayerAnimationOptimization) =
   ## Microsoft.UI.Xaml.Controls.AnimatedVisualPlayer.put_AnimationOptimization
   withIface(self.p, IID_IAnimatedVisualPlayer2, "IAnimatedVisualPlayer2", it):
-    vcall(it, Slot_IAnimatedVisualPlayer2_put_AnimationOptimization, Fn_IAnimatedVisualPlayer2_put_AnimationOptimization)(it, int32(value)).check("AnimatedVisualPlayer.put_AnimationOptimization")
+    vcall(it, Slot_IAnimatedVisualPlayer2_put_AnimationOptimization, Fn_IAnimatedVisualPlayer2_put_AnimationOptimization)(it, value).check("AnimatedVisualPlayer.put_AnimationOptimization")
 
 proc newAnimatedAcceptVisualSource*(): AnimatedAcceptVisualSource =
   ## Activate a `Microsoft.UI.Xaml.Controls.AnimatedVisuals.AnimatedAcceptVisualSource`.
@@ -11461,14 +11460,14 @@ proc `isFocusEngaged=`*(self: Control, value: bool) =
 proc requiresPointer*(self: Control): RequiresPointer =
   ## Microsoft.UI.Xaml.Controls.Control.get_RequiresPointer
   withIface(self.p, IID_IControl, "IControl", it):
-    var tmp: int32
+    var tmp: RequiresPointer
     vcall(it, Slot_IControl_get_RequiresPointer, Fn_IControl_get_RequiresPointer)(it, tmp.addr).check("Control.get_RequiresPointer")
-    result = RequiresPointer(tmp)
+    result = tmp
 
 proc `requiresPointer=`*(self: Control, value: RequiresPointer) =
   ## Microsoft.UI.Xaml.Controls.Control.put_RequiresPointer
   withIface(self.p, IID_IControl, "IControl", it):
-    vcall(it, Slot_IControl_put_RequiresPointer, Fn_IControl_put_RequiresPointer)(it, int32(value)).check("Control.put_RequiresPointer")
+    vcall(it, Slot_IControl_put_RequiresPointer, Fn_IControl_put_RequiresPointer)(it, value).check("Control.put_RequiresPointer")
 
 proc fontSize*(self: Control): float64 =
   ## Microsoft.UI.Xaml.Controls.Control.get_FontSize
@@ -11583,14 +11582,14 @@ proc `isEnabled=`*(self: Control, value: bool) =
 proc tabNavigation*(self: Control): KeyboardNavigationMode =
   ## Microsoft.UI.Xaml.Controls.Control.get_TabNavigation
   withIface(self.p, IID_IControl, "IControl", it):
-    var tmp: int32
+    var tmp: KeyboardNavigationMode
     vcall(it, Slot_IControl_get_TabNavigation, Fn_IControl_get_TabNavigation)(it, tmp.addr).check("Control.get_TabNavigation")
-    result = KeyboardNavigationMode(tmp)
+    result = tmp
 
 proc `tabNavigation=`*(self: Control, value: KeyboardNavigationMode) =
   ## Microsoft.UI.Xaml.Controls.Control.put_TabNavigation
   withIface(self.p, IID_IControl, "IControl", it):
-    vcall(it, Slot_IControl_put_TabNavigation, Fn_IControl_put_TabNavigation)(it, int32(value)).check("Control.put_TabNavigation")
+    vcall(it, Slot_IControl_put_TabNavigation, Fn_IControl_put_TabNavigation)(it, value).check("Control.put_TabNavigation")
 
 proc `template`*(self: Control): ControlTemplate =
   ## Microsoft.UI.Xaml.Controls.Control.get_Template
@@ -11620,26 +11619,26 @@ proc `padding=`*(self: Control, value: Thickness) =
 proc horizontalContentAlignment*(self: Control): HorizontalAlignment =
   ## Microsoft.UI.Xaml.Controls.Control.get_HorizontalContentAlignment
   withIface(self.p, IID_IControl, "IControl", it):
-    var tmp: int32
+    var tmp: HorizontalAlignment
     vcall(it, Slot_IControl_get_HorizontalContentAlignment, Fn_IControl_get_HorizontalContentAlignment)(it, tmp.addr).check("Control.get_HorizontalContentAlignment")
-    result = HorizontalAlignment(tmp)
+    result = tmp
 
 proc `horizontalContentAlignment=`*(self: Control, value: HorizontalAlignment) =
   ## Microsoft.UI.Xaml.Controls.Control.put_HorizontalContentAlignment
   withIface(self.p, IID_IControl, "IControl", it):
-    vcall(it, Slot_IControl_put_HorizontalContentAlignment, Fn_IControl_put_HorizontalContentAlignment)(it, int32(value)).check("Control.put_HorizontalContentAlignment")
+    vcall(it, Slot_IControl_put_HorizontalContentAlignment, Fn_IControl_put_HorizontalContentAlignment)(it, value).check("Control.put_HorizontalContentAlignment")
 
 proc verticalContentAlignment*(self: Control): VerticalAlignment =
   ## Microsoft.UI.Xaml.Controls.Control.get_VerticalContentAlignment
   withIface(self.p, IID_IControl, "IControl", it):
-    var tmp: int32
+    var tmp: VerticalAlignment
     vcall(it, Slot_IControl_get_VerticalContentAlignment, Fn_IControl_get_VerticalContentAlignment)(it, tmp.addr).check("Control.get_VerticalContentAlignment")
-    result = VerticalAlignment(tmp)
+    result = tmp
 
 proc `verticalContentAlignment=`*(self: Control, value: VerticalAlignment) =
   ## Microsoft.UI.Xaml.Controls.Control.put_VerticalContentAlignment
   withIface(self.p, IID_IControl, "IControl", it):
-    vcall(it, Slot_IControl_put_VerticalContentAlignment, Fn_IControl_put_VerticalContentAlignment)(it, int32(value)).check("Control.put_VerticalContentAlignment")
+    vcall(it, Slot_IControl_put_VerticalContentAlignment, Fn_IControl_put_VerticalContentAlignment)(it, value).check("Control.put_VerticalContentAlignment")
 
 proc background*(self: Control): Brush =
   ## Microsoft.UI.Xaml.Controls.Control.get_Background
@@ -11657,14 +11656,14 @@ proc `background=`*(self: Control, value: Brush) =
 proc backgroundSizing*(self: Control): BackgroundSizing =
   ## Microsoft.UI.Xaml.Controls.Control.get_BackgroundSizing
   withIface(self.p, IID_IControl, "IControl", it):
-    var tmp: int32
+    var tmp: BackgroundSizing
     vcall(it, Slot_IControl_get_BackgroundSizing, Fn_IControl_get_BackgroundSizing)(it, tmp.addr).check("Control.get_BackgroundSizing")
-    result = BackgroundSizing(tmp)
+    result = tmp
 
 proc `backgroundSizing=`*(self: Control, value: BackgroundSizing) =
   ## Microsoft.UI.Xaml.Controls.Control.put_BackgroundSizing
   withIface(self.p, IID_IControl, "IControl", it):
-    vcall(it, Slot_IControl_put_BackgroundSizing, Fn_IControl_put_BackgroundSizing)(it, int32(value)).check("Control.put_BackgroundSizing")
+    vcall(it, Slot_IControl_put_BackgroundSizing, Fn_IControl_put_BackgroundSizing)(it, value).check("Control.put_BackgroundSizing")
 
 proc borderThickness*(self: Control): Thickness =
   ## Microsoft.UI.Xaml.Controls.Control.get_BorderThickness
@@ -11694,14 +11693,14 @@ proc `borderBrush=`*(self: Control, value: Brush) =
 proc elementSoundMode*(self: Control): ElementSoundMode =
   ## Microsoft.UI.Xaml.Controls.Control.get_ElementSoundMode
   withIface(self.p, IID_IControl, "IControl", it):
-    var tmp: int32
+    var tmp: ElementSoundMode
     vcall(it, Slot_IControl_get_ElementSoundMode, Fn_IControl_get_ElementSoundMode)(it, tmp.addr).check("Control.get_ElementSoundMode")
-    result = ElementSoundMode(tmp)
+    result = tmp
 
 proc `elementSoundMode=`*(self: Control, value: ElementSoundMode) =
   ## Microsoft.UI.Xaml.Controls.Control.put_ElementSoundMode
   withIface(self.p, IID_IControl, "IControl", it):
-    vcall(it, Slot_IControl_put_ElementSoundMode, Fn_IControl_put_ElementSoundMode)(it, int32(value)).check("Control.put_ElementSoundMode")
+    vcall(it, Slot_IControl_put_ElementSoundMode, Fn_IControl_put_ElementSoundMode)(it, value).check("Control.put_ElementSoundMode")
 
 proc cornerRadius*(self: Control): CornerRadius =
   ## Microsoft.UI.Xaml.Controls.Control.get_CornerRadius
@@ -12110,9 +12109,9 @@ proc scrollOffset*(self: AnnotatedScrollBarScrollingEventArgs): float64 =
 proc scrollingEventKind*(self: AnnotatedScrollBarScrollingEventArgs): AnnotatedScrollBarScrollingEventKind =
   ## Microsoft.UI.Xaml.Controls.AnnotatedScrollBarScrollingEventArgs.get_ScrollingEventKind
   withIface(self.p, IID_IAnnotatedScrollBarScrollingEventArgs, "IAnnotatedScrollBarScrollingEventArgs", it):
-    var tmp: int32
+    var tmp: AnnotatedScrollBarScrollingEventKind
     vcall(it, Slot_IAnnotatedScrollBarScrollingEventArgs_get_ScrollingEventKind, Fn_IAnnotatedScrollBarScrollingEventArgs_get_ScrollingEventKind)(it, tmp.addr).check("AnnotatedScrollBarScrollingEventArgs.get_ScrollingEventKind")
-    result = AnnotatedScrollBarScrollingEventKind(tmp)
+    result = tmp
 
 proc cancel*(self: AnnotatedScrollBarScrollingEventArgs): bool =
   ## Microsoft.UI.Xaml.Controls.AnnotatedScrollBarScrollingEventArgs.get_Cancel
@@ -12227,14 +12226,14 @@ proc `isSticky=`*(self: AppBar, value: bool) =
 proc closedDisplayMode*(self: AppBar): AppBarClosedDisplayMode =
   ## Microsoft.UI.Xaml.Controls.AppBar.get_ClosedDisplayMode
   withIface(self.p, IID_IAppBar, "IAppBar", it):
-    var tmp: int32
+    var tmp: AppBarClosedDisplayMode
     vcall(it, Slot_IAppBar_get_ClosedDisplayMode, Fn_IAppBar_get_ClosedDisplayMode)(it, tmp.addr).check("AppBar.get_ClosedDisplayMode")
-    result = AppBarClosedDisplayMode(tmp)
+    result = tmp
 
 proc `closedDisplayMode=`*(self: AppBar, value: AppBarClosedDisplayMode) =
   ## Microsoft.UI.Xaml.Controls.AppBar.put_ClosedDisplayMode
   withIface(self.p, IID_IAppBar, "IAppBar", it):
-    vcall(it, Slot_IAppBar_put_ClosedDisplayMode, Fn_IAppBar_put_ClosedDisplayMode)(it, int32(value)).check("AppBar.put_ClosedDisplayMode")
+    vcall(it, Slot_IAppBar_put_ClosedDisplayMode, Fn_IAppBar_put_ClosedDisplayMode)(it, value).check("AppBar.put_ClosedDisplayMode")
 
 proc templateSettings*(self: AppBar): AppBarTemplateSettings =
   ## Microsoft.UI.Xaml.Controls.AppBar.get_TemplateSettings
@@ -12246,14 +12245,14 @@ proc templateSettings*(self: AppBar): AppBarTemplateSettings =
 proc lightDismissOverlayMode*(self: AppBar): LightDismissOverlayMode =
   ## Microsoft.UI.Xaml.Controls.AppBar.get_LightDismissOverlayMode
   withIface(self.p, IID_IAppBar, "IAppBar", it):
-    var tmp: int32
+    var tmp: LightDismissOverlayMode
     vcall(it, Slot_IAppBar_get_LightDismissOverlayMode, Fn_IAppBar_get_LightDismissOverlayMode)(it, tmp.addr).check("AppBar.get_LightDismissOverlayMode")
-    result = LightDismissOverlayMode(tmp)
+    result = tmp
 
 proc `lightDismissOverlayMode=`*(self: AppBar, value: LightDismissOverlayMode) =
   ## Microsoft.UI.Xaml.Controls.AppBar.put_LightDismissOverlayMode
   withIface(self.p, IID_IAppBar, "IAppBar", it):
-    vcall(it, Slot_IAppBar_put_LightDismissOverlayMode, Fn_IAppBar_put_LightDismissOverlayMode)(it, int32(value)).check("AppBar.put_LightDismissOverlayMode")
+    vcall(it, Slot_IAppBar_put_LightDismissOverlayMode, Fn_IAppBar_put_LightDismissOverlayMode)(it, value).check("AppBar.put_LightDismissOverlayMode")
 
 proc onOpening*(self: AppBar,
     handler: proc(sender: pointer, args: pointer)): EventRegistrationToken {.discardable.} =
@@ -12363,14 +12362,14 @@ proc newButtonBase*(): ButtonBase =
 proc clickMode*(self: ButtonBase): ClickMode =
   ## Microsoft.UI.Xaml.Controls.Primitives.ButtonBase.get_ClickMode
   withIface(self.p, IID_IButtonBase, "IButtonBase", it):
-    var tmp: int32
+    var tmp: ClickMode
     vcall(it, Slot_IButtonBase_get_ClickMode, Fn_IButtonBase_get_ClickMode)(it, tmp.addr).check("ButtonBase.get_ClickMode")
-    result = ClickMode(tmp)
+    result = tmp
 
 proc `clickMode=`*(self: ButtonBase, value: ClickMode) =
   ## Microsoft.UI.Xaml.Controls.Primitives.ButtonBase.put_ClickMode
   withIface(self.p, IID_IButtonBase, "IButtonBase", it):
-    vcall(it, Slot_IButtonBase_put_ClickMode, Fn_IButtonBase_put_ClickMode)(it, int32(value)).check("ButtonBase.put_ClickMode")
+    vcall(it, Slot_IButtonBase_put_ClickMode, Fn_IButtonBase_put_ClickMode)(it, value).check("ButtonBase.put_ClickMode")
 
 proc isPointerOver*(self: ButtonBase): bool =
   ## Microsoft.UI.Xaml.Controls.Primitives.ButtonBase.get_IsPointerOver
@@ -12482,14 +12481,14 @@ proc `icon=`*(self: AppBarButton, value: IconElement) =
 proc labelPosition*(self: AppBarButton): CommandBarLabelPosition =
   ## Microsoft.UI.Xaml.Controls.AppBarButton.get_LabelPosition
   withIface(self.p, IID_IAppBarButton, "IAppBarButton", it):
-    var tmp: int32
+    var tmp: CommandBarLabelPosition
     vcall(it, Slot_IAppBarButton_get_LabelPosition, Fn_IAppBarButton_get_LabelPosition)(it, tmp.addr).check("AppBarButton.get_LabelPosition")
-    result = CommandBarLabelPosition(tmp)
+    result = tmp
 
 proc `labelPosition=`*(self: AppBarButton, value: CommandBarLabelPosition) =
   ## Microsoft.UI.Xaml.Controls.AppBarButton.put_LabelPosition
   withIface(self.p, IID_IAppBarButton, "IAppBarButton", it):
-    vcall(it, Slot_IAppBarButton_put_LabelPosition, Fn_IAppBarButton_put_LabelPosition)(it, int32(value)).check("AppBarButton.put_LabelPosition")
+    vcall(it, Slot_IAppBarButton_put_LabelPosition, Fn_IAppBarButton_put_LabelPosition)(it, value).check("AppBarButton.put_LabelPosition")
 
 proc keyboardAcceleratorTextOverride*(self: AppBarButton): string =
   ## Microsoft.UI.Xaml.Controls.AppBarButton.get_KeyboardAcceleratorTextOverride
@@ -12730,14 +12729,14 @@ proc `icon=`*(self: AppBarToggleButton, value: IconElement) =
 proc labelPosition*(self: AppBarToggleButton): CommandBarLabelPosition =
   ## Microsoft.UI.Xaml.Controls.AppBarToggleButton.get_LabelPosition
   withIface(self.p, IID_IAppBarToggleButton, "IAppBarToggleButton", it):
-    var tmp: int32
+    var tmp: CommandBarLabelPosition
     vcall(it, Slot_IAppBarToggleButton_get_LabelPosition, Fn_IAppBarToggleButton_get_LabelPosition)(it, tmp.addr).check("AppBarToggleButton.get_LabelPosition")
-    result = CommandBarLabelPosition(tmp)
+    result = tmp
 
 proc `labelPosition=`*(self: AppBarToggleButton, value: CommandBarLabelPosition) =
   ## Microsoft.UI.Xaml.Controls.AppBarToggleButton.put_LabelPosition
   withIface(self.p, IID_IAppBarToggleButton, "IAppBarToggleButton", it):
-    vcall(it, Slot_IAppBarToggleButton_put_LabelPosition, Fn_IAppBarToggleButton_put_LabelPosition)(it, int32(value)).check("AppBarToggleButton.put_LabelPosition")
+    vcall(it, Slot_IAppBarToggleButton_put_LabelPosition, Fn_IAppBarToggleButton_put_LabelPosition)(it, value).check("AppBarToggleButton.put_LabelPosition")
 
 proc keyboardAcceleratorTextOverride*(self: AppBarToggleButton): string =
   ## Microsoft.UI.Xaml.Controls.AppBarToggleButton.get_KeyboardAcceleratorTextOverride
@@ -13155,14 +13154,14 @@ proc `queryIcon=`*(self: AutoSuggestBox, value: IconElement) =
 proc lightDismissOverlayMode*(self: AutoSuggestBox): LightDismissOverlayMode =
   ## Microsoft.UI.Xaml.Controls.AutoSuggestBox.get_LightDismissOverlayMode
   withIface(self.p, IID_IAutoSuggestBox, "IAutoSuggestBox", it):
-    var tmp: int32
+    var tmp: LightDismissOverlayMode
     vcall(it, Slot_IAutoSuggestBox_get_LightDismissOverlayMode, Fn_IAutoSuggestBox_get_LightDismissOverlayMode)(it, tmp.addr).check("AutoSuggestBox.get_LightDismissOverlayMode")
-    result = LightDismissOverlayMode(tmp)
+    result = tmp
 
 proc `lightDismissOverlayMode=`*(self: AutoSuggestBox, value: LightDismissOverlayMode) =
   ## Microsoft.UI.Xaml.Controls.AutoSuggestBox.put_LightDismissOverlayMode
   withIface(self.p, IID_IAutoSuggestBox, "IAutoSuggestBox", it):
-    vcall(it, Slot_IAutoSuggestBox_put_LightDismissOverlayMode, Fn_IAutoSuggestBox_put_LightDismissOverlayMode)(it, int32(value)).check("AutoSuggestBox.put_LightDismissOverlayMode")
+    vcall(it, Slot_IAutoSuggestBox_put_LightDismissOverlayMode, Fn_IAutoSuggestBox_put_LightDismissOverlayMode)(it, value).check("AutoSuggestBox.put_LightDismissOverlayMode")
 
 proc description*(self: AutoSuggestBox): pointer =
   ## Microsoft.UI.Xaml.Controls.AutoSuggestBox.get_Description
@@ -13272,14 +13271,14 @@ proc newAutoSuggestBoxTextChangedEventArgs*(): AutoSuggestBoxTextChangedEventArg
 proc reason*(self: AutoSuggestBoxTextChangedEventArgs): AutoSuggestionBoxTextChangeReason =
   ## Microsoft.UI.Xaml.Controls.AutoSuggestBoxTextChangedEventArgs.get_Reason
   withIface(self.p, IID_IAutoSuggestBoxTextChangedEventArgs, "IAutoSuggestBoxTextChangedEventArgs", it):
-    var tmp: int32
+    var tmp: AutoSuggestionBoxTextChangeReason
     vcall(it, Slot_IAutoSuggestBoxTextChangedEventArgs_get_Reason, Fn_IAutoSuggestBoxTextChangedEventArgs_get_Reason)(it, tmp.addr).check("AutoSuggestBoxTextChangedEventArgs.get_Reason")
-    result = AutoSuggestionBoxTextChangeReason(tmp)
+    result = tmp
 
 proc `reason=`*(self: AutoSuggestBoxTextChangedEventArgs, value: AutoSuggestionBoxTextChangeReason) =
   ## Microsoft.UI.Xaml.Controls.AutoSuggestBoxTextChangedEventArgs.put_Reason
   withIface(self.p, IID_IAutoSuggestBoxTextChangedEventArgs, "IAutoSuggestBoxTextChangedEventArgs", it):
-    vcall(it, Slot_IAutoSuggestBoxTextChangedEventArgs_put_Reason, Fn_IAutoSuggestBoxTextChangedEventArgs_put_Reason)(it, int32(value)).check("AutoSuggestBoxTextChangedEventArgs.put_Reason")
+    vcall(it, Slot_IAutoSuggestBoxTextChangedEventArgs_put_Reason, Fn_IAutoSuggestBoxTextChangedEventArgs_put_Reason)(it, value).check("AutoSuggestBoxTextChangedEventArgs.put_Reason")
 
 proc checkCurrent*(self: AutoSuggestBoxTextChangedEventArgs): bool =
   ## Microsoft.UI.Xaml.Controls.AutoSuggestBoxTextChangedEventArgs.CheckCurrent
@@ -13367,14 +13366,14 @@ proc `background=`*(self: Border, value: Brush) =
 proc backgroundSizing*(self: Border): BackgroundSizing =
   ## Microsoft.UI.Xaml.Controls.Border.get_BackgroundSizing
   withIface(self.p, IID_IBorder, "IBorder", it):
-    var tmp: int32
+    var tmp: BackgroundSizing
     vcall(it, Slot_IBorder_get_BackgroundSizing, Fn_IBorder_get_BackgroundSizing)(it, tmp.addr).check("Border.get_BackgroundSizing")
-    result = BackgroundSizing(tmp)
+    result = tmp
 
 proc `backgroundSizing=`*(self: Border, value: BackgroundSizing) =
   ## Microsoft.UI.Xaml.Controls.Border.put_BackgroundSizing
   withIface(self.p, IID_IBorder, "IBorder", it):
-    vcall(it, Slot_IBorder_put_BackgroundSizing, Fn_IBorder_put_BackgroundSizing)(it, int32(value)).check("Border.put_BackgroundSizing")
+    vcall(it, Slot_IBorder_put_BackgroundSizing, Fn_IBorder_put_BackgroundSizing)(it, value).check("Border.put_BackgroundSizing")
 
 proc cornerRadius*(self: Border): CornerRadius =
   ## Microsoft.UI.Xaml.Controls.Border.get_CornerRadius
@@ -13578,14 +13577,14 @@ proc `calendarViewStyle=`*(self: CalendarDatePicker, value: Style) =
 proc lightDismissOverlayMode*(self: CalendarDatePicker): LightDismissOverlayMode =
   ## Microsoft.UI.Xaml.Controls.CalendarDatePicker.get_LightDismissOverlayMode
   withIface(self.p, IID_ICalendarDatePicker, "ICalendarDatePicker", it):
-    var tmp: int32
+    var tmp: LightDismissOverlayMode
     vcall(it, Slot_ICalendarDatePicker_get_LightDismissOverlayMode, Fn_ICalendarDatePicker_get_LightDismissOverlayMode)(it, tmp.addr).check("CalendarDatePicker.get_LightDismissOverlayMode")
-    result = LightDismissOverlayMode(tmp)
+    result = tmp
 
 proc `lightDismissOverlayMode=`*(self: CalendarDatePicker, value: LightDismissOverlayMode) =
   ## Microsoft.UI.Xaml.Controls.CalendarDatePicker.put_LightDismissOverlayMode
   withIface(self.p, IID_ICalendarDatePicker, "ICalendarDatePicker", it):
-    vcall(it, Slot_ICalendarDatePicker_put_LightDismissOverlayMode, Fn_ICalendarDatePicker_put_LightDismissOverlayMode)(it, int32(value)).check("CalendarDatePicker.put_LightDismissOverlayMode")
+    vcall(it, Slot_ICalendarDatePicker_put_LightDismissOverlayMode, Fn_ICalendarDatePicker_put_LightDismissOverlayMode)(it, value).check("CalendarDatePicker.put_LightDismissOverlayMode")
 
 proc description*(self: CalendarDatePicker): pointer =
   ## Microsoft.UI.Xaml.Controls.CalendarDatePicker.get_Description
@@ -13638,14 +13637,14 @@ proc `isTodayHighlighted=`*(self: CalendarDatePicker, value: bool) =
 proc displayMode*(self: CalendarDatePicker): CalendarViewDisplayMode =
   ## Microsoft.UI.Xaml.Controls.CalendarDatePicker.get_DisplayMode
   withIface(self.p, IID_ICalendarDatePicker, "ICalendarDatePicker", it):
-    var tmp: int32
+    var tmp: CalendarViewDisplayMode
     vcall(it, Slot_ICalendarDatePicker_get_DisplayMode, Fn_ICalendarDatePicker_get_DisplayMode)(it, tmp.addr).check("CalendarDatePicker.get_DisplayMode")
-    result = CalendarViewDisplayMode(tmp)
+    result = tmp
 
 proc `displayMode=`*(self: CalendarDatePicker, value: CalendarViewDisplayMode) =
   ## Microsoft.UI.Xaml.Controls.CalendarDatePicker.put_DisplayMode
   withIface(self.p, IID_ICalendarDatePicker, "ICalendarDatePicker", it):
-    vcall(it, Slot_ICalendarDatePicker_put_DisplayMode, Fn_ICalendarDatePicker_put_DisplayMode)(it, int32(value)).check("CalendarDatePicker.put_DisplayMode")
+    vcall(it, Slot_ICalendarDatePicker_put_DisplayMode, Fn_ICalendarDatePicker_put_DisplayMode)(it, value).check("CalendarDatePicker.put_DisplayMode")
 
 proc firstDayOfWeek*(self: CalendarDatePicker): int32 =
   ## Microsoft.UI.Xaml.Controls.CalendarDatePicker.get_FirstDayOfWeek
@@ -13845,14 +13844,14 @@ proc `isGroupLabelVisible=`*(self: CalendarView, value: bool) =
 proc displayMode*(self: CalendarView): CalendarViewDisplayMode =
   ## Microsoft.UI.Xaml.Controls.CalendarView.get_DisplayMode
   withIface(self.p, IID_ICalendarView, "ICalendarView", it):
-    var tmp: int32
+    var tmp: CalendarViewDisplayMode
     vcall(it, Slot_ICalendarView_get_DisplayMode, Fn_ICalendarView_get_DisplayMode)(it, tmp.addr).check("CalendarView.get_DisplayMode")
-    result = CalendarViewDisplayMode(tmp)
+    result = tmp
 
 proc `displayMode=`*(self: CalendarView, value: CalendarViewDisplayMode) =
   ## Microsoft.UI.Xaml.Controls.CalendarView.put_DisplayMode
   withIface(self.p, IID_ICalendarView, "ICalendarView", it):
-    vcall(it, Slot_ICalendarView_put_DisplayMode, Fn_ICalendarView_put_DisplayMode)(it, int32(value)).check("CalendarView.put_DisplayMode")
+    vcall(it, Slot_ICalendarView_put_DisplayMode, Fn_ICalendarView_put_DisplayMode)(it, value).check("CalendarView.put_DisplayMode")
 
 proc firstDayOfWeek*(self: CalendarView): int32 =
   ## Microsoft.UI.Xaml.Controls.CalendarView.get_FirstDayOfWeek
@@ -13929,14 +13928,14 @@ proc `numberOfWeeksInView=`*(self: CalendarView, value: int32) =
 proc selectionMode*(self: CalendarView): CalendarViewSelectionMode =
   ## Microsoft.UI.Xaml.Controls.CalendarView.get_SelectionMode
   withIface(self.p, IID_ICalendarView, "ICalendarView", it):
-    var tmp: int32
+    var tmp: CalendarViewSelectionMode
     vcall(it, Slot_ICalendarView_get_SelectionMode, Fn_ICalendarView_get_SelectionMode)(it, tmp.addr).check("CalendarView.get_SelectionMode")
-    result = CalendarViewSelectionMode(tmp)
+    result = tmp
 
 proc `selectionMode=`*(self: CalendarView, value: CalendarViewSelectionMode) =
   ## Microsoft.UI.Xaml.Controls.CalendarView.put_SelectionMode
   withIface(self.p, IID_ICalendarView, "ICalendarView", it):
-    vcall(it, Slot_ICalendarView_put_SelectionMode, Fn_ICalendarView_put_SelectionMode)(it, int32(value)).check("CalendarView.put_SelectionMode")
+    vcall(it, Slot_ICalendarView_put_SelectionMode, Fn_ICalendarView_put_SelectionMode)(it, value).check("CalendarView.put_SelectionMode")
 
 proc templateSettings*(self: CalendarView): CalendarViewTemplateSettings =
   ## Microsoft.UI.Xaml.Controls.CalendarView.get_TemplateSettings
@@ -14646,50 +14645,50 @@ proc `firstOfYearDecadeLabelMargin=`*(self: CalendarView, value: Thickness) =
 proc horizontalDayItemAlignment*(self: CalendarView): HorizontalAlignment =
   ## Microsoft.UI.Xaml.Controls.CalendarView.get_HorizontalDayItemAlignment
   withIface(self.p, IID_ICalendarView, "ICalendarView", it):
-    var tmp: int32
+    var tmp: HorizontalAlignment
     vcall(it, Slot_ICalendarView_get_HorizontalDayItemAlignment, Fn_ICalendarView_get_HorizontalDayItemAlignment)(it, tmp.addr).check("CalendarView.get_HorizontalDayItemAlignment")
-    result = HorizontalAlignment(tmp)
+    result = tmp
 
 proc `horizontalDayItemAlignment=`*(self: CalendarView, value: HorizontalAlignment) =
   ## Microsoft.UI.Xaml.Controls.CalendarView.put_HorizontalDayItemAlignment
   withIface(self.p, IID_ICalendarView, "ICalendarView", it):
-    vcall(it, Slot_ICalendarView_put_HorizontalDayItemAlignment, Fn_ICalendarView_put_HorizontalDayItemAlignment)(it, int32(value)).check("CalendarView.put_HorizontalDayItemAlignment")
+    vcall(it, Slot_ICalendarView_put_HorizontalDayItemAlignment, Fn_ICalendarView_put_HorizontalDayItemAlignment)(it, value).check("CalendarView.put_HorizontalDayItemAlignment")
 
 proc verticalDayItemAlignment*(self: CalendarView): VerticalAlignment =
   ## Microsoft.UI.Xaml.Controls.CalendarView.get_VerticalDayItemAlignment
   withIface(self.p, IID_ICalendarView, "ICalendarView", it):
-    var tmp: int32
+    var tmp: VerticalAlignment
     vcall(it, Slot_ICalendarView_get_VerticalDayItemAlignment, Fn_ICalendarView_get_VerticalDayItemAlignment)(it, tmp.addr).check("CalendarView.get_VerticalDayItemAlignment")
-    result = VerticalAlignment(tmp)
+    result = tmp
 
 proc `verticalDayItemAlignment=`*(self: CalendarView, value: VerticalAlignment) =
   ## Microsoft.UI.Xaml.Controls.CalendarView.put_VerticalDayItemAlignment
   withIface(self.p, IID_ICalendarView, "ICalendarView", it):
-    vcall(it, Slot_ICalendarView_put_VerticalDayItemAlignment, Fn_ICalendarView_put_VerticalDayItemAlignment)(it, int32(value)).check("CalendarView.put_VerticalDayItemAlignment")
+    vcall(it, Slot_ICalendarView_put_VerticalDayItemAlignment, Fn_ICalendarView_put_VerticalDayItemAlignment)(it, value).check("CalendarView.put_VerticalDayItemAlignment")
 
 proc horizontalFirstOfMonthLabelAlignment*(self: CalendarView): HorizontalAlignment =
   ## Microsoft.UI.Xaml.Controls.CalendarView.get_HorizontalFirstOfMonthLabelAlignment
   withIface(self.p, IID_ICalendarView, "ICalendarView", it):
-    var tmp: int32
+    var tmp: HorizontalAlignment
     vcall(it, Slot_ICalendarView_get_HorizontalFirstOfMonthLabelAlignment, Fn_ICalendarView_get_HorizontalFirstOfMonthLabelAlignment)(it, tmp.addr).check("CalendarView.get_HorizontalFirstOfMonthLabelAlignment")
-    result = HorizontalAlignment(tmp)
+    result = tmp
 
 proc `horizontalFirstOfMonthLabelAlignment=`*(self: CalendarView, value: HorizontalAlignment) =
   ## Microsoft.UI.Xaml.Controls.CalendarView.put_HorizontalFirstOfMonthLabelAlignment
   withIface(self.p, IID_ICalendarView, "ICalendarView", it):
-    vcall(it, Slot_ICalendarView_put_HorizontalFirstOfMonthLabelAlignment, Fn_ICalendarView_put_HorizontalFirstOfMonthLabelAlignment)(it, int32(value)).check("CalendarView.put_HorizontalFirstOfMonthLabelAlignment")
+    vcall(it, Slot_ICalendarView_put_HorizontalFirstOfMonthLabelAlignment, Fn_ICalendarView_put_HorizontalFirstOfMonthLabelAlignment)(it, value).check("CalendarView.put_HorizontalFirstOfMonthLabelAlignment")
 
 proc verticalFirstOfMonthLabelAlignment*(self: CalendarView): VerticalAlignment =
   ## Microsoft.UI.Xaml.Controls.CalendarView.get_VerticalFirstOfMonthLabelAlignment
   withIface(self.p, IID_ICalendarView, "ICalendarView", it):
-    var tmp: int32
+    var tmp: VerticalAlignment
     vcall(it, Slot_ICalendarView_get_VerticalFirstOfMonthLabelAlignment, Fn_ICalendarView_get_VerticalFirstOfMonthLabelAlignment)(it, tmp.addr).check("CalendarView.get_VerticalFirstOfMonthLabelAlignment")
-    result = VerticalAlignment(tmp)
+    result = tmp
 
 proc `verticalFirstOfMonthLabelAlignment=`*(self: CalendarView, value: VerticalAlignment) =
   ## Microsoft.UI.Xaml.Controls.CalendarView.put_VerticalFirstOfMonthLabelAlignment
   withIface(self.p, IID_ICalendarView, "ICalendarView", it):
-    vcall(it, Slot_ICalendarView_put_VerticalFirstOfMonthLabelAlignment, Fn_ICalendarView_put_VerticalFirstOfMonthLabelAlignment)(it, int32(value)).check("CalendarView.put_VerticalFirstOfMonthLabelAlignment")
+    vcall(it, Slot_ICalendarView_put_VerticalFirstOfMonthLabelAlignment, Fn_ICalendarView_put_VerticalFirstOfMonthLabelAlignment)(it, value).check("CalendarView.put_VerticalFirstOfMonthLabelAlignment")
 
 proc calendarItemBorderThickness*(self: CalendarView): Thickness =
   ## Microsoft.UI.Xaml.Controls.CalendarView.get_CalendarItemBorderThickness
@@ -15199,26 +15198,26 @@ proc `maxValue=`*(self: ColorPicker, value: int32) =
 proc colorSpectrumShape*(self: ColorPicker): ColorSpectrumShape =
   ## Microsoft.UI.Xaml.Controls.ColorPicker.get_ColorSpectrumShape
   withIface(self.p, IID_IColorPicker, "IColorPicker", it):
-    var tmp: int32
+    var tmp: ColorSpectrumShape
     vcall(it, Slot_IColorPicker_get_ColorSpectrumShape, Fn_IColorPicker_get_ColorSpectrumShape)(it, tmp.addr).check("ColorPicker.get_ColorSpectrumShape")
-    result = ColorSpectrumShape(tmp)
+    result = tmp
 
 proc `colorSpectrumShape=`*(self: ColorPicker, value: ColorSpectrumShape) =
   ## Microsoft.UI.Xaml.Controls.ColorPicker.put_ColorSpectrumShape
   withIface(self.p, IID_IColorPicker, "IColorPicker", it):
-    vcall(it, Slot_IColorPicker_put_ColorSpectrumShape, Fn_IColorPicker_put_ColorSpectrumShape)(it, int32(value)).check("ColorPicker.put_ColorSpectrumShape")
+    vcall(it, Slot_IColorPicker_put_ColorSpectrumShape, Fn_IColorPicker_put_ColorSpectrumShape)(it, value).check("ColorPicker.put_ColorSpectrumShape")
 
 proc colorSpectrumComponents*(self: ColorPicker): ColorSpectrumComponents =
   ## Microsoft.UI.Xaml.Controls.ColorPicker.get_ColorSpectrumComponents
   withIface(self.p, IID_IColorPicker, "IColorPicker", it):
-    var tmp: int32
+    var tmp: ColorSpectrumComponents
     vcall(it, Slot_IColorPicker_get_ColorSpectrumComponents, Fn_IColorPicker_get_ColorSpectrumComponents)(it, tmp.addr).check("ColorPicker.get_ColorSpectrumComponents")
-    result = ColorSpectrumComponents(tmp)
+    result = tmp
 
 proc `colorSpectrumComponents=`*(self: ColorPicker, value: ColorSpectrumComponents) =
   ## Microsoft.UI.Xaml.Controls.ColorPicker.put_ColorSpectrumComponents
   withIface(self.p, IID_IColorPicker, "IColorPicker", it):
-    vcall(it, Slot_IColorPicker_put_ColorSpectrumComponents, Fn_IColorPicker_put_ColorSpectrumComponents)(it, int32(value)).check("ColorPicker.put_ColorSpectrumComponents")
+    vcall(it, Slot_IColorPicker_put_ColorSpectrumComponents, Fn_IColorPicker_put_ColorSpectrumComponents)(it, value).check("ColorPicker.put_ColorSpectrumComponents")
 
 proc onColorChanged*(self: ColorPicker,
     handler: proc(sender: pointer, args: ColorChangedEventArgs)): EventRegistrationToken {.discardable.} =
@@ -15243,14 +15242,14 @@ proc removeColorChanged*(self: ColorPicker, token: EventRegistrationToken) =
 proc orientation*(self: ColorPicker): Orientation =
   ## Microsoft.UI.Xaml.Controls.ColorPicker.get_Orientation
   withIface(self.p, IID_IColorPicker2, "IColorPicker2", it):
-    var tmp: int32
+    var tmp: Orientation
     vcall(it, Slot_IColorPicker2_get_Orientation, Fn_IColorPicker2_get_Orientation)(it, tmp.addr).check("ColorPicker.get_Orientation")
-    result = Orientation(tmp)
+    result = tmp
 
 proc `orientation=`*(self: ColorPicker, value: Orientation) =
   ## Microsoft.UI.Xaml.Controls.ColorPicker.put_Orientation
   withIface(self.p, IID_IColorPicker2, "IColorPicker2", it):
-    vcall(it, Slot_IColorPicker2_put_Orientation, Fn_IColorPicker2_put_Orientation)(it, int32(value)).check("ColorPicker.put_Orientation")
+    vcall(it, Slot_IColorPicker2_put_Orientation, Fn_IColorPicker2_put_Orientation)(it, value).check("ColorPicker.put_Orientation")
 
 proc newColumnDefinition*(): ColumnDefinition =
   ## Activate a `Microsoft.UI.Xaml.Controls.ColumnDefinition`.
@@ -15478,14 +15477,14 @@ proc `placeholderText=`*(self: ComboBox, value: string) =
 proc lightDismissOverlayMode*(self: ComboBox): LightDismissOverlayMode =
   ## Microsoft.UI.Xaml.Controls.ComboBox.get_LightDismissOverlayMode
   withIface(self.p, IID_IComboBox, "IComboBox", it):
-    var tmp: int32
+    var tmp: LightDismissOverlayMode
     vcall(it, Slot_IComboBox_get_LightDismissOverlayMode, Fn_IComboBox_get_LightDismissOverlayMode)(it, tmp.addr).check("ComboBox.get_LightDismissOverlayMode")
-    result = LightDismissOverlayMode(tmp)
+    result = tmp
 
 proc `lightDismissOverlayMode=`*(self: ComboBox, value: LightDismissOverlayMode) =
   ## Microsoft.UI.Xaml.Controls.ComboBox.put_LightDismissOverlayMode
   withIface(self.p, IID_IComboBox, "IComboBox", it):
-    vcall(it, Slot_IComboBox_put_LightDismissOverlayMode, Fn_IComboBox_put_LightDismissOverlayMode)(it, int32(value)).check("ComboBox.put_LightDismissOverlayMode")
+    vcall(it, Slot_IComboBox_put_LightDismissOverlayMode, Fn_IComboBox_put_LightDismissOverlayMode)(it, value).check("ComboBox.put_LightDismissOverlayMode")
 
 proc isTextSearchEnabled*(self: ComboBox): bool =
   ## Microsoft.UI.Xaml.Controls.ComboBox.get_IsTextSearchEnabled
@@ -15502,14 +15501,14 @@ proc `isTextSearchEnabled=`*(self: ComboBox, value: bool) =
 proc selectionChangedTrigger*(self: ComboBox): ComboBoxSelectionChangedTrigger =
   ## Microsoft.UI.Xaml.Controls.ComboBox.get_SelectionChangedTrigger
   withIface(self.p, IID_IComboBox, "IComboBox", it):
-    var tmp: int32
+    var tmp: ComboBoxSelectionChangedTrigger
     vcall(it, Slot_IComboBox_get_SelectionChangedTrigger, Fn_IComboBox_get_SelectionChangedTrigger)(it, tmp.addr).check("ComboBox.get_SelectionChangedTrigger")
-    result = ComboBoxSelectionChangedTrigger(tmp)
+    result = tmp
 
 proc `selectionChangedTrigger=`*(self: ComboBox, value: ComboBoxSelectionChangedTrigger) =
   ## Microsoft.UI.Xaml.Controls.ComboBox.put_SelectionChangedTrigger
   withIface(self.p, IID_IComboBox, "IComboBox", it):
-    vcall(it, Slot_IComboBox_put_SelectionChangedTrigger, Fn_IComboBox_put_SelectionChangedTrigger)(it, int32(value)).check("ComboBox.put_SelectionChangedTrigger")
+    vcall(it, Slot_IComboBox_put_SelectionChangedTrigger, Fn_IComboBox_put_SelectionChangedTrigger)(it, value).check("ComboBox.put_SelectionChangedTrigger")
 
 proc placeholderForeground*(self: ComboBox): Brush =
   ## Microsoft.UI.Xaml.Controls.ComboBox.get_PlaceholderForeground
@@ -15701,26 +15700,26 @@ proc commandBarTemplateSettings*(self: CommandBar): CommandBarTemplateSettings =
 proc defaultLabelPosition*(self: CommandBar): CommandBarDefaultLabelPosition =
   ## Microsoft.UI.Xaml.Controls.CommandBar.get_DefaultLabelPosition
   withIface(self.p, IID_ICommandBar, "ICommandBar", it):
-    var tmp: int32
+    var tmp: CommandBarDefaultLabelPosition
     vcall(it, Slot_ICommandBar_get_DefaultLabelPosition, Fn_ICommandBar_get_DefaultLabelPosition)(it, tmp.addr).check("CommandBar.get_DefaultLabelPosition")
-    result = CommandBarDefaultLabelPosition(tmp)
+    result = tmp
 
 proc `defaultLabelPosition=`*(self: CommandBar, value: CommandBarDefaultLabelPosition) =
   ## Microsoft.UI.Xaml.Controls.CommandBar.put_DefaultLabelPosition
   withIface(self.p, IID_ICommandBar, "ICommandBar", it):
-    vcall(it, Slot_ICommandBar_put_DefaultLabelPosition, Fn_ICommandBar_put_DefaultLabelPosition)(it, int32(value)).check("CommandBar.put_DefaultLabelPosition")
+    vcall(it, Slot_ICommandBar_put_DefaultLabelPosition, Fn_ICommandBar_put_DefaultLabelPosition)(it, value).check("CommandBar.put_DefaultLabelPosition")
 
 proc overflowButtonVisibility*(self: CommandBar): CommandBarOverflowButtonVisibility =
   ## Microsoft.UI.Xaml.Controls.CommandBar.get_OverflowButtonVisibility
   withIface(self.p, IID_ICommandBar, "ICommandBar", it):
-    var tmp: int32
+    var tmp: CommandBarOverflowButtonVisibility
     vcall(it, Slot_ICommandBar_get_OverflowButtonVisibility, Fn_ICommandBar_get_OverflowButtonVisibility)(it, tmp.addr).check("CommandBar.get_OverflowButtonVisibility")
-    result = CommandBarOverflowButtonVisibility(tmp)
+    result = tmp
 
 proc `overflowButtonVisibility=`*(self: CommandBar, value: CommandBarOverflowButtonVisibility) =
   ## Microsoft.UI.Xaml.Controls.CommandBar.put_OverflowButtonVisibility
   withIface(self.p, IID_ICommandBar, "ICommandBar", it):
-    vcall(it, Slot_ICommandBar_put_OverflowButtonVisibility, Fn_ICommandBar_put_OverflowButtonVisibility)(it, int32(value)).check("CommandBar.put_OverflowButtonVisibility")
+    vcall(it, Slot_ICommandBar_put_OverflowButtonVisibility, Fn_ICommandBar_put_OverflowButtonVisibility)(it, value).check("CommandBar.put_OverflowButtonVisibility")
 
 proc isDynamicOverflowEnabled*(self: CommandBar): bool =
   ## Microsoft.UI.Xaml.Controls.CommandBar.get_IsDynamicOverflowEnabled
@@ -15762,14 +15761,14 @@ proc newFlyoutBase*(): FlyoutBase =
 proc placement*(self: FlyoutBase): FlyoutPlacementMode =
   ## Microsoft.UI.Xaml.Controls.Primitives.FlyoutBase.get_Placement
   withIface(self.p, IID_IFlyoutBase, "IFlyoutBase", it):
-    var tmp: int32
+    var tmp: FlyoutPlacementMode
     vcall(it, Slot_IFlyoutBase_get_Placement, Fn_IFlyoutBase_get_Placement)(it, tmp.addr).check("FlyoutBase.get_Placement")
-    result = FlyoutPlacementMode(tmp)
+    result = tmp
 
 proc `placement=`*(self: FlyoutBase, value: FlyoutPlacementMode) =
   ## Microsoft.UI.Xaml.Controls.Primitives.FlyoutBase.put_Placement
   withIface(self.p, IID_IFlyoutBase, "IFlyoutBase", it):
-    vcall(it, Slot_IFlyoutBase_put_Placement, Fn_IFlyoutBase_put_Placement)(it, int32(value)).check("FlyoutBase.put_Placement")
+    vcall(it, Slot_IFlyoutBase_put_Placement, Fn_IFlyoutBase_put_Placement)(it, value).check("FlyoutBase.put_Placement")
 
 proc target*(self: FlyoutBase): FrameworkElement =
   ## Microsoft.UI.Xaml.Controls.Primitives.FlyoutBase.get_Target
@@ -15793,14 +15792,14 @@ proc `allowFocusOnInteraction=`*(self: FlyoutBase, value: bool) =
 proc lightDismissOverlayMode*(self: FlyoutBase): LightDismissOverlayMode =
   ## Microsoft.UI.Xaml.Controls.Primitives.FlyoutBase.get_LightDismissOverlayMode
   withIface(self.p, IID_IFlyoutBase, "IFlyoutBase", it):
-    var tmp: int32
+    var tmp: LightDismissOverlayMode
     vcall(it, Slot_IFlyoutBase_get_LightDismissOverlayMode, Fn_IFlyoutBase_get_LightDismissOverlayMode)(it, tmp.addr).check("FlyoutBase.get_LightDismissOverlayMode")
-    result = LightDismissOverlayMode(tmp)
+    result = tmp
 
 proc `lightDismissOverlayMode=`*(self: FlyoutBase, value: LightDismissOverlayMode) =
   ## Microsoft.UI.Xaml.Controls.Primitives.FlyoutBase.put_LightDismissOverlayMode
   withIface(self.p, IID_IFlyoutBase, "IFlyoutBase", it):
-    vcall(it, Slot_IFlyoutBase_put_LightDismissOverlayMode, Fn_IFlyoutBase_put_LightDismissOverlayMode)(it, int32(value)).check("FlyoutBase.put_LightDismissOverlayMode")
+    vcall(it, Slot_IFlyoutBase_put_LightDismissOverlayMode, Fn_IFlyoutBase_put_LightDismissOverlayMode)(it, value).check("FlyoutBase.put_LightDismissOverlayMode")
 
 proc allowFocusWhenDisabled*(self: FlyoutBase): bool =
   ## Microsoft.UI.Xaml.Controls.Primitives.FlyoutBase.get_AllowFocusWhenDisabled
@@ -15817,14 +15816,14 @@ proc `allowFocusWhenDisabled=`*(self: FlyoutBase, value: bool) =
 proc showMode*(self: FlyoutBase): FlyoutShowMode =
   ## Microsoft.UI.Xaml.Controls.Primitives.FlyoutBase.get_ShowMode
   withIface(self.p, IID_IFlyoutBase, "IFlyoutBase", it):
-    var tmp: int32
+    var tmp: FlyoutShowMode
     vcall(it, Slot_IFlyoutBase_get_ShowMode, Fn_IFlyoutBase_get_ShowMode)(it, tmp.addr).check("FlyoutBase.get_ShowMode")
-    result = FlyoutShowMode(tmp)
+    result = tmp
 
 proc `showMode=`*(self: FlyoutBase, value: FlyoutShowMode) =
   ## Microsoft.UI.Xaml.Controls.Primitives.FlyoutBase.put_ShowMode
   withIface(self.p, IID_IFlyoutBase, "IFlyoutBase", it):
-    vcall(it, Slot_IFlyoutBase_put_ShowMode, Fn_IFlyoutBase_put_ShowMode)(it, int32(value)).check("FlyoutBase.put_ShowMode")
+    vcall(it, Slot_IFlyoutBase_put_ShowMode, Fn_IFlyoutBase_put_ShowMode)(it, value).check("FlyoutBase.put_ShowMode")
 
 proc inputDevicePrefersPrimaryCommands*(self: FlyoutBase): bool =
   ## Microsoft.UI.Xaml.Controls.Primitives.FlyoutBase.get_InputDevicePrefersPrimaryCommands
@@ -15867,14 +15866,14 @@ proc isConstrainedToRootBounds*(self: FlyoutBase): bool =
 proc elementSoundMode*(self: FlyoutBase): ElementSoundMode =
   ## Microsoft.UI.Xaml.Controls.Primitives.FlyoutBase.get_ElementSoundMode
   withIface(self.p, IID_IFlyoutBase, "IFlyoutBase", it):
-    var tmp: int32
+    var tmp: ElementSoundMode
     vcall(it, Slot_IFlyoutBase_get_ElementSoundMode, Fn_IFlyoutBase_get_ElementSoundMode)(it, tmp.addr).check("FlyoutBase.get_ElementSoundMode")
-    result = ElementSoundMode(tmp)
+    result = tmp
 
 proc `elementSoundMode=`*(self: FlyoutBase, value: ElementSoundMode) =
   ## Microsoft.UI.Xaml.Controls.Primitives.FlyoutBase.put_ElementSoundMode
   withIface(self.p, IID_IFlyoutBase, "IFlyoutBase", it):
-    vcall(it, Slot_IFlyoutBase_put_ElementSoundMode, Fn_IFlyoutBase_put_ElementSoundMode)(it, int32(value)).check("FlyoutBase.put_ElementSoundMode")
+    vcall(it, Slot_IFlyoutBase_put_ElementSoundMode, Fn_IFlyoutBase_put_ElementSoundMode)(it, value).check("FlyoutBase.put_ElementSoundMode")
 
 proc overlayInputPassThroughElement*(self: FlyoutBase): DependencyObject =
   ## Microsoft.UI.Xaml.Controls.Primitives.FlyoutBase.get_OverlayInputPassThroughElement
@@ -16331,14 +16330,14 @@ proc `closeButtonStyle=`*(self: ContentDialog, value: Style) =
 proc defaultButton*(self: ContentDialog): ContentDialogButton =
   ## Microsoft.UI.Xaml.Controls.ContentDialog.get_DefaultButton
   withIface(self.p, IID_IContentDialog, "IContentDialog", it):
-    var tmp: int32
+    var tmp: ContentDialogButton
     vcall(it, Slot_IContentDialog_get_DefaultButton, Fn_IContentDialog_get_DefaultButton)(it, tmp.addr).check("ContentDialog.get_DefaultButton")
-    result = ContentDialogButton(tmp)
+    result = tmp
 
 proc `defaultButton=`*(self: ContentDialog, value: ContentDialogButton) =
   ## Microsoft.UI.Xaml.Controls.ContentDialog.put_DefaultButton
   withIface(self.p, IID_IContentDialog, "IContentDialog", it):
-    vcall(it, Slot_IContentDialog_put_DefaultButton, Fn_IContentDialog_put_DefaultButton)(it, int32(value)).check("ContentDialog.put_DefaultButton")
+    vcall(it, Slot_IContentDialog_put_DefaultButton, Fn_IContentDialog_put_DefaultButton)(it, value).check("ContentDialog.put_DefaultButton")
 
 proc onClosing*(self: ContentDialog,
     handler: proc(sender: pointer, args: ContentDialogClosingEventArgs)): EventRegistrationToken {.discardable.} =
@@ -16492,9 +16491,9 @@ proc getDeferral*(self: ContentDialogButtonClickEventArgs): ContentDialogButtonC
 proc `result`*(self: ContentDialogClosedEventArgs): ContentDialogResult =
   ## Microsoft.UI.Xaml.Controls.ContentDialogClosedEventArgs.get_Result
   withIface(self.p, IID_IContentDialogClosedEventArgs, "IContentDialogClosedEventArgs", it):
-    var tmp: int32
+    var tmp: ContentDialogResult
     vcall(it, Slot_IContentDialogClosedEventArgs_get_Result, Fn_IContentDialogClosedEventArgs_get_Result)(it, tmp.addr).check("ContentDialogClosedEventArgs.get_Result")
-    result = ContentDialogResult(tmp)
+    result = tmp
 
 proc complete*(self: ContentDialogClosingDeferral) =
   ## Microsoft.UI.Xaml.Controls.ContentDialogClosingDeferral.Complete
@@ -16504,9 +16503,9 @@ proc complete*(self: ContentDialogClosingDeferral) =
 proc `result`*(self: ContentDialogClosingEventArgs): ContentDialogResult =
   ## Microsoft.UI.Xaml.Controls.ContentDialogClosingEventArgs.get_Result
   withIface(self.p, IID_IContentDialogClosingEventArgs, "IContentDialogClosingEventArgs", it):
-    var tmp: int32
+    var tmp: ContentDialogResult
     vcall(it, Slot_IContentDialogClosingEventArgs_get_Result, Fn_IContentDialogClosingEventArgs_get_Result)(it, tmp.addr).check("ContentDialogClosingEventArgs.get_Result")
-    result = ContentDialogResult(tmp)
+    result = tmp
 
 proc cancel*(self: ContentDialogClosingEventArgs): bool =
   ## Microsoft.UI.Xaml.Controls.ContentDialogClosingEventArgs.get_Cancel
@@ -16659,26 +16658,26 @@ proc `foreground=`*(self: ContentPresenter, value: Brush) =
 proc opticalMarginAlignment*(self: ContentPresenter): OpticalMarginAlignment =
   ## Microsoft.UI.Xaml.Controls.ContentPresenter.get_OpticalMarginAlignment
   withIface(self.p, IID_IContentPresenter, "IContentPresenter", it):
-    var tmp: int32
+    var tmp: OpticalMarginAlignment
     vcall(it, Slot_IContentPresenter_get_OpticalMarginAlignment, Fn_IContentPresenter_get_OpticalMarginAlignment)(it, tmp.addr).check("ContentPresenter.get_OpticalMarginAlignment")
-    result = OpticalMarginAlignment(tmp)
+    result = tmp
 
 proc `opticalMarginAlignment=`*(self: ContentPresenter, value: OpticalMarginAlignment) =
   ## Microsoft.UI.Xaml.Controls.ContentPresenter.put_OpticalMarginAlignment
   withIface(self.p, IID_IContentPresenter, "IContentPresenter", it):
-    vcall(it, Slot_IContentPresenter_put_OpticalMarginAlignment, Fn_IContentPresenter_put_OpticalMarginAlignment)(it, int32(value)).check("ContentPresenter.put_OpticalMarginAlignment")
+    vcall(it, Slot_IContentPresenter_put_OpticalMarginAlignment, Fn_IContentPresenter_put_OpticalMarginAlignment)(it, value).check("ContentPresenter.put_OpticalMarginAlignment")
 
 proc textLineBounds*(self: ContentPresenter): TextLineBounds =
   ## Microsoft.UI.Xaml.Controls.ContentPresenter.get_TextLineBounds
   withIface(self.p, IID_IContentPresenter, "IContentPresenter", it):
-    var tmp: int32
+    var tmp: TextLineBounds
     vcall(it, Slot_IContentPresenter_get_TextLineBounds, Fn_IContentPresenter_get_TextLineBounds)(it, tmp.addr).check("ContentPresenter.get_TextLineBounds")
-    result = TextLineBounds(tmp)
+    result = tmp
 
 proc `textLineBounds=`*(self: ContentPresenter, value: TextLineBounds) =
   ## Microsoft.UI.Xaml.Controls.ContentPresenter.put_TextLineBounds
   withIface(self.p, IID_IContentPresenter, "IContentPresenter", it):
-    vcall(it, Slot_IContentPresenter_put_TextLineBounds, Fn_IContentPresenter_put_TextLineBounds)(it, int32(value)).check("ContentPresenter.put_TextLineBounds")
+    vcall(it, Slot_IContentPresenter_put_TextLineBounds, Fn_IContentPresenter_put_TextLineBounds)(it, value).check("ContentPresenter.put_TextLineBounds")
 
 proc isTextScaleFactorEnabled*(self: ContentPresenter): bool =
   ## Microsoft.UI.Xaml.Controls.ContentPresenter.get_IsTextScaleFactorEnabled
@@ -16708,14 +16707,14 @@ proc `backgroundTransition=`*(self: ContentPresenter, value: BrushTransition) =
 proc textWrapping*(self: ContentPresenter): TextWrapping =
   ## Microsoft.UI.Xaml.Controls.ContentPresenter.get_TextWrapping
   withIface(self.p, IID_IContentPresenter, "IContentPresenter", it):
-    var tmp: int32
+    var tmp: TextWrapping
     vcall(it, Slot_IContentPresenter_get_TextWrapping, Fn_IContentPresenter_get_TextWrapping)(it, tmp.addr).check("ContentPresenter.get_TextWrapping")
-    result = TextWrapping(tmp)
+    result = tmp
 
 proc `textWrapping=`*(self: ContentPresenter, value: TextWrapping) =
   ## Microsoft.UI.Xaml.Controls.ContentPresenter.put_TextWrapping
   withIface(self.p, IID_IContentPresenter, "IContentPresenter", it):
-    vcall(it, Slot_IContentPresenter_put_TextWrapping, Fn_IContentPresenter_put_TextWrapping)(it, int32(value)).check("ContentPresenter.put_TextWrapping")
+    vcall(it, Slot_IContentPresenter_put_TextWrapping, Fn_IContentPresenter_put_TextWrapping)(it, value).check("ContentPresenter.put_TextWrapping")
 
 proc maxLines*(self: ContentPresenter): int32 =
   ## Microsoft.UI.Xaml.Controls.ContentPresenter.get_MaxLines
@@ -16732,14 +16731,14 @@ proc `maxLines=`*(self: ContentPresenter, value: int32) =
 proc lineStackingStrategy*(self: ContentPresenter): LineStackingStrategy =
   ## Microsoft.UI.Xaml.Controls.ContentPresenter.get_LineStackingStrategy
   withIface(self.p, IID_IContentPresenter, "IContentPresenter", it):
-    var tmp: int32
+    var tmp: LineStackingStrategy
     vcall(it, Slot_IContentPresenter_get_LineStackingStrategy, Fn_IContentPresenter_get_LineStackingStrategy)(it, tmp.addr).check("ContentPresenter.get_LineStackingStrategy")
-    result = LineStackingStrategy(tmp)
+    result = tmp
 
 proc `lineStackingStrategy=`*(self: ContentPresenter, value: LineStackingStrategy) =
   ## Microsoft.UI.Xaml.Controls.ContentPresenter.put_LineStackingStrategy
   withIface(self.p, IID_IContentPresenter, "IContentPresenter", it):
-    vcall(it, Slot_IContentPresenter_put_LineStackingStrategy, Fn_IContentPresenter_put_LineStackingStrategy)(it, int32(value)).check("ContentPresenter.put_LineStackingStrategy")
+    vcall(it, Slot_IContentPresenter_put_LineStackingStrategy, Fn_IContentPresenter_put_LineStackingStrategy)(it, value).check("ContentPresenter.put_LineStackingStrategy")
 
 proc lineHeight*(self: ContentPresenter): float64 =
   ## Microsoft.UI.Xaml.Controls.ContentPresenter.get_LineHeight
@@ -16818,38 +16817,38 @@ proc `background=`*(self: ContentPresenter, value: Brush) =
 proc backgroundSizing*(self: ContentPresenter): BackgroundSizing =
   ## Microsoft.UI.Xaml.Controls.ContentPresenter.get_BackgroundSizing
   withIface(self.p, IID_IContentPresenter, "IContentPresenter", it):
-    var tmp: int32
+    var tmp: BackgroundSizing
     vcall(it, Slot_IContentPresenter_get_BackgroundSizing, Fn_IContentPresenter_get_BackgroundSizing)(it, tmp.addr).check("ContentPresenter.get_BackgroundSizing")
-    result = BackgroundSizing(tmp)
+    result = tmp
 
 proc `backgroundSizing=`*(self: ContentPresenter, value: BackgroundSizing) =
   ## Microsoft.UI.Xaml.Controls.ContentPresenter.put_BackgroundSizing
   withIface(self.p, IID_IContentPresenter, "IContentPresenter", it):
-    vcall(it, Slot_IContentPresenter_put_BackgroundSizing, Fn_IContentPresenter_put_BackgroundSizing)(it, int32(value)).check("ContentPresenter.put_BackgroundSizing")
+    vcall(it, Slot_IContentPresenter_put_BackgroundSizing, Fn_IContentPresenter_put_BackgroundSizing)(it, value).check("ContentPresenter.put_BackgroundSizing")
 
 proc horizontalContentAlignment*(self: ContentPresenter): HorizontalAlignment =
   ## Microsoft.UI.Xaml.Controls.ContentPresenter.get_HorizontalContentAlignment
   withIface(self.p, IID_IContentPresenter, "IContentPresenter", it):
-    var tmp: int32
+    var tmp: HorizontalAlignment
     vcall(it, Slot_IContentPresenter_get_HorizontalContentAlignment, Fn_IContentPresenter_get_HorizontalContentAlignment)(it, tmp.addr).check("ContentPresenter.get_HorizontalContentAlignment")
-    result = HorizontalAlignment(tmp)
+    result = tmp
 
 proc `horizontalContentAlignment=`*(self: ContentPresenter, value: HorizontalAlignment) =
   ## Microsoft.UI.Xaml.Controls.ContentPresenter.put_HorizontalContentAlignment
   withIface(self.p, IID_IContentPresenter, "IContentPresenter", it):
-    vcall(it, Slot_IContentPresenter_put_HorizontalContentAlignment, Fn_IContentPresenter_put_HorizontalContentAlignment)(it, int32(value)).check("ContentPresenter.put_HorizontalContentAlignment")
+    vcall(it, Slot_IContentPresenter_put_HorizontalContentAlignment, Fn_IContentPresenter_put_HorizontalContentAlignment)(it, value).check("ContentPresenter.put_HorizontalContentAlignment")
 
 proc verticalContentAlignment*(self: ContentPresenter): VerticalAlignment =
   ## Microsoft.UI.Xaml.Controls.ContentPresenter.get_VerticalContentAlignment
   withIface(self.p, IID_IContentPresenter, "IContentPresenter", it):
-    var tmp: int32
+    var tmp: VerticalAlignment
     vcall(it, Slot_IContentPresenter_get_VerticalContentAlignment, Fn_IContentPresenter_get_VerticalContentAlignment)(it, tmp.addr).check("ContentPresenter.get_VerticalContentAlignment")
-    result = VerticalAlignment(tmp)
+    result = tmp
 
 proc `verticalContentAlignment=`*(self: ContentPresenter, value: VerticalAlignment) =
   ## Microsoft.UI.Xaml.Controls.ContentPresenter.put_VerticalContentAlignment
   withIface(self.p, IID_IContentPresenter, "IContentPresenter", it):
-    vcall(it, Slot_IContentPresenter_put_VerticalContentAlignment, Fn_IContentPresenter_put_VerticalContentAlignment)(it, int32(value)).check("ContentPresenter.put_VerticalContentAlignment")
+    vcall(it, Slot_IContentPresenter_put_VerticalContentAlignment, Fn_IContentPresenter_put_VerticalContentAlignment)(it, value).check("ContentPresenter.put_VerticalContentAlignment")
 
 proc onContentTemplateChanged*(self: ContentPresenter, a1: DataTemplate, a2: DataTemplate) =
   ## Microsoft.UI.Xaml.Controls.ContentPresenter.OnContentTemplateChanged
@@ -17143,26 +17142,26 @@ proc `maxYear=`*(self: DatePicker, value: DateTime) =
 proc orientation*(self: DatePicker): Orientation =
   ## Microsoft.UI.Xaml.Controls.DatePicker.get_Orientation
   withIface(self.p, IID_IDatePicker, "IDatePicker", it):
-    var tmp: int32
+    var tmp: Orientation
     vcall(it, Slot_IDatePicker_get_Orientation, Fn_IDatePicker_get_Orientation)(it, tmp.addr).check("DatePicker.get_Orientation")
-    result = Orientation(tmp)
+    result = tmp
 
 proc `orientation=`*(self: DatePicker, value: Orientation) =
   ## Microsoft.UI.Xaml.Controls.DatePicker.put_Orientation
   withIface(self.p, IID_IDatePicker, "IDatePicker", it):
-    vcall(it, Slot_IDatePicker_put_Orientation, Fn_IDatePicker_put_Orientation)(it, int32(value)).check("DatePicker.put_Orientation")
+    vcall(it, Slot_IDatePicker_put_Orientation, Fn_IDatePicker_put_Orientation)(it, value).check("DatePicker.put_Orientation")
 
 proc lightDismissOverlayMode*(self: DatePicker): LightDismissOverlayMode =
   ## Microsoft.UI.Xaml.Controls.DatePicker.get_LightDismissOverlayMode
   withIface(self.p, IID_IDatePicker, "IDatePicker", it):
-    var tmp: int32
+    var tmp: LightDismissOverlayMode
     vcall(it, Slot_IDatePicker_get_LightDismissOverlayMode, Fn_IDatePicker_get_LightDismissOverlayMode)(it, tmp.addr).check("DatePicker.get_LightDismissOverlayMode")
-    result = LightDismissOverlayMode(tmp)
+    result = tmp
 
 proc `lightDismissOverlayMode=`*(self: DatePicker, value: LightDismissOverlayMode) =
   ## Microsoft.UI.Xaml.Controls.DatePicker.put_LightDismissOverlayMode
   withIface(self.p, IID_IDatePicker, "IDatePicker", it):
-    vcall(it, Slot_IDatePicker_put_LightDismissOverlayMode, Fn_IDatePicker_put_LightDismissOverlayMode)(it, int32(value)).check("DatePicker.put_LightDismissOverlayMode")
+    vcall(it, Slot_IDatePicker_put_LightDismissOverlayMode, Fn_IDatePicker_put_LightDismissOverlayMode)(it, value).check("DatePicker.put_LightDismissOverlayMode")
 
 proc onDateChanged*(self: DatePicker,
     handler: proc(sender: pointer, args: DatePickerValueChangedEventArgs)): EventRegistrationToken {.discardable.} =
@@ -17486,9 +17485,9 @@ proc newDynamicOverflowItemsChangingEventArgs*(): DynamicOverflowItemsChangingEv
 proc action*(self: DynamicOverflowItemsChangingEventArgs): CommandBarDynamicOverflowAction =
   ## Microsoft.UI.Xaml.Controls.DynamicOverflowItemsChangingEventArgs.get_Action
   withIface(self.p, IID_IDynamicOverflowItemsChangingEventArgs, "IDynamicOverflowItemsChangingEventArgs", it):
-    var tmp: int32
+    var tmp: CommandBarDynamicOverflowAction
     vcall(it, Slot_IDynamicOverflowItemsChangingEventArgs_get_Action, Fn_IDynamicOverflowItemsChangingEventArgs_get_Action)(it, tmp.addr).check("DynamicOverflowItemsChangingEventArgs.get_Action")
-    result = CommandBarDynamicOverflowAction(tmp)
+    result = tmp
 
 proc newExpander*(): Expander =
   ## Compose a `Microsoft.UI.Xaml.Controls.Expander`.
@@ -17548,14 +17547,14 @@ proc `isExpanded=`*(self: Expander, value: bool) =
 proc expandDirection*(self: Expander): ExpandDirection =
   ## Microsoft.UI.Xaml.Controls.Expander.get_ExpandDirection
   withIface(self.p, IID_IExpander, "IExpander", it):
-    var tmp: int32
+    var tmp: ExpandDirection
     vcall(it, Slot_IExpander_get_ExpandDirection, Fn_IExpander_get_ExpandDirection)(it, tmp.addr).check("Expander.get_ExpandDirection")
-    result = ExpandDirection(tmp)
+    result = tmp
 
 proc `expandDirection=`*(self: Expander, value: ExpandDirection) =
   ## Microsoft.UI.Xaml.Controls.Expander.put_ExpandDirection
   withIface(self.p, IID_IExpander, "IExpander", it):
-    vcall(it, Slot_IExpander_put_ExpandDirection, Fn_IExpander_put_ExpandDirection)(it, int32(value)).check("Expander.put_ExpandDirection")
+    vcall(it, Slot_IExpander_put_ExpandDirection, Fn_IExpander_put_ExpandDirection)(it, value).check("Expander.put_ExpandDirection")
 
 proc onExpanding*(self: Expander,
     handler: proc(sender: pointer, args: ExpanderExpandingEventArgs)): EventRegistrationToken {.discardable.} =
@@ -18104,14 +18103,14 @@ proc newGrid*(): Grid =
 proc backgroundSizing*(self: Grid): BackgroundSizing =
   ## Microsoft.UI.Xaml.Controls.Grid.get_BackgroundSizing
   withIface(self.p, IID_IGrid, "IGrid", it):
-    var tmp: int32
+    var tmp: BackgroundSizing
     vcall(it, Slot_IGrid_get_BackgroundSizing, Fn_IGrid_get_BackgroundSizing)(it, tmp.addr).check("Grid.get_BackgroundSizing")
-    result = BackgroundSizing(tmp)
+    result = tmp
 
 proc `backgroundSizing=`*(self: Grid, value: BackgroundSizing) =
   ## Microsoft.UI.Xaml.Controls.Grid.put_BackgroundSizing
   withIface(self.p, IID_IGrid, "IGrid", it):
-    vcall(it, Slot_IGrid_put_BackgroundSizing, Fn_IGrid_put_BackgroundSizing)(it, int32(value)).check("Grid.put_BackgroundSizing")
+    vcall(it, Slot_IGrid_put_BackgroundSizing, Fn_IGrid_put_BackgroundSizing)(it, value).check("Grid.put_BackgroundSizing")
 
 proc borderBrush*(self: Grid): Brush =
   ## Microsoft.UI.Xaml.Controls.Grid.get_BorderBrush
@@ -18194,14 +18193,14 @@ proc newListViewBase*(): ListViewBase =
 proc selectionMode*(self: ListViewBase): ListViewSelectionMode =
   ## Microsoft.UI.Xaml.Controls.ListViewBase.get_SelectionMode
   withIface(self.p, IID_IListViewBase, "IListViewBase", it):
-    var tmp: int32
+    var tmp: ListViewSelectionMode
     vcall(it, Slot_IListViewBase_get_SelectionMode, Fn_IListViewBase_get_SelectionMode)(it, tmp.addr).check("ListViewBase.get_SelectionMode")
-    result = ListViewSelectionMode(tmp)
+    result = tmp
 
 proc `selectionMode=`*(self: ListViewBase, value: ListViewSelectionMode) =
   ## Microsoft.UI.Xaml.Controls.ListViewBase.put_SelectionMode
   withIface(self.p, IID_IListViewBase, "IListViewBase", it):
-    vcall(it, Slot_IListViewBase_put_SelectionMode, Fn_IListViewBase_put_SelectionMode)(it, int32(value)).check("ListViewBase.put_SelectionMode")
+    vcall(it, Slot_IListViewBase_put_SelectionMode, Fn_IListViewBase_put_SelectionMode)(it, value).check("ListViewBase.put_SelectionMode")
 
 proc isSwipeEnabled*(self: ListViewBase): bool =
   ## Microsoft.UI.Xaml.Controls.ListViewBase.get_IsSwipeEnabled
@@ -18278,14 +18277,14 @@ proc `incrementalLoadingThreshold=`*(self: ListViewBase, value: float64) =
 proc incrementalLoadingTrigger*(self: ListViewBase): IncrementalLoadingTrigger =
   ## Microsoft.UI.Xaml.Controls.ListViewBase.get_IncrementalLoadingTrigger
   withIface(self.p, IID_IListViewBase, "IListViewBase", it):
-    var tmp: int32
+    var tmp: IncrementalLoadingTrigger
     vcall(it, Slot_IListViewBase_get_IncrementalLoadingTrigger, Fn_IListViewBase_get_IncrementalLoadingTrigger)(it, tmp.addr).check("ListViewBase.get_IncrementalLoadingTrigger")
-    result = IncrementalLoadingTrigger(tmp)
+    result = tmp
 
 proc `incrementalLoadingTrigger=`*(self: ListViewBase, value: IncrementalLoadingTrigger) =
   ## Microsoft.UI.Xaml.Controls.ListViewBase.put_IncrementalLoadingTrigger
   withIface(self.p, IID_IListViewBase, "IListViewBase", it):
-    vcall(it, Slot_IListViewBase_put_IncrementalLoadingTrigger, Fn_IListViewBase_put_IncrementalLoadingTrigger)(it, int32(value)).check("ListViewBase.put_IncrementalLoadingTrigger")
+    vcall(it, Slot_IListViewBase_put_IncrementalLoadingTrigger, Fn_IListViewBase_put_IncrementalLoadingTrigger)(it, value).check("ListViewBase.put_IncrementalLoadingTrigger")
 
 proc showsScrollingPlaceholders*(self: ListViewBase): bool =
   ## Microsoft.UI.Xaml.Controls.ListViewBase.get_ShowsScrollingPlaceholders
@@ -18302,14 +18301,14 @@ proc `showsScrollingPlaceholders=`*(self: ListViewBase, value: bool) =
 proc reorderMode*(self: ListViewBase): ListViewReorderMode =
   ## Microsoft.UI.Xaml.Controls.ListViewBase.get_ReorderMode
   withIface(self.p, IID_IListViewBase, "IListViewBase", it):
-    var tmp: int32
+    var tmp: ListViewReorderMode
     vcall(it, Slot_IListViewBase_get_ReorderMode, Fn_IListViewBase_get_ReorderMode)(it, tmp.addr).check("ListViewBase.get_ReorderMode")
-    result = ListViewReorderMode(tmp)
+    result = tmp
 
 proc `reorderMode=`*(self: ListViewBase, value: ListViewReorderMode) =
   ## Microsoft.UI.Xaml.Controls.ListViewBase.put_ReorderMode
   withIface(self.p, IID_IListViewBase, "IListViewBase", it):
-    vcall(it, Slot_IListViewBase_put_ReorderMode, Fn_IListViewBase_put_ReorderMode)(it, int32(value)).check("ListViewBase.put_ReorderMode")
+    vcall(it, Slot_IListViewBase_put_ReorderMode, Fn_IListViewBase_put_ReorderMode)(it, value).check("ListViewBase.put_ReorderMode")
 
 proc isMultiSelectCheckBoxEnabled*(self: ListViewBase): bool =
   ## Microsoft.UI.Xaml.Controls.ListViewBase.get_IsMultiSelectCheckBoxEnabled
@@ -18468,7 +18467,7 @@ proc selectAll*(self: ListViewBase) =
 proc scrollIntoView*(self: ListViewBase, a1: pointer, a2: ScrollIntoViewAlignment) =
   ## Microsoft.UI.Xaml.Controls.ListViewBase.ScrollIntoView
   withIface(self.p, IID_IListViewBase, "IListViewBase", it):
-    vcall(it, Slot_IListViewBase_ScrollIntoView2, Fn_IListViewBase_ScrollIntoView2)(it, a1, int32(a2)).check("ListViewBase.ScrollIntoView")
+    vcall(it, Slot_IListViewBase_ScrollIntoView2, Fn_IListViewBase_ScrollIntoView2)(it, a1, a2).check("ListViewBase.ScrollIntoView")
 
 proc setDesiredContainerUpdateDuration*(self: ListViewBase, a1: TimeSpan) =
   ## Microsoft.UI.Xaml.Controls.ListViewBase.SetDesiredContainerUpdateDuration
@@ -18835,14 +18834,14 @@ proc `headerTemplate=`*(self: Hub, value: DataTemplate) =
 proc orientation*(self: Hub): Orientation =
   ## Microsoft.UI.Xaml.Controls.Hub.get_Orientation
   withIface(self.p, IID_IHub, "IHub", it):
-    var tmp: int32
+    var tmp: Orientation
     vcall(it, Slot_IHub_get_Orientation, Fn_IHub_get_Orientation)(it, tmp.addr).check("Hub.get_Orientation")
-    result = Orientation(tmp)
+    result = tmp
 
 proc `orientation=`*(self: Hub, value: Orientation) =
   ## Microsoft.UI.Xaml.Controls.Hub.put_Orientation
   withIface(self.p, IID_IHub, "IHub", it):
-    vcall(it, Slot_IHub_put_Orientation, Fn_IHub_put_Orientation)(it, int32(value)).check("Hub.put_Orientation")
+    vcall(it, Slot_IHub_put_Orientation, Fn_IHub_put_Orientation)(it, value).check("Hub.put_Orientation")
 
 proc defaultSectionIndex*(self: Hub): int32 =
   ## Microsoft.UI.Xaml.Controls.Hub.get_DefaultSectionIndex
@@ -19092,14 +19091,14 @@ proc `source=`*(self: Image, value: ImageSource) =
 proc stretch*(self: Image): Stretch =
   ## Microsoft.UI.Xaml.Controls.Image.get_Stretch
   withIface(self.p, IID_IImage, "IImage", it):
-    var tmp: int32
+    var tmp: Stretch
     vcall(it, Slot_IImage_get_Stretch, Fn_IImage_get_Stretch)(it, tmp.addr).check("Image.get_Stretch")
-    result = Stretch(tmp)
+    result = tmp
 
 proc `stretch=`*(self: Image, value: Stretch) =
   ## Microsoft.UI.Xaml.Controls.Image.put_Stretch
   withIface(self.p, IID_IImage, "IImage", it):
-    vcall(it, Slot_IImage_put_Stretch, Fn_IImage_put_Stretch)(it, int32(value)).check("Image.put_Stretch")
+    vcall(it, Slot_IImage_put_Stretch, Fn_IImage_put_Stretch)(it, value).check("Image.put_Stretch")
 
 proc nineGrid*(self: Image): Thickness =
   ## Microsoft.UI.Xaml.Controls.Image.get_NineGrid
@@ -19302,14 +19301,14 @@ proc `message=`*(self: InfoBar, value: string) =
 proc severity*(self: InfoBar): InfoBarSeverity =
   ## Microsoft.UI.Xaml.Controls.InfoBar.get_Severity
   withIface(self.p, IID_IInfoBar, "IInfoBar", it):
-    var tmp: int32
+    var tmp: InfoBarSeverity
     vcall(it, Slot_IInfoBar_get_Severity, Fn_IInfoBar_get_Severity)(it, tmp.addr).check("InfoBar.get_Severity")
-    result = InfoBarSeverity(tmp)
+    result = tmp
 
 proc `severity=`*(self: InfoBar, value: InfoBarSeverity) =
   ## Microsoft.UI.Xaml.Controls.InfoBar.put_Severity
   withIface(self.p, IID_IInfoBar, "IInfoBar", it):
-    vcall(it, Slot_IInfoBar_put_Severity, Fn_IInfoBar_put_Severity)(it, int32(value)).check("InfoBar.put_Severity")
+    vcall(it, Slot_IInfoBar_put_Severity, Fn_IInfoBar_put_Severity)(it, value).check("InfoBar.put_Severity")
 
 proc iconSource*(self: InfoBar): IconSource =
   ## Microsoft.UI.Xaml.Controls.InfoBar.get_IconSource
@@ -19493,16 +19492,16 @@ proc removeClosed*(self: InfoBar, token: EventRegistrationToken) =
 proc reason*(self: InfoBarClosedEventArgs): InfoBarCloseReason =
   ## Microsoft.UI.Xaml.Controls.InfoBarClosedEventArgs.get_Reason
   withIface(self.p, IID_IInfoBarClosedEventArgs, "IInfoBarClosedEventArgs", it):
-    var tmp: int32
+    var tmp: InfoBarCloseReason
     vcall(it, Slot_IInfoBarClosedEventArgs_get_Reason, Fn_IInfoBarClosedEventArgs_get_Reason)(it, tmp.addr).check("InfoBarClosedEventArgs.get_Reason")
-    result = InfoBarCloseReason(tmp)
+    result = tmp
 
 proc reason*(self: InfoBarClosingEventArgs): InfoBarCloseReason =
   ## Microsoft.UI.Xaml.Controls.InfoBarClosingEventArgs.get_Reason
   withIface(self.p, IID_IInfoBarClosingEventArgs, "IInfoBarClosingEventArgs", it):
-    var tmp: int32
+    var tmp: InfoBarCloseReason
     vcall(it, Slot_IInfoBarClosingEventArgs_get_Reason, Fn_IInfoBarClosingEventArgs_get_Reason)(it, tmp.addr).check("InfoBarClosingEventArgs.get_Reason")
-    result = InfoBarCloseReason(tmp)
+    result = tmp
 
 proc cancel*(self: InfoBarClosingEventArgs): bool =
   ## Microsoft.UI.Xaml.Controls.InfoBarClosingEventArgs.get_Cancel
@@ -19548,16 +19547,16 @@ proc clickedItem*(self: ItemClickEventArgs): pointer =
 proc operation*(self: ItemCollectionTransition): ItemCollectionTransitionOperation =
   ## Microsoft.UI.Xaml.Controls.ItemCollectionTransition.get_Operation
   withIface(self.p, IID_IItemCollectionTransition, "IItemCollectionTransition", it):
-    var tmp: int32
+    var tmp: ItemCollectionTransitionOperation
     vcall(it, Slot_IItemCollectionTransition_get_Operation, Fn_IItemCollectionTransition_get_Operation)(it, tmp.addr).check("ItemCollectionTransition.get_Operation")
-    result = ItemCollectionTransitionOperation(tmp)
+    result = tmp
 
 proc triggers*(self: ItemCollectionTransition): ItemCollectionTransitionTriggers =
   ## Microsoft.UI.Xaml.Controls.ItemCollectionTransition.get_Triggers
   withIface(self.p, IID_IItemCollectionTransition, "IItemCollectionTransition", it):
-    var tmp: int32
+    var tmp: ItemCollectionTransitionTriggers
     vcall(it, Slot_IItemCollectionTransition_get_Triggers, Fn_IItemCollectionTransition_get_Triggers)(it, tmp.addr).check("ItemCollectionTransition.get_Triggers")
-    result = ItemCollectionTransitionTriggers(tmp)
+    result = tmp
 
 proc oldBounds*(self: ItemCollectionTransition): Rect =
   ## Microsoft.UI.Xaml.Controls.ItemCollectionTransition.get_OldBounds
@@ -19758,7 +19757,7 @@ proc getItemContainerGeneratorForPanel*(self: ItemContainerGenerator, a1: Panel)
 proc startAt*(self: ItemContainerGenerator, a1: GeneratorPosition, a2: GeneratorDirection, a3: bool) =
   ## Microsoft.UI.Xaml.Controls.ItemContainerGenerator.StartAt
   withIface(self.p, IID_IItemContainerGenerator, "IItemContainerGenerator", it):
-    vcall(it, Slot_IItemContainerGenerator_StartAt, Fn_IItemContainerGenerator_StartAt)(it, a1, int32(a2), a3).check("ItemContainerGenerator.StartAt")
+    vcall(it, Slot_IItemContainerGenerator_StartAt, Fn_IItemContainerGenerator_StartAt)(it, a1, a2, a3).check("ItemContainerGenerator.StartAt")
 
 proc stop*(self: ItemContainerGenerator) =
   ## Microsoft.UI.Xaml.Controls.ItemContainerGenerator.Stop
@@ -20286,14 +20285,14 @@ proc `groupPadding=`*(self: ItemsStackPanel, value: Thickness) =
 proc orientation*(self: ItemsStackPanel): Orientation =
   ## Microsoft.UI.Xaml.Controls.ItemsStackPanel.get_Orientation
   withIface(self.p, IID_IItemsStackPanel, "IItemsStackPanel", it):
-    var tmp: int32
+    var tmp: Orientation
     vcall(it, Slot_IItemsStackPanel_get_Orientation, Fn_IItemsStackPanel_get_Orientation)(it, tmp.addr).check("ItemsStackPanel.get_Orientation")
-    result = Orientation(tmp)
+    result = tmp
 
 proc `orientation=`*(self: ItemsStackPanel, value: Orientation) =
   ## Microsoft.UI.Xaml.Controls.ItemsStackPanel.put_Orientation
   withIface(self.p, IID_IItemsStackPanel, "IItemsStackPanel", it):
-    vcall(it, Slot_IItemsStackPanel_put_Orientation, Fn_IItemsStackPanel_put_Orientation)(it, int32(value)).check("ItemsStackPanel.put_Orientation")
+    vcall(it, Slot_IItemsStackPanel_put_Orientation, Fn_IItemsStackPanel_put_Orientation)(it, value).check("ItemsStackPanel.put_Orientation")
 
 proc firstCacheIndex*(self: ItemsStackPanel): int32 =
   ## Microsoft.UI.Xaml.Controls.ItemsStackPanel.get_FirstCacheIndex
@@ -20326,33 +20325,33 @@ proc lastCacheIndex*(self: ItemsStackPanel): int32 =
 proc scrollingDirection*(self: ItemsStackPanel): PanelScrollingDirection =
   ## Microsoft.UI.Xaml.Controls.ItemsStackPanel.get_ScrollingDirection
   withIface(self.p, IID_IItemsStackPanel, "IItemsStackPanel", it):
-    var tmp: int32
+    var tmp: PanelScrollingDirection
     vcall(it, Slot_IItemsStackPanel_get_ScrollingDirection, Fn_IItemsStackPanel_get_ScrollingDirection)(it, tmp.addr).check("ItemsStackPanel.get_ScrollingDirection")
-    result = PanelScrollingDirection(tmp)
+    result = tmp
 
 proc groupHeaderPlacement*(self: ItemsStackPanel): GroupHeaderPlacement =
   ## Microsoft.UI.Xaml.Controls.ItemsStackPanel.get_GroupHeaderPlacement
   withIface(self.p, IID_IItemsStackPanel, "IItemsStackPanel", it):
-    var tmp: int32
+    var tmp: GroupHeaderPlacement
     vcall(it, Slot_IItemsStackPanel_get_GroupHeaderPlacement, Fn_IItemsStackPanel_get_GroupHeaderPlacement)(it, tmp.addr).check("ItemsStackPanel.get_GroupHeaderPlacement")
-    result = GroupHeaderPlacement(tmp)
+    result = tmp
 
 proc `groupHeaderPlacement=`*(self: ItemsStackPanel, value: GroupHeaderPlacement) =
   ## Microsoft.UI.Xaml.Controls.ItemsStackPanel.put_GroupHeaderPlacement
   withIface(self.p, IID_IItemsStackPanel, "IItemsStackPanel", it):
-    vcall(it, Slot_IItemsStackPanel_put_GroupHeaderPlacement, Fn_IItemsStackPanel_put_GroupHeaderPlacement)(it, int32(value)).check("ItemsStackPanel.put_GroupHeaderPlacement")
+    vcall(it, Slot_IItemsStackPanel_put_GroupHeaderPlacement, Fn_IItemsStackPanel_put_GroupHeaderPlacement)(it, value).check("ItemsStackPanel.put_GroupHeaderPlacement")
 
 proc itemsUpdatingScrollMode*(self: ItemsStackPanel): ItemsUpdatingScrollMode =
   ## Microsoft.UI.Xaml.Controls.ItemsStackPanel.get_ItemsUpdatingScrollMode
   withIface(self.p, IID_IItemsStackPanel, "IItemsStackPanel", it):
-    var tmp: int32
+    var tmp: ItemsUpdatingScrollMode
     vcall(it, Slot_IItemsStackPanel_get_ItemsUpdatingScrollMode, Fn_IItemsStackPanel_get_ItemsUpdatingScrollMode)(it, tmp.addr).check("ItemsStackPanel.get_ItemsUpdatingScrollMode")
-    result = ItemsUpdatingScrollMode(tmp)
+    result = tmp
 
 proc `itemsUpdatingScrollMode=`*(self: ItemsStackPanel, value: ItemsUpdatingScrollMode) =
   ## Microsoft.UI.Xaml.Controls.ItemsStackPanel.put_ItemsUpdatingScrollMode
   withIface(self.p, IID_IItemsStackPanel, "IItemsStackPanel", it):
-    vcall(it, Slot_IItemsStackPanel_put_ItemsUpdatingScrollMode, Fn_IItemsStackPanel_put_ItemsUpdatingScrollMode)(it, int32(value)).check("ItemsStackPanel.put_ItemsUpdatingScrollMode")
+    vcall(it, Slot_IItemsStackPanel_put_ItemsUpdatingScrollMode, Fn_IItemsStackPanel_put_ItemsUpdatingScrollMode)(it, value).check("ItemsStackPanel.put_ItemsUpdatingScrollMode")
 
 proc cacheLength*(self: ItemsStackPanel): float64 =
   ## Microsoft.UI.Xaml.Controls.ItemsStackPanel.get_CacheLength
@@ -20454,14 +20453,14 @@ proc `isItemInvokedEnabled=`*(self: ItemsView, value: bool) =
 proc selectionMode*(self: ItemsView): ItemsViewSelectionMode =
   ## Microsoft.UI.Xaml.Controls.ItemsView.get_SelectionMode
   withIface(self.p, IID_IItemsView, "IItemsView", it):
-    var tmp: int32
+    var tmp: ItemsViewSelectionMode
     vcall(it, Slot_IItemsView_get_SelectionMode, Fn_IItemsView_get_SelectionMode)(it, tmp.addr).check("ItemsView.get_SelectionMode")
-    result = ItemsViewSelectionMode(tmp)
+    result = tmp
 
 proc `selectionMode=`*(self: ItemsView, value: ItemsViewSelectionMode) =
   ## Microsoft.UI.Xaml.Controls.ItemsView.put_SelectionMode
   withIface(self.p, IID_IItemsView, "IItemsView", it):
-    vcall(it, Slot_IItemsView_put_SelectionMode, Fn_IItemsView_put_SelectionMode)(it, int32(value)).check("ItemsView.put_SelectionMode")
+    vcall(it, Slot_IItemsView_put_SelectionMode, Fn_IItemsView_put_SelectionMode)(it, value).check("ItemsView.put_SelectionMode")
 
 proc itemTransitionProvider*(self: ItemsView): ItemCollectionTransitionProvider =
   ## Microsoft.UI.Xaml.Controls.ItemsView.get_ItemTransitionProvider
@@ -20595,14 +20594,14 @@ proc `groupPadding=`*(self: ItemsWrapGrid, value: Thickness) =
 proc orientation*(self: ItemsWrapGrid): Orientation =
   ## Microsoft.UI.Xaml.Controls.ItemsWrapGrid.get_Orientation
   withIface(self.p, IID_IItemsWrapGrid, "IItemsWrapGrid", it):
-    var tmp: int32
+    var tmp: Orientation
     vcall(it, Slot_IItemsWrapGrid_get_Orientation, Fn_IItemsWrapGrid_get_Orientation)(it, tmp.addr).check("ItemsWrapGrid.get_Orientation")
-    result = Orientation(tmp)
+    result = tmp
 
 proc `orientation=`*(self: ItemsWrapGrid, value: Orientation) =
   ## Microsoft.UI.Xaml.Controls.ItemsWrapGrid.put_Orientation
   withIface(self.p, IID_IItemsWrapGrid, "IItemsWrapGrid", it):
-    vcall(it, Slot_IItemsWrapGrid_put_Orientation, Fn_IItemsWrapGrid_put_Orientation)(it, int32(value)).check("ItemsWrapGrid.put_Orientation")
+    vcall(it, Slot_IItemsWrapGrid_put_Orientation, Fn_IItemsWrapGrid_put_Orientation)(it, value).check("ItemsWrapGrid.put_Orientation")
 
 proc maximumRowsOrColumns*(self: ItemsWrapGrid): int32 =
   ## Microsoft.UI.Xaml.Controls.ItemsWrapGrid.get_MaximumRowsOrColumns
@@ -20671,21 +20670,21 @@ proc lastCacheIndex*(self: ItemsWrapGrid): int32 =
 proc scrollingDirection*(self: ItemsWrapGrid): PanelScrollingDirection =
   ## Microsoft.UI.Xaml.Controls.ItemsWrapGrid.get_ScrollingDirection
   withIface(self.p, IID_IItemsWrapGrid, "IItemsWrapGrid", it):
-    var tmp: int32
+    var tmp: PanelScrollingDirection
     vcall(it, Slot_IItemsWrapGrid_get_ScrollingDirection, Fn_IItemsWrapGrid_get_ScrollingDirection)(it, tmp.addr).check("ItemsWrapGrid.get_ScrollingDirection")
-    result = PanelScrollingDirection(tmp)
+    result = tmp
 
 proc groupHeaderPlacement*(self: ItemsWrapGrid): GroupHeaderPlacement =
   ## Microsoft.UI.Xaml.Controls.ItemsWrapGrid.get_GroupHeaderPlacement
   withIface(self.p, IID_IItemsWrapGrid, "IItemsWrapGrid", it):
-    var tmp: int32
+    var tmp: GroupHeaderPlacement
     vcall(it, Slot_IItemsWrapGrid_get_GroupHeaderPlacement, Fn_IItemsWrapGrid_get_GroupHeaderPlacement)(it, tmp.addr).check("ItemsWrapGrid.get_GroupHeaderPlacement")
-    result = GroupHeaderPlacement(tmp)
+    result = tmp
 
 proc `groupHeaderPlacement=`*(self: ItemsWrapGrid, value: GroupHeaderPlacement) =
   ## Microsoft.UI.Xaml.Controls.ItemsWrapGrid.put_GroupHeaderPlacement
   withIface(self.p, IID_IItemsWrapGrid, "IItemsWrapGrid", it):
-    vcall(it, Slot_IItemsWrapGrid_put_GroupHeaderPlacement, Fn_IItemsWrapGrid_put_GroupHeaderPlacement)(it, int32(value)).check("ItemsWrapGrid.put_GroupHeaderPlacement")
+    vcall(it, Slot_IItemsWrapGrid_put_GroupHeaderPlacement, Fn_IItemsWrapGrid_put_GroupHeaderPlacement)(it, value).check("ItemsWrapGrid.put_GroupHeaderPlacement")
 
 proc cacheLength*(self: ItemsWrapGrid): float64 =
   ## Microsoft.UI.Xaml.Controls.ItemsWrapGrid.get_CacheLength
@@ -20782,9 +20781,9 @@ proc removeArrangeInvalidated*(self: Layout, token: EventRegistrationToken) =
 proc indexBasedLayoutOrientation*(self: Layout): IndexBasedLayoutOrientation =
   ## Microsoft.UI.Xaml.Controls.Layout.get_IndexBasedLayoutOrientation
   withIface(self.p, IID_ILayout2, "ILayout2", it):
-    var tmp: int32
+    var tmp: IndexBasedLayoutOrientation
     vcall(it, Slot_ILayout2_get_IndexBasedLayoutOrientation, Fn_ILayout2_get_IndexBasedLayoutOrientation)(it, tmp.addr).check("Layout.get_IndexBasedLayoutOrientation")
-    result = IndexBasedLayoutOrientation(tmp)
+    result = tmp
 
 proc invalidateMeasure*(self: Layout) =
   ## Microsoft.UI.Xaml.Controls.Layout.InvalidateMeasure
@@ -20799,7 +20798,7 @@ proc invalidateArrange*(self: Layout) =
 proc setIndexBasedLayoutOrientation*(self: Layout, a1: IndexBasedLayoutOrientation) =
   ## Microsoft.UI.Xaml.Controls.Layout.SetIndexBasedLayoutOrientation
   withIface(self.p, IID_ILayoutProtected2, "ILayoutProtected2", it):
-    vcall(it, Slot_ILayoutProtected2_SetIndexBasedLayoutOrientation, Fn_ILayoutProtected2_SetIndexBasedLayoutOrientation)(it, int32(a1)).check("Layout.SetIndexBasedLayoutOrientation")
+    vcall(it, Slot_ILayoutProtected2_SetIndexBasedLayoutOrientation, Fn_ILayoutProtected2_SetIndexBasedLayoutOrientation)(it, a1).check("Layout.SetIndexBasedLayoutOrientation")
 
 proc createDefaultItemTransitionProvider*(self: Layout): ItemCollectionTransitionProvider =
   ## Microsoft.UI.Xaml.Controls.Layout.CreateDefaultItemTransitionProvider
@@ -20920,26 +20919,26 @@ proc removeItemsUnlocked*(self: LinedFlowLayout, token: EventRegistrationToken) 
 proc itemsJustification*(self: LinedFlowLayout): LinedFlowLayoutItemsJustification =
   ## Microsoft.UI.Xaml.Controls.LinedFlowLayout.get_ItemsJustification
   withIface(self.p, IID_ILinedFlowLayout, "ILinedFlowLayout", it):
-    var tmp: int32
+    var tmp: LinedFlowLayoutItemsJustification
     vcall(it, Slot_ILinedFlowLayout_get_ItemsJustification, Fn_ILinedFlowLayout_get_ItemsJustification)(it, tmp.addr).check("LinedFlowLayout.get_ItemsJustification")
-    result = LinedFlowLayoutItemsJustification(tmp)
+    result = tmp
 
 proc `itemsJustification=`*(self: LinedFlowLayout, value: LinedFlowLayoutItemsJustification) =
   ## Microsoft.UI.Xaml.Controls.LinedFlowLayout.put_ItemsJustification
   withIface(self.p, IID_ILinedFlowLayout, "ILinedFlowLayout", it):
-    vcall(it, Slot_ILinedFlowLayout_put_ItemsJustification, Fn_ILinedFlowLayout_put_ItemsJustification)(it, int32(value)).check("LinedFlowLayout.put_ItemsJustification")
+    vcall(it, Slot_ILinedFlowLayout_put_ItemsJustification, Fn_ILinedFlowLayout_put_ItemsJustification)(it, value).check("LinedFlowLayout.put_ItemsJustification")
 
 proc itemsStretch*(self: LinedFlowLayout): LinedFlowLayoutItemsStretch =
   ## Microsoft.UI.Xaml.Controls.LinedFlowLayout.get_ItemsStretch
   withIface(self.p, IID_ILinedFlowLayout, "ILinedFlowLayout", it):
-    var tmp: int32
+    var tmp: LinedFlowLayoutItemsStretch
     vcall(it, Slot_ILinedFlowLayout_get_ItemsStretch, Fn_ILinedFlowLayout_get_ItemsStretch)(it, tmp.addr).check("LinedFlowLayout.get_ItemsStretch")
-    result = LinedFlowLayoutItemsStretch(tmp)
+    result = tmp
 
 proc `itemsStretch=`*(self: LinedFlowLayout, value: LinedFlowLayoutItemsStretch) =
   ## Microsoft.UI.Xaml.Controls.LinedFlowLayout.put_ItemsStretch
   withIface(self.p, IID_ILinedFlowLayout, "ILinedFlowLayout", it):
-    vcall(it, Slot_ILinedFlowLayout_put_ItemsStretch, Fn_ILinedFlowLayout_put_ItemsStretch)(it, int32(value)).check("LinedFlowLayout.put_ItemsStretch")
+    vcall(it, Slot_ILinedFlowLayout_put_ItemsStretch, Fn_ILinedFlowLayout_put_ItemsStretch)(it, value).check("LinedFlowLayout.put_ItemsStretch")
 
 proc minItemSpacing*(self: LinedFlowLayout): float64 =
   ## Microsoft.UI.Xaml.Controls.LinedFlowLayout.get_MinItemSpacing
@@ -21066,14 +21065,14 @@ proc newListBox*(): ListBox =
 proc selectionMode*(self: ListBox): SelectionMode =
   ## Microsoft.UI.Xaml.Controls.ListBox.get_SelectionMode
   withIface(self.p, IID_IListBox, "IListBox", it):
-    var tmp: int32
+    var tmp: SelectionMode
     vcall(it, Slot_IListBox_get_SelectionMode, Fn_IListBox_get_SelectionMode)(it, tmp.addr).check("ListBox.get_SelectionMode")
-    result = SelectionMode(tmp)
+    result = tmp
 
 proc `selectionMode=`*(self: ListBox, value: SelectionMode) =
   ## Microsoft.UI.Xaml.Controls.ListBox.put_SelectionMode
   withIface(self.p, IID_IListBox, "IListBox", it):
-    vcall(it, Slot_IListBox_put_SelectionMode, Fn_IListBox_put_SelectionMode)(it, int32(value)).check("ListBox.put_SelectionMode")
+    vcall(it, Slot_IListBox_put_SelectionMode, Fn_IListBox_put_SelectionMode)(it, value).check("ListBox.put_SelectionMode")
 
 proc singleSelectionFollowsFocus*(self: ListBox): bool =
   ## Microsoft.UI.Xaml.Controls.ListBox.get_SingleSelectionFollowsFocus
@@ -21147,14 +21146,14 @@ proc `displayMemberPath=`*(self: ListPickerFlyout, value: string) =
 proc selectionMode*(self: ListPickerFlyout): ListPickerFlyoutSelectionMode =
   ## Microsoft.UI.Xaml.Controls.ListPickerFlyout.get_SelectionMode
   withIface(self.p, IID_IListPickerFlyout, "IListPickerFlyout", it):
-    var tmp: int32
+    var tmp: ListPickerFlyoutSelectionMode
     vcall(it, Slot_IListPickerFlyout_get_SelectionMode, Fn_IListPickerFlyout_get_SelectionMode)(it, tmp.addr).check("ListPickerFlyout.get_SelectionMode")
-    result = ListPickerFlyoutSelectionMode(tmp)
+    result = tmp
 
 proc `selectionMode=`*(self: ListPickerFlyout, value: ListPickerFlyoutSelectionMode) =
   ## Microsoft.UI.Xaml.Controls.ListPickerFlyout.put_SelectionMode
   withIface(self.p, IID_IListPickerFlyout, "IListPickerFlyout", it):
-    vcall(it, Slot_IListPickerFlyout_put_SelectionMode, Fn_IListPickerFlyout_put_SelectionMode)(it, int32(value)).check("ListPickerFlyout.put_SelectionMode")
+    vcall(it, Slot_IListPickerFlyout_put_SelectionMode, Fn_IListPickerFlyout_put_SelectionMode)(it, value).check("ListPickerFlyout.put_SelectionMode")
 
 proc selectedIndex*(self: ListPickerFlyout): int32 =
   ## Microsoft.UI.Xaml.Controls.ListPickerFlyout.get_SelectedIndex
@@ -21419,14 +21418,14 @@ proc `posterSource=`*(self: MediaPlayerElement, value: ImageSource) =
 proc stretch*(self: MediaPlayerElement): Stretch =
   ## Microsoft.UI.Xaml.Controls.MediaPlayerElement.get_Stretch
   withIface(self.p, IID_IMediaPlayerElement, "IMediaPlayerElement", it):
-    var tmp: int32
+    var tmp: Stretch
     vcall(it, Slot_IMediaPlayerElement_get_Stretch, Fn_IMediaPlayerElement_get_Stretch)(it, tmp.addr).check("MediaPlayerElement.get_Stretch")
-    result = Stretch(tmp)
+    result = tmp
 
 proc `stretch=`*(self: MediaPlayerElement, value: Stretch) =
   ## Microsoft.UI.Xaml.Controls.MediaPlayerElement.put_Stretch
   withIface(self.p, IID_IMediaPlayerElement, "IMediaPlayerElement", it):
-    vcall(it, Slot_IMediaPlayerElement_put_Stretch, Fn_IMediaPlayerElement_put_Stretch)(it, int32(value)).check("MediaPlayerElement.put_Stretch")
+    vcall(it, Slot_IMediaPlayerElement_put_Stretch, Fn_IMediaPlayerElement_put_Stretch)(it, value).check("MediaPlayerElement.put_Stretch")
 
 proc autoPlay*(self: MediaPlayerElement): bool =
   ## Microsoft.UI.Xaml.Controls.MediaPlayerElement.get_AutoPlay
@@ -21460,14 +21459,14 @@ proc newMediaPlayerPresenter*(): MediaPlayerPresenter =
 proc stretch*(self: MediaPlayerPresenter): Stretch =
   ## Microsoft.UI.Xaml.Controls.MediaPlayerPresenter.get_Stretch
   withIface(self.p, IID_IMediaPlayerPresenter, "IMediaPlayerPresenter", it):
-    var tmp: int32
+    var tmp: Stretch
     vcall(it, Slot_IMediaPlayerPresenter_get_Stretch, Fn_IMediaPlayerPresenter_get_Stretch)(it, tmp.addr).check("MediaPlayerPresenter.get_Stretch")
-    result = Stretch(tmp)
+    result = tmp
 
 proc `stretch=`*(self: MediaPlayerPresenter, value: Stretch) =
   ## Microsoft.UI.Xaml.Controls.MediaPlayerPresenter.put_Stretch
   withIface(self.p, IID_IMediaPlayerPresenter, "IMediaPlayerPresenter", it):
-    vcall(it, Slot_IMediaPlayerPresenter_put_Stretch, Fn_IMediaPlayerPresenter_put_Stretch)(it, int32(value)).check("MediaPlayerPresenter.put_Stretch")
+    vcall(it, Slot_IMediaPlayerPresenter_put_Stretch, Fn_IMediaPlayerPresenter_put_Stretch)(it, value).check("MediaPlayerPresenter.put_Stretch")
 
 proc isFullWindow*(self: MediaPlayerPresenter): bool =
   ## Microsoft.UI.Xaml.Controls.MediaPlayerPresenter.get_IsFullWindow
@@ -21741,14 +21740,14 @@ proc `isPreviousTrackButtonVisible=`*(self: MediaTransportControls, value: bool)
 proc fastPlayFallbackBehaviour*(self: MediaTransportControls): FastPlayFallbackBehaviour =
   ## Microsoft.UI.Xaml.Controls.MediaTransportControls.get_FastPlayFallbackBehaviour
   withIface(self.p, IID_IMediaTransportControls, "IMediaTransportControls", it):
-    var tmp: int32
+    var tmp: FastPlayFallbackBehaviour
     vcall(it, Slot_IMediaTransportControls_get_FastPlayFallbackBehaviour, Fn_IMediaTransportControls_get_FastPlayFallbackBehaviour)(it, tmp.addr).check("MediaTransportControls.get_FastPlayFallbackBehaviour")
-    result = FastPlayFallbackBehaviour(tmp)
+    result = tmp
 
 proc `fastPlayFallbackBehaviour=`*(self: MediaTransportControls, value: FastPlayFallbackBehaviour) =
   ## Microsoft.UI.Xaml.Controls.MediaTransportControls.put_FastPlayFallbackBehaviour
   withIface(self.p, IID_IMediaTransportControls, "IMediaTransportControls", it):
-    vcall(it, Slot_IMediaTransportControls_put_FastPlayFallbackBehaviour, Fn_IMediaTransportControls_put_FastPlayFallbackBehaviour)(it, int32(value)).check("MediaTransportControls.put_FastPlayFallbackBehaviour")
+    vcall(it, Slot_IMediaTransportControls_put_FastPlayFallbackBehaviour, Fn_IMediaTransportControls_put_FastPlayFallbackBehaviour)(it, value).check("MediaTransportControls.put_FastPlayFallbackBehaviour")
 
 proc showAndHideAutomatically*(self: MediaTransportControls): bool =
   ## Microsoft.UI.Xaml.Controls.MediaTransportControls.get_ShowAndHideAutomatically
@@ -22129,9 +22128,9 @@ proc `headerTemplate=`*(self: NavigationView, value: DataTemplate) =
 proc displayMode*(self: NavigationView): NavigationViewDisplayMode =
   ## Microsoft.UI.Xaml.Controls.NavigationView.get_DisplayMode
   withIface(self.p, IID_INavigationView, "INavigationView", it):
-    var tmp: int32
+    var tmp: NavigationViewDisplayMode
     vcall(it, Slot_INavigationView_get_DisplayMode, Fn_INavigationView_get_DisplayMode)(it, tmp.addr).check("NavigationView.get_DisplayMode")
-    result = NavigationViewDisplayMode(tmp)
+    result = tmp
 
 proc isSettingsVisible*(self: NavigationView): bool =
   ## Microsoft.UI.Xaml.Controls.NavigationView.get_IsSettingsVisible
@@ -22392,14 +22391,14 @@ proc `isTitleBarAutoPaddingEnabled=`*(self: NavigationView, value: bool) =
 proc isBackButtonVisible*(self: NavigationView): NavigationViewBackButtonVisible =
   ## Microsoft.UI.Xaml.Controls.NavigationView.get_IsBackButtonVisible
   withIface(self.p, IID_INavigationView2, "INavigationView2", it):
-    var tmp: int32
+    var tmp: NavigationViewBackButtonVisible
     vcall(it, Slot_INavigationView2_get_IsBackButtonVisible, Fn_INavigationView2_get_IsBackButtonVisible)(it, tmp.addr).check("NavigationView.get_IsBackButtonVisible")
-    result = NavigationViewBackButtonVisible(tmp)
+    result = tmp
 
 proc `isBackButtonVisible=`*(self: NavigationView, value: NavigationViewBackButtonVisible) =
   ## Microsoft.UI.Xaml.Controls.NavigationView.put_IsBackButtonVisible
   withIface(self.p, IID_INavigationView2, "INavigationView2", it):
-    vcall(it, Slot_INavigationView2_put_IsBackButtonVisible, Fn_INavigationView2_put_IsBackButtonVisible)(it, int32(value)).check("NavigationView.put_IsBackButtonVisible")
+    vcall(it, Slot_INavigationView2_put_IsBackButtonVisible, Fn_INavigationView2_put_IsBackButtonVisible)(it, value).check("NavigationView.put_IsBackButtonVisible")
 
 proc isBackEnabled*(self: NavigationView): bool =
   ## Microsoft.UI.Xaml.Controls.NavigationView.get_IsBackEnabled
@@ -22529,14 +22528,14 @@ proc removePaneOpening*(self: NavigationView, token: EventRegistrationToken) =
 proc paneDisplayMode*(self: NavigationView): NavigationViewPaneDisplayMode =
   ## Microsoft.UI.Xaml.Controls.NavigationView.get_PaneDisplayMode
   withIface(self.p, IID_INavigationView2, "INavigationView2", it):
-    var tmp: int32
+    var tmp: NavigationViewPaneDisplayMode
     vcall(it, Slot_INavigationView2_get_PaneDisplayMode, Fn_INavigationView2_get_PaneDisplayMode)(it, tmp.addr).check("NavigationView.get_PaneDisplayMode")
-    result = NavigationViewPaneDisplayMode(tmp)
+    result = tmp
 
 proc `paneDisplayMode=`*(self: NavigationView, value: NavigationViewPaneDisplayMode) =
   ## Microsoft.UI.Xaml.Controls.NavigationView.put_PaneDisplayMode
   withIface(self.p, IID_INavigationView2, "INavigationView2", it):
-    vcall(it, Slot_INavigationView2_put_PaneDisplayMode, Fn_INavigationView2_put_PaneDisplayMode)(it, int32(value)).check("NavigationView.put_PaneDisplayMode")
+    vcall(it, Slot_INavigationView2_put_PaneDisplayMode, Fn_INavigationView2_put_PaneDisplayMode)(it, value).check("NavigationView.put_PaneDisplayMode")
 
 proc paneHeader*(self: NavigationView): UIElement =
   ## Microsoft.UI.Xaml.Controls.NavigationView.get_PaneHeader
@@ -22592,14 +22591,14 @@ proc `isPaneVisible=`*(self: NavigationView, value: bool) =
 proc selectionFollowsFocus*(self: NavigationView): NavigationViewSelectionFollowsFocus =
   ## Microsoft.UI.Xaml.Controls.NavigationView.get_SelectionFollowsFocus
   withIface(self.p, IID_INavigationView2, "INavigationView2", it):
-    var tmp: int32
+    var tmp: NavigationViewSelectionFollowsFocus
     vcall(it, Slot_INavigationView2_get_SelectionFollowsFocus, Fn_INavigationView2_get_SelectionFollowsFocus)(it, tmp.addr).check("NavigationView.get_SelectionFollowsFocus")
-    result = NavigationViewSelectionFollowsFocus(tmp)
+    result = tmp
 
 proc `selectionFollowsFocus=`*(self: NavigationView, value: NavigationViewSelectionFollowsFocus) =
   ## Microsoft.UI.Xaml.Controls.NavigationView.put_SelectionFollowsFocus
   withIface(self.p, IID_INavigationView2, "INavigationView2", it):
-    vcall(it, Slot_INavigationView2_put_SelectionFollowsFocus, Fn_INavigationView2_put_SelectionFollowsFocus)(it, int32(value)).check("NavigationView.put_SelectionFollowsFocus")
+    vcall(it, Slot_INavigationView2_put_SelectionFollowsFocus, Fn_INavigationView2_put_SelectionFollowsFocus)(it, value).check("NavigationView.put_SelectionFollowsFocus")
 
 proc templateSettings*(self: NavigationView): NavigationViewTemplateSettings =
   ## Microsoft.UI.Xaml.Controls.NavigationView.get_TemplateSettings
@@ -22611,26 +22610,26 @@ proc templateSettings*(self: NavigationView): NavigationViewTemplateSettings =
 proc shoulderNavigationEnabled*(self: NavigationView): NavigationViewShoulderNavigationEnabled =
   ## Microsoft.UI.Xaml.Controls.NavigationView.get_ShoulderNavigationEnabled
   withIface(self.p, IID_INavigationView2, "INavigationView2", it):
-    var tmp: int32
+    var tmp: NavigationViewShoulderNavigationEnabled
     vcall(it, Slot_INavigationView2_get_ShoulderNavigationEnabled, Fn_INavigationView2_get_ShoulderNavigationEnabled)(it, tmp.addr).check("NavigationView.get_ShoulderNavigationEnabled")
-    result = NavigationViewShoulderNavigationEnabled(tmp)
+    result = tmp
 
 proc `shoulderNavigationEnabled=`*(self: NavigationView, value: NavigationViewShoulderNavigationEnabled) =
   ## Microsoft.UI.Xaml.Controls.NavigationView.put_ShoulderNavigationEnabled
   withIface(self.p, IID_INavigationView2, "INavigationView2", it):
-    vcall(it, Slot_INavigationView2_put_ShoulderNavigationEnabled, Fn_INavigationView2_put_ShoulderNavigationEnabled)(it, int32(value)).check("NavigationView.put_ShoulderNavigationEnabled")
+    vcall(it, Slot_INavigationView2_put_ShoulderNavigationEnabled, Fn_INavigationView2_put_ShoulderNavigationEnabled)(it, value).check("NavigationView.put_ShoulderNavigationEnabled")
 
 proc overflowLabelMode*(self: NavigationView): NavigationViewOverflowLabelMode =
   ## Microsoft.UI.Xaml.Controls.NavigationView.get_OverflowLabelMode
   withIface(self.p, IID_INavigationView2, "INavigationView2", it):
-    var tmp: int32
+    var tmp: NavigationViewOverflowLabelMode
     vcall(it, Slot_INavigationView2_get_OverflowLabelMode, Fn_INavigationView2_get_OverflowLabelMode)(it, tmp.addr).check("NavigationView.get_OverflowLabelMode")
-    result = NavigationViewOverflowLabelMode(tmp)
+    result = tmp
 
 proc `overflowLabelMode=`*(self: NavigationView, value: NavigationViewOverflowLabelMode) =
   ## Microsoft.UI.Xaml.Controls.NavigationView.put_OverflowLabelMode
   withIface(self.p, IID_INavigationView2, "INavigationView2", it):
-    vcall(it, Slot_INavigationView2_put_OverflowLabelMode, Fn_INavigationView2_put_OverflowLabelMode)(it, int32(value)).check("NavigationView.put_OverflowLabelMode")
+    vcall(it, Slot_INavigationView2_put_OverflowLabelMode, Fn_INavigationView2_put_OverflowLabelMode)(it, value).check("NavigationView.put_OverflowLabelMode")
 
 proc onExpanding*(self: NavigationView,
     handler: proc(sender: pointer, args: NavigationViewItemExpandingEventArgs)): EventRegistrationToken {.discardable.} =
@@ -22687,9 +22686,9 @@ proc collapse*(self: NavigationView, a1: NavigationViewItem) =
 proc displayMode*(self: NavigationViewDisplayModeChangedEventArgs): NavigationViewDisplayMode =
   ## Microsoft.UI.Xaml.Controls.NavigationViewDisplayModeChangedEventArgs.get_DisplayMode
   withIface(self.p, IID_INavigationViewDisplayModeChangedEventArgs, "INavigationViewDisplayModeChangedEventArgs", it):
-    var tmp: int32
+    var tmp: NavigationViewDisplayMode
     vcall(it, Slot_INavigationViewDisplayModeChangedEventArgs_get_DisplayMode, Fn_INavigationViewDisplayModeChangedEventArgs_get_DisplayMode)(it, tmp.addr).check("NavigationViewDisplayModeChangedEventArgs.get_DisplayMode")
-    result = NavigationViewDisplayMode(tmp)
+    result = tmp
 
 proc isSelected*(self: NavigationViewItemBase): bool =
   ## Microsoft.UI.Xaml.Controls.NavigationViewItemBase.get_IsSelected
@@ -22926,37 +22925,37 @@ proc topPadding*(self: NavigationViewTemplateSettings): float64 =
 proc overflowButtonVisibility*(self: NavigationViewTemplateSettings): Visibility =
   ## Microsoft.UI.Xaml.Controls.NavigationViewTemplateSettings.get_OverflowButtonVisibility
   withIface(self.p, IID_INavigationViewTemplateSettings, "INavigationViewTemplateSettings", it):
-    var tmp: int32
+    var tmp: Visibility
     vcall(it, Slot_INavigationViewTemplateSettings_get_OverflowButtonVisibility, Fn_INavigationViewTemplateSettings_get_OverflowButtonVisibility)(it, tmp.addr).check("NavigationViewTemplateSettings.get_OverflowButtonVisibility")
-    result = Visibility(tmp)
+    result = tmp
 
 proc paneToggleButtonVisibility*(self: NavigationViewTemplateSettings): Visibility =
   ## Microsoft.UI.Xaml.Controls.NavigationViewTemplateSettings.get_PaneToggleButtonVisibility
   withIface(self.p, IID_INavigationViewTemplateSettings, "INavigationViewTemplateSettings", it):
-    var tmp: int32
+    var tmp: Visibility
     vcall(it, Slot_INavigationViewTemplateSettings_get_PaneToggleButtonVisibility, Fn_INavigationViewTemplateSettings_get_PaneToggleButtonVisibility)(it, tmp.addr).check("NavigationViewTemplateSettings.get_PaneToggleButtonVisibility")
-    result = Visibility(tmp)
+    result = tmp
 
 proc backButtonVisibility*(self: NavigationViewTemplateSettings): Visibility =
   ## Microsoft.UI.Xaml.Controls.NavigationViewTemplateSettings.get_BackButtonVisibility
   withIface(self.p, IID_INavigationViewTemplateSettings, "INavigationViewTemplateSettings", it):
-    var tmp: int32
+    var tmp: Visibility
     vcall(it, Slot_INavigationViewTemplateSettings_get_BackButtonVisibility, Fn_INavigationViewTemplateSettings_get_BackButtonVisibility)(it, tmp.addr).check("NavigationViewTemplateSettings.get_BackButtonVisibility")
-    result = Visibility(tmp)
+    result = tmp
 
 proc topPaneVisibility*(self: NavigationViewTemplateSettings): Visibility =
   ## Microsoft.UI.Xaml.Controls.NavigationViewTemplateSettings.get_TopPaneVisibility
   withIface(self.p, IID_INavigationViewTemplateSettings, "INavigationViewTemplateSettings", it):
-    var tmp: int32
+    var tmp: Visibility
     vcall(it, Slot_INavigationViewTemplateSettings_get_TopPaneVisibility, Fn_INavigationViewTemplateSettings_get_TopPaneVisibility)(it, tmp.addr).check("NavigationViewTemplateSettings.get_TopPaneVisibility")
-    result = Visibility(tmp)
+    result = tmp
 
 proc leftPaneVisibility*(self: NavigationViewTemplateSettings): Visibility =
   ## Microsoft.UI.Xaml.Controls.NavigationViewTemplateSettings.get_LeftPaneVisibility
   withIface(self.p, IID_INavigationViewTemplateSettings, "INavigationViewTemplateSettings", it):
-    var tmp: int32
+    var tmp: Visibility
     vcall(it, Slot_INavigationViewTemplateSettings_get_LeftPaneVisibility, Fn_INavigationViewTemplateSettings_get_LeftPaneVisibility)(it, tmp.addr).check("NavigationViewTemplateSettings.get_LeftPaneVisibility")
-    result = Visibility(tmp)
+    result = tmp
 
 proc singleSelectionFollowsFocus*(self: NavigationViewTemplateSettings): bool =
   ## Microsoft.UI.Xaml.Controls.NavigationViewTemplateSettings.get_SingleSelectionFollowsFocus
@@ -23169,14 +23168,14 @@ proc `selectionHighlightColor=`*(self: NumberBox, value: SolidColorBrush) =
 proc textReadingOrder*(self: NumberBox): TextReadingOrder =
   ## Microsoft.UI.Xaml.Controls.NumberBox.get_TextReadingOrder
   withIface(self.p, IID_INumberBox, "INumberBox", it):
-    var tmp: int32
+    var tmp: TextReadingOrder
     vcall(it, Slot_INumberBox_get_TextReadingOrder, Fn_INumberBox_get_TextReadingOrder)(it, tmp.addr).check("NumberBox.get_TextReadingOrder")
-    result = TextReadingOrder(tmp)
+    result = tmp
 
 proc `textReadingOrder=`*(self: NumberBox, value: TextReadingOrder) =
   ## Microsoft.UI.Xaml.Controls.NumberBox.put_TextReadingOrder
   withIface(self.p, IID_INumberBox, "INumberBox", it):
-    vcall(it, Slot_INumberBox_put_TextReadingOrder, Fn_INumberBox_put_TextReadingOrder)(it, int32(value)).check("NumberBox.put_TextReadingOrder")
+    vcall(it, Slot_INumberBox_put_TextReadingOrder, Fn_INumberBox_put_TextReadingOrder)(it, value).check("NumberBox.put_TextReadingOrder")
 
 proc preventKeyboardDisplayOnProgrammaticFocus*(self: NumberBox): bool =
   ## Microsoft.UI.Xaml.Controls.NumberBox.get_PreventKeyboardDisplayOnProgrammaticFocus
@@ -23205,26 +23204,26 @@ proc `description=`*(self: NumberBox, value: pointer) =
 proc validationMode*(self: NumberBox): NumberBoxValidationMode =
   ## Microsoft.UI.Xaml.Controls.NumberBox.get_ValidationMode
   withIface(self.p, IID_INumberBox, "INumberBox", it):
-    var tmp: int32
+    var tmp: NumberBoxValidationMode
     vcall(it, Slot_INumberBox_get_ValidationMode, Fn_INumberBox_get_ValidationMode)(it, tmp.addr).check("NumberBox.get_ValidationMode")
-    result = NumberBoxValidationMode(tmp)
+    result = tmp
 
 proc `validationMode=`*(self: NumberBox, value: NumberBoxValidationMode) =
   ## Microsoft.UI.Xaml.Controls.NumberBox.put_ValidationMode
   withIface(self.p, IID_INumberBox, "INumberBox", it):
-    vcall(it, Slot_INumberBox_put_ValidationMode, Fn_INumberBox_put_ValidationMode)(it, int32(value)).check("NumberBox.put_ValidationMode")
+    vcall(it, Slot_INumberBox_put_ValidationMode, Fn_INumberBox_put_ValidationMode)(it, value).check("NumberBox.put_ValidationMode")
 
 proc spinButtonPlacementMode*(self: NumberBox): NumberBoxSpinButtonPlacementMode =
   ## Microsoft.UI.Xaml.Controls.NumberBox.get_SpinButtonPlacementMode
   withIface(self.p, IID_INumberBox, "INumberBox", it):
-    var tmp: int32
+    var tmp: NumberBoxSpinButtonPlacementMode
     vcall(it, Slot_INumberBox_get_SpinButtonPlacementMode, Fn_INumberBox_get_SpinButtonPlacementMode)(it, tmp.addr).check("NumberBox.get_SpinButtonPlacementMode")
-    result = NumberBoxSpinButtonPlacementMode(tmp)
+    result = tmp
 
 proc `spinButtonPlacementMode=`*(self: NumberBox, value: NumberBoxSpinButtonPlacementMode) =
   ## Microsoft.UI.Xaml.Controls.NumberBox.put_SpinButtonPlacementMode
   withIface(self.p, IID_INumberBox, "INumberBox", it):
-    vcall(it, Slot_INumberBox_put_SpinButtonPlacementMode, Fn_INumberBox_put_SpinButtonPlacementMode)(it, int32(value)).check("NumberBox.put_SpinButtonPlacementMode")
+    vcall(it, Slot_INumberBox_put_SpinButtonPlacementMode, Fn_INumberBox_put_SpinButtonPlacementMode)(it, value).check("NumberBox.put_SpinButtonPlacementMode")
 
 proc isWrapEnabled*(self: NumberBox): bool =
   ## Microsoft.UI.Xaml.Controls.NumberBox.get_IsWrapEnabled
@@ -23317,14 +23316,14 @@ proc frame*(self: Page): Frame =
 proc navigationCacheMode*(self: Page): NavigationCacheMode =
   ## Microsoft.UI.Xaml.Controls.Page.get_NavigationCacheMode
   withIface(self.p, IID_IPage, "IPage", it):
-    var tmp: int32
+    var tmp: NavigationCacheMode
     vcall(it, Slot_IPage_get_NavigationCacheMode, Fn_IPage_get_NavigationCacheMode)(it, tmp.addr).check("Page.get_NavigationCacheMode")
-    result = NavigationCacheMode(tmp)
+    result = tmp
 
 proc `navigationCacheMode=`*(self: Page, value: NavigationCacheMode) =
   ## Microsoft.UI.Xaml.Controls.Page.put_NavigationCacheMode
   withIface(self.p, IID_IPage, "IPage", it):
-    vcall(it, Slot_IPage_put_NavigationCacheMode, Fn_IPage_put_NavigationCacheMode)(it, int32(value)).check("Page.put_NavigationCacheMode")
+    vcall(it, Slot_IPage_put_NavigationCacheMode, Fn_IPage_put_NavigationCacheMode)(it, value).check("Page.put_NavigationCacheMode")
 
 proc topAppBar*(self: Page): AppBar =
   ## Microsoft.UI.Xaml.Controls.Page.get_TopAppBar
@@ -23415,14 +23414,14 @@ proc `horizontalSourceEndOffset=`*(self: ParallaxView, value: float64) =
 proc horizontalSourceOffsetKind*(self: ParallaxView): ParallaxSourceOffsetKind =
   ## Microsoft.UI.Xaml.Controls.ParallaxView.get_HorizontalSourceOffsetKind
   withIface(self.p, IID_IParallaxView, "IParallaxView", it):
-    var tmp: int32
+    var tmp: ParallaxSourceOffsetKind
     vcall(it, Slot_IParallaxView_get_HorizontalSourceOffsetKind, Fn_IParallaxView_get_HorizontalSourceOffsetKind)(it, tmp.addr).check("ParallaxView.get_HorizontalSourceOffsetKind")
-    result = ParallaxSourceOffsetKind(tmp)
+    result = tmp
 
 proc `horizontalSourceOffsetKind=`*(self: ParallaxView, value: ParallaxSourceOffsetKind) =
   ## Microsoft.UI.Xaml.Controls.ParallaxView.put_HorizontalSourceOffsetKind
   withIface(self.p, IID_IParallaxView, "IParallaxView", it):
-    vcall(it, Slot_IParallaxView_put_HorizontalSourceOffsetKind, Fn_IParallaxView_put_HorizontalSourceOffsetKind)(it, int32(value)).check("ParallaxView.put_HorizontalSourceOffsetKind")
+    vcall(it, Slot_IParallaxView_put_HorizontalSourceOffsetKind, Fn_IParallaxView_put_HorizontalSourceOffsetKind)(it, value).check("ParallaxView.put_HorizontalSourceOffsetKind")
 
 proc horizontalSourceStartOffset*(self: ParallaxView): float64 =
   ## Microsoft.UI.Xaml.Controls.ParallaxView.get_HorizontalSourceStartOffset
@@ -23524,14 +23523,14 @@ proc `verticalSourceEndOffset=`*(self: ParallaxView, value: float64) =
 proc verticalSourceOffsetKind*(self: ParallaxView): ParallaxSourceOffsetKind =
   ## Microsoft.UI.Xaml.Controls.ParallaxView.get_VerticalSourceOffsetKind
   withIface(self.p, IID_IParallaxView, "IParallaxView", it):
-    var tmp: int32
+    var tmp: ParallaxSourceOffsetKind
     vcall(it, Slot_IParallaxView_get_VerticalSourceOffsetKind, Fn_IParallaxView_get_VerticalSourceOffsetKind)(it, tmp.addr).check("ParallaxView.get_VerticalSourceOffsetKind")
-    result = ParallaxSourceOffsetKind(tmp)
+    result = tmp
 
 proc `verticalSourceOffsetKind=`*(self: ParallaxView, value: ParallaxSourceOffsetKind) =
   ## Microsoft.UI.Xaml.Controls.ParallaxView.put_VerticalSourceOffsetKind
   withIface(self.p, IID_IParallaxView, "IParallaxView", it):
-    vcall(it, Slot_IParallaxView_put_VerticalSourceOffsetKind, Fn_IParallaxView_put_VerticalSourceOffsetKind)(it, int32(value)).check("ParallaxView.put_VerticalSourceOffsetKind")
+    vcall(it, Slot_IParallaxView_put_VerticalSourceOffsetKind, Fn_IParallaxView_put_VerticalSourceOffsetKind)(it, value).check("ParallaxView.put_VerticalSourceOffsetKind")
 
 proc verticalSourceStartOffset*(self: ParallaxView): float64 =
   ## Microsoft.UI.Xaml.Controls.ParallaxView.get_VerticalSourceStartOffset
@@ -23675,26 +23674,26 @@ proc `preventKeyboardDisplayOnProgrammaticFocus=`*(self: PasswordBox, value: boo
 proc passwordRevealMode*(self: PasswordBox): PasswordRevealMode =
   ## Microsoft.UI.Xaml.Controls.PasswordBox.get_PasswordRevealMode
   withIface(self.p, IID_IPasswordBox, "IPasswordBox", it):
-    var tmp: int32
+    var tmp: PasswordRevealMode
     vcall(it, Slot_IPasswordBox_get_PasswordRevealMode, Fn_IPasswordBox_get_PasswordRevealMode)(it, tmp.addr).check("PasswordBox.get_PasswordRevealMode")
-    result = PasswordRevealMode(tmp)
+    result = tmp
 
 proc `passwordRevealMode=`*(self: PasswordBox, value: PasswordRevealMode) =
   ## Microsoft.UI.Xaml.Controls.PasswordBox.put_PasswordRevealMode
   withIface(self.p, IID_IPasswordBox, "IPasswordBox", it):
-    vcall(it, Slot_IPasswordBox_put_PasswordRevealMode, Fn_IPasswordBox_put_PasswordRevealMode)(it, int32(value)).check("PasswordBox.put_PasswordRevealMode")
+    vcall(it, Slot_IPasswordBox_put_PasswordRevealMode, Fn_IPasswordBox_put_PasswordRevealMode)(it, value).check("PasswordBox.put_PasswordRevealMode")
 
 proc textReadingOrder*(self: PasswordBox): TextReadingOrder =
   ## Microsoft.UI.Xaml.Controls.PasswordBox.get_TextReadingOrder
   withIface(self.p, IID_IPasswordBox, "IPasswordBox", it):
-    var tmp: int32
+    var tmp: TextReadingOrder
     vcall(it, Slot_IPasswordBox_get_TextReadingOrder, Fn_IPasswordBox_get_TextReadingOrder)(it, tmp.addr).check("PasswordBox.get_TextReadingOrder")
-    result = TextReadingOrder(tmp)
+    result = tmp
 
 proc `textReadingOrder=`*(self: PasswordBox, value: TextReadingOrder) =
   ## Microsoft.UI.Xaml.Controls.PasswordBox.put_TextReadingOrder
   withIface(self.p, IID_IPasswordBox, "IPasswordBox", it):
-    vcall(it, Slot_IPasswordBox_put_TextReadingOrder, Fn_IPasswordBox_put_TextReadingOrder)(it, int32(value)).check("PasswordBox.put_TextReadingOrder")
+    vcall(it, Slot_IPasswordBox_put_TextReadingOrder, Fn_IPasswordBox_put_TextReadingOrder)(it, value).check("PasswordBox.put_TextReadingOrder")
 
 proc inputScope*(self: PasswordBox): InputScope =
   ## Microsoft.UI.Xaml.Controls.PasswordBox.get_InputScope
@@ -24111,38 +24110,38 @@ proc `maxVisiblePips=`*(self: PipsPager, value: int32) =
 proc orientation*(self: PipsPager): Orientation =
   ## Microsoft.UI.Xaml.Controls.PipsPager.get_Orientation
   withIface(self.p, IID_IPipsPager, "IPipsPager", it):
-    var tmp: int32
+    var tmp: Orientation
     vcall(it, Slot_IPipsPager_get_Orientation, Fn_IPipsPager_get_Orientation)(it, tmp.addr).check("PipsPager.get_Orientation")
-    result = Orientation(tmp)
+    result = tmp
 
 proc `orientation=`*(self: PipsPager, value: Orientation) =
   ## Microsoft.UI.Xaml.Controls.PipsPager.put_Orientation
   withIface(self.p, IID_IPipsPager, "IPipsPager", it):
-    vcall(it, Slot_IPipsPager_put_Orientation, Fn_IPipsPager_put_Orientation)(it, int32(value)).check("PipsPager.put_Orientation")
+    vcall(it, Slot_IPipsPager_put_Orientation, Fn_IPipsPager_put_Orientation)(it, value).check("PipsPager.put_Orientation")
 
 proc previousButtonVisibility*(self: PipsPager): PipsPagerButtonVisibility =
   ## Microsoft.UI.Xaml.Controls.PipsPager.get_PreviousButtonVisibility
   withIface(self.p, IID_IPipsPager, "IPipsPager", it):
-    var tmp: int32
+    var tmp: PipsPagerButtonVisibility
     vcall(it, Slot_IPipsPager_get_PreviousButtonVisibility, Fn_IPipsPager_get_PreviousButtonVisibility)(it, tmp.addr).check("PipsPager.get_PreviousButtonVisibility")
-    result = PipsPagerButtonVisibility(tmp)
+    result = tmp
 
 proc `previousButtonVisibility=`*(self: PipsPager, value: PipsPagerButtonVisibility) =
   ## Microsoft.UI.Xaml.Controls.PipsPager.put_PreviousButtonVisibility
   withIface(self.p, IID_IPipsPager, "IPipsPager", it):
-    vcall(it, Slot_IPipsPager_put_PreviousButtonVisibility, Fn_IPipsPager_put_PreviousButtonVisibility)(it, int32(value)).check("PipsPager.put_PreviousButtonVisibility")
+    vcall(it, Slot_IPipsPager_put_PreviousButtonVisibility, Fn_IPipsPager_put_PreviousButtonVisibility)(it, value).check("PipsPager.put_PreviousButtonVisibility")
 
 proc nextButtonVisibility*(self: PipsPager): PipsPagerButtonVisibility =
   ## Microsoft.UI.Xaml.Controls.PipsPager.get_NextButtonVisibility
   withIface(self.p, IID_IPipsPager, "IPipsPager", it):
-    var tmp: int32
+    var tmp: PipsPagerButtonVisibility
     vcall(it, Slot_IPipsPager_get_NextButtonVisibility, Fn_IPipsPager_get_NextButtonVisibility)(it, tmp.addr).check("PipsPager.get_NextButtonVisibility")
-    result = PipsPagerButtonVisibility(tmp)
+    result = tmp
 
 proc `nextButtonVisibility=`*(self: PipsPager, value: PipsPagerButtonVisibility) =
   ## Microsoft.UI.Xaml.Controls.PipsPager.put_NextButtonVisibility
   withIface(self.p, IID_IPipsPager, "IPipsPager", it):
-    vcall(it, Slot_IPipsPager_put_NextButtonVisibility, Fn_IPipsPager_put_NextButtonVisibility)(it, int32(value)).check("PipsPager.put_NextButtonVisibility")
+    vcall(it, Slot_IPipsPager_put_NextButtonVisibility, Fn_IPipsPager_put_NextButtonVisibility)(it, value).check("PipsPager.put_NextButtonVisibility")
 
 proc previousButtonStyle*(self: PipsPager): Style =
   ## Microsoft.UI.Xaml.Controls.PipsPager.get_PreviousButtonStyle
@@ -24226,14 +24225,14 @@ proc templateSettings*(self: PipsPager): PipsPagerTemplateSettings =
 proc wrapMode*(self: PipsPager): PipsPagerWrapMode =
   ## Microsoft.UI.Xaml.Controls.PipsPager.get_WrapMode
   withIface(self.p, IID_IPipsPager2, "IPipsPager2", it):
-    var tmp: int32
+    var tmp: PipsPagerWrapMode
     vcall(it, Slot_IPipsPager2_get_WrapMode, Fn_IPipsPager2_get_WrapMode)(it, tmp.addr).check("PipsPager.get_WrapMode")
-    result = PipsPagerWrapMode(tmp)
+    result = tmp
 
 proc `wrapMode=`*(self: PipsPager, value: PipsPagerWrapMode) =
   ## Microsoft.UI.Xaml.Controls.PipsPager.put_WrapMode
   withIface(self.p, IID_IPipsPager2, "IPipsPager2", it):
-    vcall(it, Slot_IPipsPager2_put_WrapMode, Fn_IPipsPager2_put_WrapMode)(it, int32(value)).check("PipsPager.put_WrapMode")
+    vcall(it, Slot_IPipsPager2_put_WrapMode, Fn_IPipsPager2_put_WrapMode)(it, value).check("PipsPager.put_WrapMode")
 
 proc newPivot*(): Pivot =
   ## Compose a `Microsoft.UI.Xaml.Controls.Pivot`.
@@ -24367,14 +24366,14 @@ proc `isLocked=`*(self: Pivot, value: bool) =
 proc headerFocusVisualPlacement*(self: Pivot): PivotHeaderFocusVisualPlacement =
   ## Microsoft.UI.Xaml.Controls.Pivot.get_HeaderFocusVisualPlacement
   withIface(self.p, IID_IPivot, "IPivot", it):
-    var tmp: int32
+    var tmp: PivotHeaderFocusVisualPlacement
     vcall(it, Slot_IPivot_get_HeaderFocusVisualPlacement, Fn_IPivot_get_HeaderFocusVisualPlacement)(it, tmp.addr).check("Pivot.get_HeaderFocusVisualPlacement")
-    result = PivotHeaderFocusVisualPlacement(tmp)
+    result = tmp
 
 proc `headerFocusVisualPlacement=`*(self: Pivot, value: PivotHeaderFocusVisualPlacement) =
   ## Microsoft.UI.Xaml.Controls.Pivot.put_HeaderFocusVisualPlacement
   withIface(self.p, IID_IPivot, "IPivot", it):
-    vcall(it, Slot_IPivot_put_HeaderFocusVisualPlacement, Fn_IPivot_put_HeaderFocusVisualPlacement)(it, int32(value)).check("Pivot.put_HeaderFocusVisualPlacement")
+    vcall(it, Slot_IPivot_put_HeaderFocusVisualPlacement, Fn_IPivot_put_HeaderFocusVisualPlacement)(it, value).check("Pivot.put_HeaderFocusVisualPlacement")
 
 proc isHeaderItemsCarouselEnabled*(self: Pivot): bool =
   ## Microsoft.UI.Xaml.Controls.Pivot.get_IsHeaderItemsCarouselEnabled
@@ -25102,14 +25101,14 @@ proc `stepFrequency=`*(self: Slider, value: float64) =
 proc snapsTo*(self: Slider): SliderSnapsTo =
   ## Microsoft.UI.Xaml.Controls.Slider.get_SnapsTo
   withIface(self.p, IID_ISlider, "ISlider", it):
-    var tmp: int32
+    var tmp: SliderSnapsTo
     vcall(it, Slot_ISlider_get_SnapsTo, Fn_ISlider_get_SnapsTo)(it, tmp.addr).check("Slider.get_SnapsTo")
-    result = SliderSnapsTo(tmp)
+    result = tmp
 
 proc `snapsTo=`*(self: Slider, value: SliderSnapsTo) =
   ## Microsoft.UI.Xaml.Controls.Slider.put_SnapsTo
   withIface(self.p, IID_ISlider, "ISlider", it):
-    vcall(it, Slot_ISlider_put_SnapsTo, Fn_ISlider_put_SnapsTo)(it, int32(value)).check("Slider.put_SnapsTo")
+    vcall(it, Slot_ISlider_put_SnapsTo, Fn_ISlider_put_SnapsTo)(it, value).check("Slider.put_SnapsTo")
 
 proc tickFrequency*(self: Slider): float64 =
   ## Microsoft.UI.Xaml.Controls.Slider.get_TickFrequency
@@ -25126,26 +25125,26 @@ proc `tickFrequency=`*(self: Slider, value: float64) =
 proc tickPlacement*(self: Slider): TickPlacement =
   ## Microsoft.UI.Xaml.Controls.Slider.get_TickPlacement
   withIface(self.p, IID_ISlider, "ISlider", it):
-    var tmp: int32
+    var tmp: TickPlacement
     vcall(it, Slot_ISlider_get_TickPlacement, Fn_ISlider_get_TickPlacement)(it, tmp.addr).check("Slider.get_TickPlacement")
-    result = TickPlacement(tmp)
+    result = tmp
 
 proc `tickPlacement=`*(self: Slider, value: TickPlacement) =
   ## Microsoft.UI.Xaml.Controls.Slider.put_TickPlacement
   withIface(self.p, IID_ISlider, "ISlider", it):
-    vcall(it, Slot_ISlider_put_TickPlacement, Fn_ISlider_put_TickPlacement)(it, int32(value)).check("Slider.put_TickPlacement")
+    vcall(it, Slot_ISlider_put_TickPlacement, Fn_ISlider_put_TickPlacement)(it, value).check("Slider.put_TickPlacement")
 
 proc orientation*(self: Slider): Orientation =
   ## Microsoft.UI.Xaml.Controls.Slider.get_Orientation
   withIface(self.p, IID_ISlider, "ISlider", it):
-    var tmp: int32
+    var tmp: Orientation
     vcall(it, Slot_ISlider_get_Orientation, Fn_ISlider_get_Orientation)(it, tmp.addr).check("Slider.get_Orientation")
-    result = Orientation(tmp)
+    result = tmp
 
 proc `orientation=`*(self: Slider, value: Orientation) =
   ## Microsoft.UI.Xaml.Controls.Slider.put_Orientation
   withIface(self.p, IID_ISlider, "ISlider", it):
-    vcall(it, Slot_ISlider_put_Orientation, Fn_ISlider_put_Orientation)(it, int32(value)).check("Slider.put_Orientation")
+    vcall(it, Slot_ISlider_put_Orientation, Fn_ISlider_put_Orientation)(it, value).check("Slider.put_Orientation")
 
 proc isDirectionReversed*(self: Slider): bool =
   ## Microsoft.UI.Xaml.Controls.Slider.get_IsDirectionReversed
@@ -25216,14 +25215,14 @@ proc newColorPickerSlider*(): ColorPickerSlider =
 proc colorChannel*(self: ColorPickerSlider): ColorPickerHsvChannel =
   ## Microsoft.UI.Xaml.Controls.Primitives.ColorPickerSlider.get_ColorChannel
   withIface(self.p, IID_IColorPickerSlider, "IColorPickerSlider", it):
-    var tmp: int32
+    var tmp: ColorPickerHsvChannel
     vcall(it, Slot_IColorPickerSlider_get_ColorChannel, Fn_IColorPickerSlider_get_ColorChannel)(it, tmp.addr).check("ColorPickerSlider.get_ColorChannel")
-    result = ColorPickerHsvChannel(tmp)
+    result = tmp
 
 proc `colorChannel=`*(self: ColorPickerSlider, value: ColorPickerHsvChannel) =
   ## Microsoft.UI.Xaml.Controls.Primitives.ColorPickerSlider.put_ColorChannel
   withIface(self.p, IID_IColorPickerSlider, "IColorPickerSlider", it):
-    vcall(it, Slot_IColorPickerSlider_put_ColorChannel, Fn_IColorPickerSlider_put_ColorChannel)(it, int32(value)).check("ColorPickerSlider.put_ColorChannel")
+    vcall(it, Slot_IColorPickerSlider_put_ColorChannel, Fn_IColorPickerSlider_put_ColorChannel)(it, value).check("ColorPickerSlider.put_ColorChannel")
 
 proc newColorSpectrum*(): ColorSpectrum =
   ## Compose a `Microsoft.UI.Xaml.Controls.Primitives.ColorSpectrum`.
@@ -25329,26 +25328,26 @@ proc `maxValue=`*(self: ColorSpectrum, value: int32) =
 proc shape*(self: ColorSpectrum): ColorSpectrumShape =
   ## Microsoft.UI.Xaml.Controls.Primitives.ColorSpectrum.get_Shape
   withIface(self.p, IID_IColorSpectrum, "IColorSpectrum", it):
-    var tmp: int32
+    var tmp: ColorSpectrumShape
     vcall(it, Slot_IColorSpectrum_get_Shape, Fn_IColorSpectrum_get_Shape)(it, tmp.addr).check("ColorSpectrum.get_Shape")
-    result = ColorSpectrumShape(tmp)
+    result = tmp
 
 proc `shape=`*(self: ColorSpectrum, value: ColorSpectrumShape) =
   ## Microsoft.UI.Xaml.Controls.Primitives.ColorSpectrum.put_Shape
   withIface(self.p, IID_IColorSpectrum, "IColorSpectrum", it):
-    vcall(it, Slot_IColorSpectrum_put_Shape, Fn_IColorSpectrum_put_Shape)(it, int32(value)).check("ColorSpectrum.put_Shape")
+    vcall(it, Slot_IColorSpectrum_put_Shape, Fn_IColorSpectrum_put_Shape)(it, value).check("ColorSpectrum.put_Shape")
 
 proc components*(self: ColorSpectrum): ColorSpectrumComponents =
   ## Microsoft.UI.Xaml.Controls.Primitives.ColorSpectrum.get_Components
   withIface(self.p, IID_IColorSpectrum, "IColorSpectrum", it):
-    var tmp: int32
+    var tmp: ColorSpectrumComponents
     vcall(it, Slot_IColorSpectrum_get_Components, Fn_IColorSpectrum_get_Components)(it, tmp.addr).check("ColorSpectrum.get_Components")
-    result = ColorSpectrumComponents(tmp)
+    result = tmp
 
 proc `components=`*(self: ColorSpectrum, value: ColorSpectrumComponents) =
   ## Microsoft.UI.Xaml.Controls.Primitives.ColorSpectrum.put_Components
   withIface(self.p, IID_IColorSpectrum, "IColorSpectrum", it):
-    vcall(it, Slot_IColorSpectrum_put_Components, Fn_IColorSpectrum_put_Components)(it, int32(value)).check("ColorSpectrum.put_Components")
+    vcall(it, Slot_IColorSpectrum_put_Components, Fn_IColorSpectrum_put_Components)(it, value).check("ColorSpectrum.put_Components")
 
 proc onColorChanged*(self: ColorSpectrum,
     handler: proc(sender: pointer, args: ColorChangedEventArgs)): EventRegistrationToken {.discardable.} =
@@ -25435,9 +25434,9 @@ proc dropDownOffset*(self: ComboBoxTemplateSettings): float64 =
 proc selectedItemDirection*(self: ComboBoxTemplateSettings): AnimationDirection =
   ## Microsoft.UI.Xaml.Controls.Primitives.ComboBoxTemplateSettings.get_SelectedItemDirection
   withIface(self.p, IID_IComboBoxTemplateSettings, "IComboBoxTemplateSettings", it):
-    var tmp: int32
+    var tmp: AnimationDirection
     vcall(it, Slot_IComboBoxTemplateSettings_get_SelectedItemDirection, Fn_IComboBoxTemplateSettings_get_SelectedItemDirection)(it, tmp.addr).check("ComboBoxTemplateSettings.get_SelectedItemDirection")
-    result = AnimationDirection(tmp)
+    result = tmp
 
 proc dropDownContentMinWidth*(self: ComboBoxTemplateSettings): float64 =
   ## Microsoft.UI.Xaml.Controls.Primitives.ComboBoxTemplateSettings.get_DropDownContentMinWidth
@@ -25670,9 +25669,9 @@ proc negativeOverflowContentHeight*(self: CommandBarTemplateSettings): float64 =
 proc effectiveOverflowButtonVisibility*(self: CommandBarTemplateSettings): Visibility =
   ## Microsoft.UI.Xaml.Controls.Primitives.CommandBarTemplateSettings.get_EffectiveOverflowButtonVisibility
   withIface(self.p, IID_ICommandBarTemplateSettings, "ICommandBarTemplateSettings", it):
-    var tmp: int32
+    var tmp: Visibility
     vcall(it, Slot_ICommandBarTemplateSettings_get_EffectiveOverflowButtonVisibility, Fn_ICommandBarTemplateSettings_get_EffectiveOverflowButtonVisibility)(it, tmp.addr).check("CommandBarTemplateSettings.get_EffectiveOverflowButtonVisibility")
-    result = Visibility(tmp)
+    result = tmp
 
 proc overflowContentCompactYTranslation*(self: CommandBarTemplateSettings): float64 =
   ## Microsoft.UI.Xaml.Controls.Primitives.CommandBarTemplateSettings.get_OverflowContentCompactYTranslation
@@ -25702,14 +25701,14 @@ proc newCornerRadiusFilterConverter*(): CornerRadiusFilterConverter =
 proc filter*(self: CornerRadiusFilterConverter): CornerRadiusFilterKind =
   ## Microsoft.UI.Xaml.Controls.Primitives.CornerRadiusFilterConverter.get_Filter
   withIface(self.p, IID_ICornerRadiusFilterConverter, "ICornerRadiusFilterConverter", it):
-    var tmp: int32
+    var tmp: CornerRadiusFilterKind
     vcall(it, Slot_ICornerRadiusFilterConverter_get_Filter, Fn_ICornerRadiusFilterConverter_get_Filter)(it, tmp.addr).check("CornerRadiusFilterConverter.get_Filter")
-    result = CornerRadiusFilterKind(tmp)
+    result = tmp
 
 proc `filter=`*(self: CornerRadiusFilterConverter, value: CornerRadiusFilterKind) =
   ## Microsoft.UI.Xaml.Controls.Primitives.CornerRadiusFilterConverter.put_Filter
   withIface(self.p, IID_ICornerRadiusFilterConverter, "ICornerRadiusFilterConverter", it):
-    vcall(it, Slot_ICornerRadiusFilterConverter_put_Filter, Fn_ICornerRadiusFilterConverter_put_Filter)(it, int32(value)).check("CornerRadiusFilterConverter.put_Filter")
+    vcall(it, Slot_ICornerRadiusFilterConverter_put_Filter, Fn_ICornerRadiusFilterConverter_put_Filter)(it, value).check("CornerRadiusFilterConverter.put_Filter")
 
 proc scale*(self: CornerRadiusFilterConverter): float64 =
   ## Microsoft.UI.Xaml.Controls.Primitives.CornerRadiusFilterConverter.get_Scale
@@ -25746,14 +25745,14 @@ proc newCornerRadiusToThicknessConverter*(): CornerRadiusToThicknessConverter =
 proc conversionKind*(self: CornerRadiusToThicknessConverter): CornerRadiusToThicknessConverterKind =
   ## Microsoft.UI.Xaml.Controls.Primitives.CornerRadiusToThicknessConverter.get_ConversionKind
   withIface(self.p, IID_ICornerRadiusToThicknessConverter, "ICornerRadiusToThicknessConverter", it):
-    var tmp: int32
+    var tmp: CornerRadiusToThicknessConverterKind
     vcall(it, Slot_ICornerRadiusToThicknessConverter_get_ConversionKind, Fn_ICornerRadiusToThicknessConverter_get_ConversionKind)(it, tmp.addr).check("CornerRadiusToThicknessConverter.get_ConversionKind")
-    result = CornerRadiusToThicknessConverterKind(tmp)
+    result = tmp
 
 proc `conversionKind=`*(self: CornerRadiusToThicknessConverter, value: CornerRadiusToThicknessConverterKind) =
   ## Microsoft.UI.Xaml.Controls.Primitives.CornerRadiusToThicknessConverter.put_ConversionKind
   withIface(self.p, IID_ICornerRadiusToThicknessConverter, "ICornerRadiusToThicknessConverter", it):
-    vcall(it, Slot_ICornerRadiusToThicknessConverter_put_ConversionKind, Fn_ICornerRadiusToThicknessConverter_put_ConversionKind)(it, int32(value)).check("CornerRadiusToThicknessConverter.put_ConversionKind")
+    vcall(it, Slot_ICornerRadiusToThicknessConverter_put_ConversionKind, Fn_ICornerRadiusToThicknessConverter_put_ConversionKind)(it, value).check("CornerRadiusToThicknessConverter.put_ConversionKind")
 
 proc multiplier*(self: CornerRadiusToThicknessConverter): float64 =
   ## Microsoft.UI.Xaml.Controls.Primitives.CornerRadiusToThicknessConverter.get_Multiplier
@@ -25852,26 +25851,26 @@ proc newFlyoutShowOptions*(): FlyoutShowOptions =
 proc showMode*(self: FlyoutShowOptions): FlyoutShowMode =
   ## Microsoft.UI.Xaml.Controls.Primitives.FlyoutShowOptions.get_ShowMode
   withIface(self.p, IID_IFlyoutShowOptions, "IFlyoutShowOptions", it):
-    var tmp: int32
+    var tmp: FlyoutShowMode
     vcall(it, Slot_IFlyoutShowOptions_get_ShowMode, Fn_IFlyoutShowOptions_get_ShowMode)(it, tmp.addr).check("FlyoutShowOptions.get_ShowMode")
-    result = FlyoutShowMode(tmp)
+    result = tmp
 
 proc `showMode=`*(self: FlyoutShowOptions, value: FlyoutShowMode) =
   ## Microsoft.UI.Xaml.Controls.Primitives.FlyoutShowOptions.put_ShowMode
   withIface(self.p, IID_IFlyoutShowOptions, "IFlyoutShowOptions", it):
-    vcall(it, Slot_IFlyoutShowOptions_put_ShowMode, Fn_IFlyoutShowOptions_put_ShowMode)(it, int32(value)).check("FlyoutShowOptions.put_ShowMode")
+    vcall(it, Slot_IFlyoutShowOptions_put_ShowMode, Fn_IFlyoutShowOptions_put_ShowMode)(it, value).check("FlyoutShowOptions.put_ShowMode")
 
 proc placement*(self: FlyoutShowOptions): FlyoutPlacementMode =
   ## Microsoft.UI.Xaml.Controls.Primitives.FlyoutShowOptions.get_Placement
   withIface(self.p, IID_IFlyoutShowOptions, "IFlyoutShowOptions", it):
-    var tmp: int32
+    var tmp: FlyoutPlacementMode
     vcall(it, Slot_IFlyoutShowOptions_get_Placement, Fn_IFlyoutShowOptions_get_Placement)(it, tmp.addr).check("FlyoutShowOptions.get_Placement")
-    result = FlyoutPlacementMode(tmp)
+    result = tmp
 
 proc `placement=`*(self: FlyoutShowOptions, value: FlyoutPlacementMode) =
   ## Microsoft.UI.Xaml.Controls.Primitives.FlyoutShowOptions.put_Placement
   withIface(self.p, IID_IFlyoutShowOptions, "IFlyoutShowOptions", it):
-    vcall(it, Slot_IFlyoutShowOptions_put_Placement, Fn_IFlyoutShowOptions_put_Placement)(it, int32(value)).check("FlyoutShowOptions.put_Placement")
+    vcall(it, Slot_IFlyoutShowOptions_put_Placement, Fn_IFlyoutShowOptions_put_Placement)(it, value).check("FlyoutShowOptions.put_Placement")
 
 proc newGridViewItemPresenter*(): GridViewItemPresenter =
   ## Compose a `Microsoft.UI.Xaml.Controls.Primitives.GridViewItemPresenter`.
@@ -26097,26 +26096,26 @@ proc `reorderHintOffset=`*(self: GridViewItemPresenter, value: float64) =
 proc gridViewItemPresenterHorizontalContentAlignment*(self: GridViewItemPresenter): HorizontalAlignment =
   ## Microsoft.UI.Xaml.Controls.Primitives.GridViewItemPresenter.get_GridViewItemPresenterHorizontalContentAlignment
   withIface(self.p, IID_IGridViewItemPresenter, "IGridViewItemPresenter", it):
-    var tmp: int32
+    var tmp: HorizontalAlignment
     vcall(it, Slot_IGridViewItemPresenter_get_GridViewItemPresenterHorizontalContentAlignment, Fn_IGridViewItemPresenter_get_GridViewItemPresenterHorizontalContentAlignment)(it, tmp.addr).check("GridViewItemPresenter.get_GridViewItemPresenterHorizontalContentAlignment")
-    result = HorizontalAlignment(tmp)
+    result = tmp
 
 proc `gridViewItemPresenterHorizontalContentAlignment=`*(self: GridViewItemPresenter, value: HorizontalAlignment) =
   ## Microsoft.UI.Xaml.Controls.Primitives.GridViewItemPresenter.put_GridViewItemPresenterHorizontalContentAlignment
   withIface(self.p, IID_IGridViewItemPresenter, "IGridViewItemPresenter", it):
-    vcall(it, Slot_IGridViewItemPresenter_put_GridViewItemPresenterHorizontalContentAlignment, Fn_IGridViewItemPresenter_put_GridViewItemPresenterHorizontalContentAlignment)(it, int32(value)).check("GridViewItemPresenter.put_GridViewItemPresenterHorizontalContentAlignment")
+    vcall(it, Slot_IGridViewItemPresenter_put_GridViewItemPresenterHorizontalContentAlignment, Fn_IGridViewItemPresenter_put_GridViewItemPresenterHorizontalContentAlignment)(it, value).check("GridViewItemPresenter.put_GridViewItemPresenterHorizontalContentAlignment")
 
 proc gridViewItemPresenterVerticalContentAlignment*(self: GridViewItemPresenter): VerticalAlignment =
   ## Microsoft.UI.Xaml.Controls.Primitives.GridViewItemPresenter.get_GridViewItemPresenterVerticalContentAlignment
   withIface(self.p, IID_IGridViewItemPresenter, "IGridViewItemPresenter", it):
-    var tmp: int32
+    var tmp: VerticalAlignment
     vcall(it, Slot_IGridViewItemPresenter_get_GridViewItemPresenterVerticalContentAlignment, Fn_IGridViewItemPresenter_get_GridViewItemPresenterVerticalContentAlignment)(it, tmp.addr).check("GridViewItemPresenter.get_GridViewItemPresenterVerticalContentAlignment")
-    result = VerticalAlignment(tmp)
+    result = tmp
 
 proc `gridViewItemPresenterVerticalContentAlignment=`*(self: GridViewItemPresenter, value: VerticalAlignment) =
   ## Microsoft.UI.Xaml.Controls.Primitives.GridViewItemPresenter.put_GridViewItemPresenterVerticalContentAlignment
   withIface(self.p, IID_IGridViewItemPresenter, "IGridViewItemPresenter", it):
-    vcall(it, Slot_IGridViewItemPresenter_put_GridViewItemPresenterVerticalContentAlignment, Fn_IGridViewItemPresenter_put_GridViewItemPresenterVerticalContentAlignment)(it, int32(value)).check("GridViewItemPresenter.put_GridViewItemPresenterVerticalContentAlignment")
+    vcall(it, Slot_IGridViewItemPresenter_put_GridViewItemPresenterVerticalContentAlignment, Fn_IGridViewItemPresenter_put_GridViewItemPresenterVerticalContentAlignment)(it, value).check("GridViewItemPresenter.put_GridViewItemPresenterVerticalContentAlignment")
 
 proc gridViewItemPresenterPadding*(self: GridViewItemPresenter): Thickness =
   ## Microsoft.UI.Xaml.Controls.Primitives.GridViewItemPresenter.get_GridViewItemPresenterPadding
@@ -26541,26 +26540,26 @@ proc `reorderHintOffset=`*(self: ListViewItemPresenter, value: float64) =
 proc listViewItemPresenterHorizontalContentAlignment*(self: ListViewItemPresenter): HorizontalAlignment =
   ## Microsoft.UI.Xaml.Controls.Primitives.ListViewItemPresenter.get_ListViewItemPresenterHorizontalContentAlignment
   withIface(self.p, IID_IListViewItemPresenter, "IListViewItemPresenter", it):
-    var tmp: int32
+    var tmp: HorizontalAlignment
     vcall(it, Slot_IListViewItemPresenter_get_ListViewItemPresenterHorizontalContentAlignment, Fn_IListViewItemPresenter_get_ListViewItemPresenterHorizontalContentAlignment)(it, tmp.addr).check("ListViewItemPresenter.get_ListViewItemPresenterHorizontalContentAlignment")
-    result = HorizontalAlignment(tmp)
+    result = tmp
 
 proc `listViewItemPresenterHorizontalContentAlignment=`*(self: ListViewItemPresenter, value: HorizontalAlignment) =
   ## Microsoft.UI.Xaml.Controls.Primitives.ListViewItemPresenter.put_ListViewItemPresenterHorizontalContentAlignment
   withIface(self.p, IID_IListViewItemPresenter, "IListViewItemPresenter", it):
-    vcall(it, Slot_IListViewItemPresenter_put_ListViewItemPresenterHorizontalContentAlignment, Fn_IListViewItemPresenter_put_ListViewItemPresenterHorizontalContentAlignment)(it, int32(value)).check("ListViewItemPresenter.put_ListViewItemPresenterHorizontalContentAlignment")
+    vcall(it, Slot_IListViewItemPresenter_put_ListViewItemPresenterHorizontalContentAlignment, Fn_IListViewItemPresenter_put_ListViewItemPresenterHorizontalContentAlignment)(it, value).check("ListViewItemPresenter.put_ListViewItemPresenterHorizontalContentAlignment")
 
 proc listViewItemPresenterVerticalContentAlignment*(self: ListViewItemPresenter): VerticalAlignment =
   ## Microsoft.UI.Xaml.Controls.Primitives.ListViewItemPresenter.get_ListViewItemPresenterVerticalContentAlignment
   withIface(self.p, IID_IListViewItemPresenter, "IListViewItemPresenter", it):
-    var tmp: int32
+    var tmp: VerticalAlignment
     vcall(it, Slot_IListViewItemPresenter_get_ListViewItemPresenterVerticalContentAlignment, Fn_IListViewItemPresenter_get_ListViewItemPresenterVerticalContentAlignment)(it, tmp.addr).check("ListViewItemPresenter.get_ListViewItemPresenterVerticalContentAlignment")
-    result = VerticalAlignment(tmp)
+    result = tmp
 
 proc `listViewItemPresenterVerticalContentAlignment=`*(self: ListViewItemPresenter, value: VerticalAlignment) =
   ## Microsoft.UI.Xaml.Controls.Primitives.ListViewItemPresenter.put_ListViewItemPresenterVerticalContentAlignment
   withIface(self.p, IID_IListViewItemPresenter, "IListViewItemPresenter", it):
-    vcall(it, Slot_IListViewItemPresenter_put_ListViewItemPresenterVerticalContentAlignment, Fn_IListViewItemPresenter_put_ListViewItemPresenterVerticalContentAlignment)(it, int32(value)).check("ListViewItemPresenter.put_ListViewItemPresenterVerticalContentAlignment")
+    vcall(it, Slot_IListViewItemPresenter_put_ListViewItemPresenterVerticalContentAlignment, Fn_IListViewItemPresenter_put_ListViewItemPresenterVerticalContentAlignment)(it, value).check("ListViewItemPresenter.put_ListViewItemPresenterVerticalContentAlignment")
 
 proc listViewItemPresenterPadding*(self: ListViewItemPresenter): Thickness =
   ## Microsoft.UI.Xaml.Controls.Primitives.ListViewItemPresenter.get_ListViewItemPresenterPadding
@@ -26653,14 +26652,14 @@ proc `focusSecondaryBorderBrush=`*(self: ListViewItemPresenter, value: Brush) =
 proc checkMode*(self: ListViewItemPresenter): ListViewItemPresenterCheckMode =
   ## Microsoft.UI.Xaml.Controls.Primitives.ListViewItemPresenter.get_CheckMode
   withIface(self.p, IID_IListViewItemPresenter, "IListViewItemPresenter", it):
-    var tmp: int32
+    var tmp: ListViewItemPresenterCheckMode
     vcall(it, Slot_IListViewItemPresenter_get_CheckMode, Fn_IListViewItemPresenter_get_CheckMode)(it, tmp.addr).check("ListViewItemPresenter.get_CheckMode")
-    result = ListViewItemPresenterCheckMode(tmp)
+    result = tmp
 
 proc `checkMode=`*(self: ListViewItemPresenter, value: ListViewItemPresenterCheckMode) =
   ## Microsoft.UI.Xaml.Controls.Primitives.ListViewItemPresenter.put_CheckMode
   withIface(self.p, IID_IListViewItemPresenter, "IListViewItemPresenter", it):
-    vcall(it, Slot_IListViewItemPresenter_put_CheckMode, Fn_IListViewItemPresenter_put_CheckMode)(it, int32(value)).check("ListViewItemPresenter.put_CheckMode")
+    vcall(it, Slot_IListViewItemPresenter_put_CheckMode, Fn_IListViewItemPresenter_put_CheckMode)(it, value).check("ListViewItemPresenter.put_CheckMode")
 
 proc pointerOverForeground*(self: ListViewItemPresenter): Brush =
   ## Microsoft.UI.Xaml.Controls.Primitives.ListViewItemPresenter.get_PointerOverForeground
@@ -26946,14 +26945,14 @@ proc `selectionIndicatorVisualEnabled=`*(self: ListViewItemPresenter, value: boo
 proc selectionIndicatorMode*(self: ListViewItemPresenter): ListViewItemPresenterSelectionIndicatorMode =
   ## Microsoft.UI.Xaml.Controls.Primitives.ListViewItemPresenter.get_SelectionIndicatorMode
   withIface(self.p, IID_IListViewItemPresenter, "IListViewItemPresenter", it):
-    var tmp: int32
+    var tmp: ListViewItemPresenterSelectionIndicatorMode
     vcall(it, Slot_IListViewItemPresenter_get_SelectionIndicatorMode, Fn_IListViewItemPresenter_get_SelectionIndicatorMode)(it, tmp.addr).check("ListViewItemPresenter.get_SelectionIndicatorMode")
-    result = ListViewItemPresenterSelectionIndicatorMode(tmp)
+    result = tmp
 
 proc `selectionIndicatorMode=`*(self: ListViewItemPresenter, value: ListViewItemPresenterSelectionIndicatorMode) =
   ## Microsoft.UI.Xaml.Controls.Primitives.ListViewItemPresenter.put_SelectionIndicatorMode
   withIface(self.p, IID_IListViewItemPresenter, "IListViewItemPresenter", it):
-    vcall(it, Slot_IListViewItemPresenter_put_SelectionIndicatorMode, Fn_IListViewItemPresenter_put_SelectionIndicatorMode)(it, int32(value)).check("ListViewItemPresenter.put_SelectionIndicatorMode")
+    vcall(it, Slot_IListViewItemPresenter_put_SelectionIndicatorMode, Fn_IListViewItemPresenter_put_SelectionIndicatorMode)(it, value).check("ListViewItemPresenter.put_SelectionIndicatorMode")
 
 proc selectionIndicatorBrush*(self: ListViewItemPresenter): Brush =
   ## Microsoft.UI.Xaml.Controls.Primitives.ListViewItemPresenter.get_SelectionIndicatorBrush
@@ -27672,14 +27671,14 @@ proc `isLightDismissEnabled=`*(self: Popup, value: bool) =
 proc lightDismissOverlayMode*(self: Popup): LightDismissOverlayMode =
   ## Microsoft.UI.Xaml.Controls.Primitives.Popup.get_LightDismissOverlayMode
   withIface(self.p, IID_IPopup, "IPopup", it):
-    var tmp: int32
+    var tmp: LightDismissOverlayMode
     vcall(it, Slot_IPopup_get_LightDismissOverlayMode, Fn_IPopup_get_LightDismissOverlayMode)(it, tmp.addr).check("Popup.get_LightDismissOverlayMode")
-    result = LightDismissOverlayMode(tmp)
+    result = tmp
 
 proc `lightDismissOverlayMode=`*(self: Popup, value: LightDismissOverlayMode) =
   ## Microsoft.UI.Xaml.Controls.Primitives.Popup.put_LightDismissOverlayMode
   withIface(self.p, IID_IPopup, "IPopup", it):
-    vcall(it, Slot_IPopup_put_LightDismissOverlayMode, Fn_IPopup_put_LightDismissOverlayMode)(it, int32(value)).check("Popup.put_LightDismissOverlayMode")
+    vcall(it, Slot_IPopup_put_LightDismissOverlayMode, Fn_IPopup_put_LightDismissOverlayMode)(it, value).check("Popup.put_LightDismissOverlayMode")
 
 proc shouldConstrainToRootBounds*(self: Popup): bool =
   ## Microsoft.UI.Xaml.Controls.Primitives.Popup.get_ShouldConstrainToRootBounds
@@ -27756,21 +27755,21 @@ proc `placementTarget=`*(self: Popup, value: FrameworkElement) =
 proc desiredPlacement*(self: Popup): PopupPlacementMode =
   ## Microsoft.UI.Xaml.Controls.Primitives.Popup.get_DesiredPlacement
   withIface(self.p, IID_IPopup2, "IPopup2", it):
-    var tmp: int32
+    var tmp: PopupPlacementMode
     vcall(it, Slot_IPopup2_get_DesiredPlacement, Fn_IPopup2_get_DesiredPlacement)(it, tmp.addr).check("Popup.get_DesiredPlacement")
-    result = PopupPlacementMode(tmp)
+    result = tmp
 
 proc `desiredPlacement=`*(self: Popup, value: PopupPlacementMode) =
   ## Microsoft.UI.Xaml.Controls.Primitives.Popup.put_DesiredPlacement
   withIface(self.p, IID_IPopup2, "IPopup2", it):
-    vcall(it, Slot_IPopup2_put_DesiredPlacement, Fn_IPopup2_put_DesiredPlacement)(it, int32(value)).check("Popup.put_DesiredPlacement")
+    vcall(it, Slot_IPopup2_put_DesiredPlacement, Fn_IPopup2_put_DesiredPlacement)(it, value).check("Popup.put_DesiredPlacement")
 
 proc actualPlacement*(self: Popup): PopupPlacementMode =
   ## Microsoft.UI.Xaml.Controls.Primitives.Popup.get_ActualPlacement
   withIface(self.p, IID_IPopup2, "IPopup2", it):
-    var tmp: int32
+    var tmp: PopupPlacementMode
     vcall(it, Slot_IPopup2_get_ActualPlacement, Fn_IPopup2_get_ActualPlacement)(it, tmp.addr).check("Popup.get_ActualPlacement")
-    result = PopupPlacementMode(tmp)
+    result = tmp
 
 proc onActualPlacementChanged*(self: Popup,
     handler: proc(sender: pointer, args: pointer)): EventRegistrationToken {.discardable.} =
@@ -27850,9 +27849,9 @@ proc `interval=`*(self: RepeatButton, value: int32) =
 proc alignment*(self: ScrollSnapPointBase): ScrollSnapPointsAlignment =
   ## Microsoft.UI.Xaml.Controls.Primitives.ScrollSnapPointBase.get_Alignment
   withIface(self.p, IID_IScrollSnapPointBase, "IScrollSnapPointBase", it):
-    var tmp: int32
+    var tmp: ScrollSnapPointsAlignment
     vcall(it, Slot_IScrollSnapPointBase_get_Alignment, Fn_IScrollSnapPointBase_get_Alignment)(it, tmp.addr).check("ScrollSnapPointBase.get_Alignment")
-    result = ScrollSnapPointsAlignment(tmp)
+    result = tmp
 
 proc newRepeatedScrollSnapPoint*(): RepeatedScrollSnapPoint =
   ## Compose a `Microsoft.UI.Xaml.Controls.Primitives.RepeatedScrollSnapPoint`.
@@ -27927,14 +27926,14 @@ proc newScrollBar*(): ScrollBar =
 proc orientation*(self: ScrollBar): Orientation =
   ## Microsoft.UI.Xaml.Controls.Primitives.ScrollBar.get_Orientation
   withIface(self.p, IID_IScrollBar, "IScrollBar", it):
-    var tmp: int32
+    var tmp: Orientation
     vcall(it, Slot_IScrollBar_get_Orientation, Fn_IScrollBar_get_Orientation)(it, tmp.addr).check("ScrollBar.get_Orientation")
-    result = Orientation(tmp)
+    result = tmp
 
 proc `orientation=`*(self: ScrollBar, value: Orientation) =
   ## Microsoft.UI.Xaml.Controls.Primitives.ScrollBar.put_Orientation
   withIface(self.p, IID_IScrollBar, "IScrollBar", it):
-    vcall(it, Slot_IScrollBar_put_Orientation, Fn_IScrollBar_put_Orientation)(it, int32(value)).check("ScrollBar.put_Orientation")
+    vcall(it, Slot_IScrollBar_put_Orientation, Fn_IScrollBar_put_Orientation)(it, value).check("ScrollBar.put_Orientation")
 
 proc viewportSize*(self: ScrollBar): float64 =
   ## Microsoft.UI.Xaml.Controls.Primitives.ScrollBar.get_ViewportSize
@@ -27951,14 +27950,14 @@ proc `viewportSize=`*(self: ScrollBar, value: float64) =
 proc indicatorMode*(self: ScrollBar): ScrollingIndicatorMode =
   ## Microsoft.UI.Xaml.Controls.Primitives.ScrollBar.get_IndicatorMode
   withIface(self.p, IID_IScrollBar, "IScrollBar", it):
-    var tmp: int32
+    var tmp: ScrollingIndicatorMode
     vcall(it, Slot_IScrollBar_get_IndicatorMode, Fn_IScrollBar_get_IndicatorMode)(it, tmp.addr).check("ScrollBar.get_IndicatorMode")
-    result = ScrollingIndicatorMode(tmp)
+    result = tmp
 
 proc `indicatorMode=`*(self: ScrollBar, value: ScrollingIndicatorMode) =
   ## Microsoft.UI.Xaml.Controls.Primitives.ScrollBar.put_IndicatorMode
   withIface(self.p, IID_IScrollBar, "IScrollBar", it):
-    vcall(it, Slot_IScrollBar_put_IndicatorMode, Fn_IScrollBar_put_IndicatorMode)(it, int32(value)).check("ScrollBar.put_IndicatorMode")
+    vcall(it, Slot_IScrollBar_put_IndicatorMode, Fn_IScrollBar_put_IndicatorMode)(it, value).check("ScrollBar.put_IndicatorMode")
 
 proc onScroll*(self: ScrollBar,
     handler: proc(sender: pointer, args: ScrollEventArgs)): EventRegistrationToken {.discardable.} =
@@ -28093,9 +28092,9 @@ proc newValue*(self: ScrollEventArgs): float64 =
 proc scrollEventType*(self: ScrollEventArgs): ScrollEventType =
   ## Microsoft.UI.Xaml.Controls.Primitives.ScrollEventArgs.get_ScrollEventType
   withIface(self.p, IID_IScrollEventArgs, "IScrollEventArgs", it):
-    var tmp: int32
+    var tmp: ScrollEventType
     vcall(it, Slot_IScrollEventArgs_get_ScrollEventType, Fn_IScrollEventArgs_get_ScrollEventType)(it, tmp.addr).check("ScrollEventArgs.get_ScrollEventType")
-    result = ScrollEventType(tmp)
+    result = tmp
 
 proc newScrollPresenter*(): ScrollPresenter =
   ## Compose a `Microsoft.UI.Xaml.Controls.Primitives.ScrollPresenter`.
@@ -28194,136 +28193,136 @@ proc scrollableHeight*(self: ScrollPresenter): float64 =
 proc contentOrientation*(self: ScrollPresenter): ScrollingContentOrientation =
   ## Microsoft.UI.Xaml.Controls.Primitives.ScrollPresenter.get_ContentOrientation
   withIface(self.p, IID_IScrollPresenter, "IScrollPresenter", it):
-    var tmp: int32
+    var tmp: ScrollingContentOrientation
     vcall(it, Slot_IScrollPresenter_get_ContentOrientation, Fn_IScrollPresenter_get_ContentOrientation)(it, tmp.addr).check("ScrollPresenter.get_ContentOrientation")
-    result = ScrollingContentOrientation(tmp)
+    result = tmp
 
 proc `contentOrientation=`*(self: ScrollPresenter, value: ScrollingContentOrientation) =
   ## Microsoft.UI.Xaml.Controls.Primitives.ScrollPresenter.put_ContentOrientation
   withIface(self.p, IID_IScrollPresenter, "IScrollPresenter", it):
-    vcall(it, Slot_IScrollPresenter_put_ContentOrientation, Fn_IScrollPresenter_put_ContentOrientation)(it, int32(value)).check("ScrollPresenter.put_ContentOrientation")
+    vcall(it, Slot_IScrollPresenter_put_ContentOrientation, Fn_IScrollPresenter_put_ContentOrientation)(it, value).check("ScrollPresenter.put_ContentOrientation")
 
 proc horizontalScrollChainMode*(self: ScrollPresenter): ScrollingChainMode =
   ## Microsoft.UI.Xaml.Controls.Primitives.ScrollPresenter.get_HorizontalScrollChainMode
   withIface(self.p, IID_IScrollPresenter, "IScrollPresenter", it):
-    var tmp: int32
+    var tmp: ScrollingChainMode
     vcall(it, Slot_IScrollPresenter_get_HorizontalScrollChainMode, Fn_IScrollPresenter_get_HorizontalScrollChainMode)(it, tmp.addr).check("ScrollPresenter.get_HorizontalScrollChainMode")
-    result = ScrollingChainMode(tmp)
+    result = tmp
 
 proc `horizontalScrollChainMode=`*(self: ScrollPresenter, value: ScrollingChainMode) =
   ## Microsoft.UI.Xaml.Controls.Primitives.ScrollPresenter.put_HorizontalScrollChainMode
   withIface(self.p, IID_IScrollPresenter, "IScrollPresenter", it):
-    vcall(it, Slot_IScrollPresenter_put_HorizontalScrollChainMode, Fn_IScrollPresenter_put_HorizontalScrollChainMode)(it, int32(value)).check("ScrollPresenter.put_HorizontalScrollChainMode")
+    vcall(it, Slot_IScrollPresenter_put_HorizontalScrollChainMode, Fn_IScrollPresenter_put_HorizontalScrollChainMode)(it, value).check("ScrollPresenter.put_HorizontalScrollChainMode")
 
 proc verticalScrollChainMode*(self: ScrollPresenter): ScrollingChainMode =
   ## Microsoft.UI.Xaml.Controls.Primitives.ScrollPresenter.get_VerticalScrollChainMode
   withIface(self.p, IID_IScrollPresenter, "IScrollPresenter", it):
-    var tmp: int32
+    var tmp: ScrollingChainMode
     vcall(it, Slot_IScrollPresenter_get_VerticalScrollChainMode, Fn_IScrollPresenter_get_VerticalScrollChainMode)(it, tmp.addr).check("ScrollPresenter.get_VerticalScrollChainMode")
-    result = ScrollingChainMode(tmp)
+    result = tmp
 
 proc `verticalScrollChainMode=`*(self: ScrollPresenter, value: ScrollingChainMode) =
   ## Microsoft.UI.Xaml.Controls.Primitives.ScrollPresenter.put_VerticalScrollChainMode
   withIface(self.p, IID_IScrollPresenter, "IScrollPresenter", it):
-    vcall(it, Slot_IScrollPresenter_put_VerticalScrollChainMode, Fn_IScrollPresenter_put_VerticalScrollChainMode)(it, int32(value)).check("ScrollPresenter.put_VerticalScrollChainMode")
+    vcall(it, Slot_IScrollPresenter_put_VerticalScrollChainMode, Fn_IScrollPresenter_put_VerticalScrollChainMode)(it, value).check("ScrollPresenter.put_VerticalScrollChainMode")
 
 proc horizontalScrollRailMode*(self: ScrollPresenter): ScrollingRailMode =
   ## Microsoft.UI.Xaml.Controls.Primitives.ScrollPresenter.get_HorizontalScrollRailMode
   withIface(self.p, IID_IScrollPresenter, "IScrollPresenter", it):
-    var tmp: int32
+    var tmp: ScrollingRailMode
     vcall(it, Slot_IScrollPresenter_get_HorizontalScrollRailMode, Fn_IScrollPresenter_get_HorizontalScrollRailMode)(it, tmp.addr).check("ScrollPresenter.get_HorizontalScrollRailMode")
-    result = ScrollingRailMode(tmp)
+    result = tmp
 
 proc `horizontalScrollRailMode=`*(self: ScrollPresenter, value: ScrollingRailMode) =
   ## Microsoft.UI.Xaml.Controls.Primitives.ScrollPresenter.put_HorizontalScrollRailMode
   withIface(self.p, IID_IScrollPresenter, "IScrollPresenter", it):
-    vcall(it, Slot_IScrollPresenter_put_HorizontalScrollRailMode, Fn_IScrollPresenter_put_HorizontalScrollRailMode)(it, int32(value)).check("ScrollPresenter.put_HorizontalScrollRailMode")
+    vcall(it, Slot_IScrollPresenter_put_HorizontalScrollRailMode, Fn_IScrollPresenter_put_HorizontalScrollRailMode)(it, value).check("ScrollPresenter.put_HorizontalScrollRailMode")
 
 proc verticalScrollRailMode*(self: ScrollPresenter): ScrollingRailMode =
   ## Microsoft.UI.Xaml.Controls.Primitives.ScrollPresenter.get_VerticalScrollRailMode
   withIface(self.p, IID_IScrollPresenter, "IScrollPresenter", it):
-    var tmp: int32
+    var tmp: ScrollingRailMode
     vcall(it, Slot_IScrollPresenter_get_VerticalScrollRailMode, Fn_IScrollPresenter_get_VerticalScrollRailMode)(it, tmp.addr).check("ScrollPresenter.get_VerticalScrollRailMode")
-    result = ScrollingRailMode(tmp)
+    result = tmp
 
 proc `verticalScrollRailMode=`*(self: ScrollPresenter, value: ScrollingRailMode) =
   ## Microsoft.UI.Xaml.Controls.Primitives.ScrollPresenter.put_VerticalScrollRailMode
   withIface(self.p, IID_IScrollPresenter, "IScrollPresenter", it):
-    vcall(it, Slot_IScrollPresenter_put_VerticalScrollRailMode, Fn_IScrollPresenter_put_VerticalScrollRailMode)(it, int32(value)).check("ScrollPresenter.put_VerticalScrollRailMode")
+    vcall(it, Slot_IScrollPresenter_put_VerticalScrollRailMode, Fn_IScrollPresenter_put_VerticalScrollRailMode)(it, value).check("ScrollPresenter.put_VerticalScrollRailMode")
 
 proc horizontalScrollMode*(self: ScrollPresenter): ScrollingScrollMode =
   ## Microsoft.UI.Xaml.Controls.Primitives.ScrollPresenter.get_HorizontalScrollMode
   withIface(self.p, IID_IScrollPresenter, "IScrollPresenter", it):
-    var tmp: int32
+    var tmp: ScrollingScrollMode
     vcall(it, Slot_IScrollPresenter_get_HorizontalScrollMode, Fn_IScrollPresenter_get_HorizontalScrollMode)(it, tmp.addr).check("ScrollPresenter.get_HorizontalScrollMode")
-    result = ScrollingScrollMode(tmp)
+    result = tmp
 
 proc `horizontalScrollMode=`*(self: ScrollPresenter, value: ScrollingScrollMode) =
   ## Microsoft.UI.Xaml.Controls.Primitives.ScrollPresenter.put_HorizontalScrollMode
   withIface(self.p, IID_IScrollPresenter, "IScrollPresenter", it):
-    vcall(it, Slot_IScrollPresenter_put_HorizontalScrollMode, Fn_IScrollPresenter_put_HorizontalScrollMode)(it, int32(value)).check("ScrollPresenter.put_HorizontalScrollMode")
+    vcall(it, Slot_IScrollPresenter_put_HorizontalScrollMode, Fn_IScrollPresenter_put_HorizontalScrollMode)(it, value).check("ScrollPresenter.put_HorizontalScrollMode")
 
 proc verticalScrollMode*(self: ScrollPresenter): ScrollingScrollMode =
   ## Microsoft.UI.Xaml.Controls.Primitives.ScrollPresenter.get_VerticalScrollMode
   withIface(self.p, IID_IScrollPresenter, "IScrollPresenter", it):
-    var tmp: int32
+    var tmp: ScrollingScrollMode
     vcall(it, Slot_IScrollPresenter_get_VerticalScrollMode, Fn_IScrollPresenter_get_VerticalScrollMode)(it, tmp.addr).check("ScrollPresenter.get_VerticalScrollMode")
-    result = ScrollingScrollMode(tmp)
+    result = tmp
 
 proc `verticalScrollMode=`*(self: ScrollPresenter, value: ScrollingScrollMode) =
   ## Microsoft.UI.Xaml.Controls.Primitives.ScrollPresenter.put_VerticalScrollMode
   withIface(self.p, IID_IScrollPresenter, "IScrollPresenter", it):
-    vcall(it, Slot_IScrollPresenter_put_VerticalScrollMode, Fn_IScrollPresenter_put_VerticalScrollMode)(it, int32(value)).check("ScrollPresenter.put_VerticalScrollMode")
+    vcall(it, Slot_IScrollPresenter_put_VerticalScrollMode, Fn_IScrollPresenter_put_VerticalScrollMode)(it, value).check("ScrollPresenter.put_VerticalScrollMode")
 
 proc computedHorizontalScrollMode*(self: ScrollPresenter): ScrollingScrollMode =
   ## Microsoft.UI.Xaml.Controls.Primitives.ScrollPresenter.get_ComputedHorizontalScrollMode
   withIface(self.p, IID_IScrollPresenter, "IScrollPresenter", it):
-    var tmp: int32
+    var tmp: ScrollingScrollMode
     vcall(it, Slot_IScrollPresenter_get_ComputedHorizontalScrollMode, Fn_IScrollPresenter_get_ComputedHorizontalScrollMode)(it, tmp.addr).check("ScrollPresenter.get_ComputedHorizontalScrollMode")
-    result = ScrollingScrollMode(tmp)
+    result = tmp
 
 proc computedVerticalScrollMode*(self: ScrollPresenter): ScrollingScrollMode =
   ## Microsoft.UI.Xaml.Controls.Primitives.ScrollPresenter.get_ComputedVerticalScrollMode
   withIface(self.p, IID_IScrollPresenter, "IScrollPresenter", it):
-    var tmp: int32
+    var tmp: ScrollingScrollMode
     vcall(it, Slot_IScrollPresenter_get_ComputedVerticalScrollMode, Fn_IScrollPresenter_get_ComputedVerticalScrollMode)(it, tmp.addr).check("ScrollPresenter.get_ComputedVerticalScrollMode")
-    result = ScrollingScrollMode(tmp)
+    result = tmp
 
 proc zoomChainMode*(self: ScrollPresenter): ScrollingChainMode =
   ## Microsoft.UI.Xaml.Controls.Primitives.ScrollPresenter.get_ZoomChainMode
   withIface(self.p, IID_IScrollPresenter, "IScrollPresenter", it):
-    var tmp: int32
+    var tmp: ScrollingChainMode
     vcall(it, Slot_IScrollPresenter_get_ZoomChainMode, Fn_IScrollPresenter_get_ZoomChainMode)(it, tmp.addr).check("ScrollPresenter.get_ZoomChainMode")
-    result = ScrollingChainMode(tmp)
+    result = tmp
 
 proc `zoomChainMode=`*(self: ScrollPresenter, value: ScrollingChainMode) =
   ## Microsoft.UI.Xaml.Controls.Primitives.ScrollPresenter.put_ZoomChainMode
   withIface(self.p, IID_IScrollPresenter, "IScrollPresenter", it):
-    vcall(it, Slot_IScrollPresenter_put_ZoomChainMode, Fn_IScrollPresenter_put_ZoomChainMode)(it, int32(value)).check("ScrollPresenter.put_ZoomChainMode")
+    vcall(it, Slot_IScrollPresenter_put_ZoomChainMode, Fn_IScrollPresenter_put_ZoomChainMode)(it, value).check("ScrollPresenter.put_ZoomChainMode")
 
 proc zoomMode*(self: ScrollPresenter): ScrollingZoomMode =
   ## Microsoft.UI.Xaml.Controls.Primitives.ScrollPresenter.get_ZoomMode
   withIface(self.p, IID_IScrollPresenter, "IScrollPresenter", it):
-    var tmp: int32
+    var tmp: ScrollingZoomMode
     vcall(it, Slot_IScrollPresenter_get_ZoomMode, Fn_IScrollPresenter_get_ZoomMode)(it, tmp.addr).check("ScrollPresenter.get_ZoomMode")
-    result = ScrollingZoomMode(tmp)
+    result = tmp
 
 proc `zoomMode=`*(self: ScrollPresenter, value: ScrollingZoomMode) =
   ## Microsoft.UI.Xaml.Controls.Primitives.ScrollPresenter.put_ZoomMode
   withIface(self.p, IID_IScrollPresenter, "IScrollPresenter", it):
-    vcall(it, Slot_IScrollPresenter_put_ZoomMode, Fn_IScrollPresenter_put_ZoomMode)(it, int32(value)).check("ScrollPresenter.put_ZoomMode")
+    vcall(it, Slot_IScrollPresenter_put_ZoomMode, Fn_IScrollPresenter_put_ZoomMode)(it, value).check("ScrollPresenter.put_ZoomMode")
 
 proc ignoredInputKinds*(self: ScrollPresenter): ScrollingInputKinds =
   ## Microsoft.UI.Xaml.Controls.Primitives.ScrollPresenter.get_IgnoredInputKinds
   withIface(self.p, IID_IScrollPresenter, "IScrollPresenter", it):
-    var tmp: int32
+    var tmp: ScrollingInputKinds
     vcall(it, Slot_IScrollPresenter_get_IgnoredInputKinds, Fn_IScrollPresenter_get_IgnoredInputKinds)(it, tmp.addr).check("ScrollPresenter.get_IgnoredInputKinds")
-    result = ScrollingInputKinds(tmp)
+    result = tmp
 
 proc `ignoredInputKinds=`*(self: ScrollPresenter, value: ScrollingInputKinds) =
   ## Microsoft.UI.Xaml.Controls.Primitives.ScrollPresenter.put_IgnoredInputKinds
   withIface(self.p, IID_IScrollPresenter, "IScrollPresenter", it):
-    vcall(it, Slot_IScrollPresenter_put_IgnoredInputKinds, Fn_IScrollPresenter_put_IgnoredInputKinds)(it, int32(value)).check("ScrollPresenter.put_IgnoredInputKinds")
+    vcall(it, Slot_IScrollPresenter_put_IgnoredInputKinds, Fn_IScrollPresenter_put_IgnoredInputKinds)(it, value).check("ScrollPresenter.put_IgnoredInputKinds")
 
 proc minZoomFactor*(self: ScrollPresenter): float64 =
   ## Microsoft.UI.Xaml.Controls.Primitives.ScrollPresenter.get_MinZoomFactor
@@ -28352,9 +28351,9 @@ proc `maxZoomFactor=`*(self: ScrollPresenter, value: float64) =
 proc state*(self: ScrollPresenter): ScrollingInteractionState =
   ## Microsoft.UI.Xaml.Controls.Primitives.ScrollPresenter.get_State
   withIface(self.p, IID_IScrollPresenter, "IScrollPresenter", it):
-    var tmp: int32
+    var tmp: ScrollingInteractionState
     vcall(it, Slot_IScrollPresenter_get_State, Fn_IScrollPresenter_get_State)(it, tmp.addr).check("ScrollPresenter.get_State")
-    result = ScrollingInteractionState(tmp)
+    result = tmp
 
 proc horizontalScrollController*(self: ScrollPresenter): pointer =
   ## Microsoft.UI.Xaml.Controls.Primitives.ScrollPresenter.get_HorizontalScrollController
@@ -29565,14 +29564,14 @@ proc `visualizer=`*(self: RefreshContainer, value: RefreshVisualizer) =
 proc pullDirection*(self: RefreshContainer): RefreshPullDirection =
   ## Microsoft.UI.Xaml.Controls.RefreshContainer.get_PullDirection
   withIface(self.p, IID_IRefreshContainer, "IRefreshContainer", it):
-    var tmp: int32
+    var tmp: RefreshPullDirection
     vcall(it, Slot_IRefreshContainer_get_PullDirection, Fn_IRefreshContainer_get_PullDirection)(it, tmp.addr).check("RefreshContainer.get_PullDirection")
-    result = RefreshPullDirection(tmp)
+    result = tmp
 
 proc `pullDirection=`*(self: RefreshContainer, value: RefreshPullDirection) =
   ## Microsoft.UI.Xaml.Controls.RefreshContainer.put_PullDirection
   withIface(self.p, IID_IRefreshContainer, "IRefreshContainer", it):
-    vcall(it, Slot_IRefreshContainer_put_PullDirection, Fn_IRefreshContainer_put_PullDirection)(it, int32(value)).check("RefreshContainer.put_PullDirection")
+    vcall(it, Slot_IRefreshContainer_put_PullDirection, Fn_IRefreshContainer_put_PullDirection)(it, value).check("RefreshContainer.put_PullDirection")
 
 proc onRefreshRequested*(self: RefreshContainer,
     handler: proc(sender: pointer, args: RefreshRequestedEventArgs)): EventRegistrationToken {.discardable.} =
@@ -29609,16 +29608,16 @@ proc interactionRatio*(self: RefreshInteractionRatioChangedEventArgs): float64 =
 proc oldState*(self: RefreshStateChangedEventArgs): RefreshVisualizerState =
   ## Microsoft.UI.Xaml.Controls.RefreshStateChangedEventArgs.get_OldState
   withIface(self.p, IID_IRefreshStateChangedEventArgs, "IRefreshStateChangedEventArgs", it):
-    var tmp: int32
+    var tmp: RefreshVisualizerState
     vcall(it, Slot_IRefreshStateChangedEventArgs_get_OldState, Fn_IRefreshStateChangedEventArgs_get_OldState)(it, tmp.addr).check("RefreshStateChangedEventArgs.get_OldState")
-    result = RefreshVisualizerState(tmp)
+    result = tmp
 
 proc newState*(self: RefreshStateChangedEventArgs): RefreshVisualizerState =
   ## Microsoft.UI.Xaml.Controls.RefreshStateChangedEventArgs.get_NewState
   withIface(self.p, IID_IRefreshStateChangedEventArgs, "IRefreshStateChangedEventArgs", it):
-    var tmp: int32
+    var tmp: RefreshVisualizerState
     vcall(it, Slot_IRefreshStateChangedEventArgs_get_NewState, Fn_IRefreshStateChangedEventArgs_get_NewState)(it, tmp.addr).check("RefreshStateChangedEventArgs.get_NewState")
-    result = RefreshVisualizerState(tmp)
+    result = tmp
 
 proc newRefreshVisualizer*(): RefreshVisualizer =
   ## Compose a `Microsoft.UI.Xaml.Controls.RefreshVisualizer`.
@@ -29633,14 +29632,14 @@ proc requestRefresh*(self: RefreshVisualizer) =
 proc orientation*(self: RefreshVisualizer): RefreshVisualizerOrientation =
   ## Microsoft.UI.Xaml.Controls.RefreshVisualizer.get_Orientation
   withIface(self.p, IID_IRefreshVisualizer, "IRefreshVisualizer", it):
-    var tmp: int32
+    var tmp: RefreshVisualizerOrientation
     vcall(it, Slot_IRefreshVisualizer_get_Orientation, Fn_IRefreshVisualizer_get_Orientation)(it, tmp.addr).check("RefreshVisualizer.get_Orientation")
-    result = RefreshVisualizerOrientation(tmp)
+    result = tmp
 
 proc `orientation=`*(self: RefreshVisualizer, value: RefreshVisualizerOrientation) =
   ## Microsoft.UI.Xaml.Controls.RefreshVisualizer.put_Orientation
   withIface(self.p, IID_IRefreshVisualizer, "IRefreshVisualizer", it):
-    vcall(it, Slot_IRefreshVisualizer_put_Orientation, Fn_IRefreshVisualizer_put_Orientation)(it, int32(value)).check("RefreshVisualizer.put_Orientation")
+    vcall(it, Slot_IRefreshVisualizer_put_Orientation, Fn_IRefreshVisualizer_put_Orientation)(it, value).check("RefreshVisualizer.put_Orientation")
 
 proc content*(self: RefreshVisualizer): UIElement =
   ## Microsoft.UI.Xaml.Controls.RefreshVisualizer.get_Content
@@ -29658,9 +29657,9 @@ proc `content=`*(self: RefreshVisualizer, value: UIElement) =
 proc state*(self: RefreshVisualizer): RefreshVisualizerState =
   ## Microsoft.UI.Xaml.Controls.RefreshVisualizer.get_State
   withIface(self.p, IID_IRefreshVisualizer, "IRefreshVisualizer", it):
-    var tmp: int32
+    var tmp: RefreshVisualizerState
     vcall(it, Slot_IRefreshVisualizer_get_State, Fn_IRefreshVisualizer_get_State)(it, tmp.addr).check("RefreshVisualizer.get_State")
-    result = RefreshVisualizerState(tmp)
+    result = tmp
 
 proc onRefreshRequested*(self: RefreshVisualizer,
     handler: proc(sender: pointer, args: RefreshRequestedEventArgs)): EventRegistrationToken {.discardable.} =
@@ -29710,14 +29709,14 @@ proc newRelativePanel*(): RelativePanel =
 proc backgroundSizing*(self: RelativePanel): BackgroundSizing =
   ## Microsoft.UI.Xaml.Controls.RelativePanel.get_BackgroundSizing
   withIface(self.p, IID_IRelativePanel, "IRelativePanel", it):
-    var tmp: int32
+    var tmp: BackgroundSizing
     vcall(it, Slot_IRelativePanel_get_BackgroundSizing, Fn_IRelativePanel_get_BackgroundSizing)(it, tmp.addr).check("RelativePanel.get_BackgroundSizing")
-    result = BackgroundSizing(tmp)
+    result = tmp
 
 proc `backgroundSizing=`*(self: RelativePanel, value: BackgroundSizing) =
   ## Microsoft.UI.Xaml.Controls.RelativePanel.put_BackgroundSizing
   withIface(self.p, IID_IRelativePanel, "IRelativePanel", it):
-    vcall(it, Slot_IRelativePanel_put_BackgroundSizing, Fn_IRelativePanel_put_BackgroundSizing)(it, int32(value)).check("RelativePanel.put_BackgroundSizing")
+    vcall(it, Slot_IRelativePanel_put_BackgroundSizing, Fn_IRelativePanel_put_BackgroundSizing)(it, value).check("RelativePanel.put_BackgroundSizing")
 
 proc borderBrush*(self: RelativePanel): Brush =
   ## Microsoft.UI.Xaml.Controls.RelativePanel.get_BorderBrush
@@ -29805,26 +29804,26 @@ proc `acceptsReturn=`*(self: RichEditBox, value: bool) =
 proc textAlignment*(self: RichEditBox): TextAlignment =
   ## Microsoft.UI.Xaml.Controls.RichEditBox.get_TextAlignment
   withIface(self.p, IID_IRichEditBox, "IRichEditBox", it):
-    var tmp: int32
+    var tmp: TextAlignment
     vcall(it, Slot_IRichEditBox_get_TextAlignment, Fn_IRichEditBox_get_TextAlignment)(it, tmp.addr).check("RichEditBox.get_TextAlignment")
-    result = TextAlignment(tmp)
+    result = tmp
 
 proc `textAlignment=`*(self: RichEditBox, value: TextAlignment) =
   ## Microsoft.UI.Xaml.Controls.RichEditBox.put_TextAlignment
   withIface(self.p, IID_IRichEditBox, "IRichEditBox", it):
-    vcall(it, Slot_IRichEditBox_put_TextAlignment, Fn_IRichEditBox_put_TextAlignment)(it, int32(value)).check("RichEditBox.put_TextAlignment")
+    vcall(it, Slot_IRichEditBox_put_TextAlignment, Fn_IRichEditBox_put_TextAlignment)(it, value).check("RichEditBox.put_TextAlignment")
 
 proc textWrapping*(self: RichEditBox): TextWrapping =
   ## Microsoft.UI.Xaml.Controls.RichEditBox.get_TextWrapping
   withIface(self.p, IID_IRichEditBox, "IRichEditBox", it):
-    var tmp: int32
+    var tmp: TextWrapping
     vcall(it, Slot_IRichEditBox_get_TextWrapping, Fn_IRichEditBox_get_TextWrapping)(it, tmp.addr).check("RichEditBox.get_TextWrapping")
-    result = TextWrapping(tmp)
+    result = tmp
 
 proc `textWrapping=`*(self: RichEditBox, value: TextWrapping) =
   ## Microsoft.UI.Xaml.Controls.RichEditBox.put_TextWrapping
   withIface(self.p, IID_IRichEditBox, "IRichEditBox", it):
-    vcall(it, Slot_IRichEditBox_put_TextWrapping, Fn_IRichEditBox_put_TextWrapping)(it, int32(value)).check("RichEditBox.put_TextWrapping")
+    vcall(it, Slot_IRichEditBox_put_TextWrapping, Fn_IRichEditBox_put_TextWrapping)(it, value).check("RichEditBox.put_TextWrapping")
 
 proc isSpellCheckEnabled*(self: RichEditBox): bool =
   ## Microsoft.UI.Xaml.Controls.RichEditBox.get_IsSpellCheckEnabled
@@ -29966,38 +29965,38 @@ proc `maxLength=`*(self: RichEditBox, value: int32) =
 proc horizontalTextAlignment*(self: RichEditBox): TextAlignment =
   ## Microsoft.UI.Xaml.Controls.RichEditBox.get_HorizontalTextAlignment
   withIface(self.p, IID_IRichEditBox, "IRichEditBox", it):
-    var tmp: int32
+    var tmp: TextAlignment
     vcall(it, Slot_IRichEditBox_get_HorizontalTextAlignment, Fn_IRichEditBox_get_HorizontalTextAlignment)(it, tmp.addr).check("RichEditBox.get_HorizontalTextAlignment")
-    result = TextAlignment(tmp)
+    result = tmp
 
 proc `horizontalTextAlignment=`*(self: RichEditBox, value: TextAlignment) =
   ## Microsoft.UI.Xaml.Controls.RichEditBox.put_HorizontalTextAlignment
   withIface(self.p, IID_IRichEditBox, "IRichEditBox", it):
-    vcall(it, Slot_IRichEditBox_put_HorizontalTextAlignment, Fn_IRichEditBox_put_HorizontalTextAlignment)(it, int32(value)).check("RichEditBox.put_HorizontalTextAlignment")
+    vcall(it, Slot_IRichEditBox_put_HorizontalTextAlignment, Fn_IRichEditBox_put_HorizontalTextAlignment)(it, value).check("RichEditBox.put_HorizontalTextAlignment")
 
 proc characterCasing*(self: RichEditBox): CharacterCasing =
   ## Microsoft.UI.Xaml.Controls.RichEditBox.get_CharacterCasing
   withIface(self.p, IID_IRichEditBox, "IRichEditBox", it):
-    var tmp: int32
+    var tmp: CharacterCasing
     vcall(it, Slot_IRichEditBox_get_CharacterCasing, Fn_IRichEditBox_get_CharacterCasing)(it, tmp.addr).check("RichEditBox.get_CharacterCasing")
-    result = CharacterCasing(tmp)
+    result = tmp
 
 proc `characterCasing=`*(self: RichEditBox, value: CharacterCasing) =
   ## Microsoft.UI.Xaml.Controls.RichEditBox.put_CharacterCasing
   withIface(self.p, IID_IRichEditBox, "IRichEditBox", it):
-    vcall(it, Slot_IRichEditBox_put_CharacterCasing, Fn_IRichEditBox_put_CharacterCasing)(it, int32(value)).check("RichEditBox.put_CharacterCasing")
+    vcall(it, Slot_IRichEditBox_put_CharacterCasing, Fn_IRichEditBox_put_CharacterCasing)(it, value).check("RichEditBox.put_CharacterCasing")
 
 proc disabledFormattingAccelerators*(self: RichEditBox): DisabledFormattingAccelerators =
   ## Microsoft.UI.Xaml.Controls.RichEditBox.get_DisabledFormattingAccelerators
   withIface(self.p, IID_IRichEditBox, "IRichEditBox", it):
-    var tmp: int32
+    var tmp: DisabledFormattingAccelerators
     vcall(it, Slot_IRichEditBox_get_DisabledFormattingAccelerators, Fn_IRichEditBox_get_DisabledFormattingAccelerators)(it, tmp.addr).check("RichEditBox.get_DisabledFormattingAccelerators")
-    result = DisabledFormattingAccelerators(tmp)
+    result = tmp
 
 proc `disabledFormattingAccelerators=`*(self: RichEditBox, value: DisabledFormattingAccelerators) =
   ## Microsoft.UI.Xaml.Controls.RichEditBox.put_DisabledFormattingAccelerators
   withIface(self.p, IID_IRichEditBox, "IRichEditBox", it):
-    vcall(it, Slot_IRichEditBox_put_DisabledFormattingAccelerators, Fn_IRichEditBox_put_DisabledFormattingAccelerators)(it, int32(value)).check("RichEditBox.put_DisabledFormattingAccelerators")
+    vcall(it, Slot_IRichEditBox_put_DisabledFormattingAccelerators, Fn_IRichEditBox_put_DisabledFormattingAccelerators)(it, value).check("RichEditBox.put_DisabledFormattingAccelerators")
 
 proc selectionFlyout*(self: RichEditBox): FlyoutBase =
   ## Microsoft.UI.Xaml.Controls.RichEditBox.get_SelectionFlyout
@@ -30234,38 +30233,38 @@ proc removeSelectionChanging*(self: RichEditBox, token: EventRegistrationToken) 
 proc textReadingOrder*(self: RichEditBox): TextReadingOrder =
   ## Microsoft.UI.Xaml.Controls.RichEditBox.get_TextReadingOrder
   withIface(self.p, IID_IRichEditBox, "IRichEditBox", it):
-    var tmp: int32
+    var tmp: TextReadingOrder
     vcall(it, Slot_IRichEditBox_get_TextReadingOrder, Fn_IRichEditBox_get_TextReadingOrder)(it, tmp.addr).check("RichEditBox.get_TextReadingOrder")
-    result = TextReadingOrder(tmp)
+    result = tmp
 
 proc `textReadingOrder=`*(self: RichEditBox, value: TextReadingOrder) =
   ## Microsoft.UI.Xaml.Controls.RichEditBox.put_TextReadingOrder
   withIface(self.p, IID_IRichEditBox, "IRichEditBox", it):
-    vcall(it, Slot_IRichEditBox_put_TextReadingOrder, Fn_IRichEditBox_put_TextReadingOrder)(it, int32(value)).check("RichEditBox.put_TextReadingOrder")
+    vcall(it, Slot_IRichEditBox_put_TextReadingOrder, Fn_IRichEditBox_put_TextReadingOrder)(it, value).check("RichEditBox.put_TextReadingOrder")
 
 proc clipboardCopyFormat*(self: RichEditBox): RichEditClipboardFormat =
   ## Microsoft.UI.Xaml.Controls.RichEditBox.get_ClipboardCopyFormat
   withIface(self.p, IID_IRichEditBox, "IRichEditBox", it):
-    var tmp: int32
+    var tmp: RichEditClipboardFormat
     vcall(it, Slot_IRichEditBox_get_ClipboardCopyFormat, Fn_IRichEditBox_get_ClipboardCopyFormat)(it, tmp.addr).check("RichEditBox.get_ClipboardCopyFormat")
-    result = RichEditClipboardFormat(tmp)
+    result = tmp
 
 proc `clipboardCopyFormat=`*(self: RichEditBox, value: RichEditClipboardFormat) =
   ## Microsoft.UI.Xaml.Controls.RichEditBox.put_ClipboardCopyFormat
   withIface(self.p, IID_IRichEditBox, "IRichEditBox", it):
-    vcall(it, Slot_IRichEditBox_put_ClipboardCopyFormat, Fn_IRichEditBox_put_ClipboardCopyFormat)(it, int32(value)).check("RichEditBox.put_ClipboardCopyFormat")
+    vcall(it, Slot_IRichEditBox_put_ClipboardCopyFormat, Fn_IRichEditBox_put_ClipboardCopyFormat)(it, value).check("RichEditBox.put_ClipboardCopyFormat")
 
 proc desiredCandidateWindowAlignment*(self: RichEditBox): CandidateWindowAlignment =
   ## Microsoft.UI.Xaml.Controls.RichEditBox.get_DesiredCandidateWindowAlignment
   withIface(self.p, IID_IRichEditBox, "IRichEditBox", it):
-    var tmp: int32
+    var tmp: CandidateWindowAlignment
     vcall(it, Slot_IRichEditBox_get_DesiredCandidateWindowAlignment, Fn_IRichEditBox_get_DesiredCandidateWindowAlignment)(it, tmp.addr).check("RichEditBox.get_DesiredCandidateWindowAlignment")
-    result = CandidateWindowAlignment(tmp)
+    result = tmp
 
 proc `desiredCandidateWindowAlignment=`*(self: RichEditBox, value: CandidateWindowAlignment) =
   ## Microsoft.UI.Xaml.Controls.RichEditBox.put_DesiredCandidateWindowAlignment
   withIface(self.p, IID_IRichEditBox, "IRichEditBox", it):
-    vcall(it, Slot_IRichEditBox_put_DesiredCandidateWindowAlignment, Fn_IRichEditBox_put_DesiredCandidateWindowAlignment)(it, int32(value)).check("RichEditBox.put_DesiredCandidateWindowAlignment")
+    vcall(it, Slot_IRichEditBox_put_DesiredCandidateWindowAlignment, Fn_IRichEditBox_put_DesiredCandidateWindowAlignment)(it, value).check("RichEditBox.put_DesiredCandidateWindowAlignment")
 
 proc onCandidateWindowBoundsChanged*(self: RichEditBox,
     handler: proc(sender: pointer, args: CandidateWindowBoundsChangedEventArgs)): EventRegistrationToken {.discardable.} =
@@ -30421,38 +30420,38 @@ proc `foreground=`*(self: RichTextBlock, value: Brush) =
 proc textWrapping*(self: RichTextBlock): TextWrapping =
   ## Microsoft.UI.Xaml.Controls.RichTextBlock.get_TextWrapping
   withIface(self.p, IID_IRichTextBlock, "IRichTextBlock", it):
-    var tmp: int32
+    var tmp: TextWrapping
     vcall(it, Slot_IRichTextBlock_get_TextWrapping, Fn_IRichTextBlock_get_TextWrapping)(it, tmp.addr).check("RichTextBlock.get_TextWrapping")
-    result = TextWrapping(tmp)
+    result = tmp
 
 proc `textWrapping=`*(self: RichTextBlock, value: TextWrapping) =
   ## Microsoft.UI.Xaml.Controls.RichTextBlock.put_TextWrapping
   withIface(self.p, IID_IRichTextBlock, "IRichTextBlock", it):
-    vcall(it, Slot_IRichTextBlock_put_TextWrapping, Fn_IRichTextBlock_put_TextWrapping)(it, int32(value)).check("RichTextBlock.put_TextWrapping")
+    vcall(it, Slot_IRichTextBlock_put_TextWrapping, Fn_IRichTextBlock_put_TextWrapping)(it, value).check("RichTextBlock.put_TextWrapping")
 
 proc textTrimming*(self: RichTextBlock): TextTrimming =
   ## Microsoft.UI.Xaml.Controls.RichTextBlock.get_TextTrimming
   withIface(self.p, IID_IRichTextBlock, "IRichTextBlock", it):
-    var tmp: int32
+    var tmp: TextTrimming
     vcall(it, Slot_IRichTextBlock_get_TextTrimming, Fn_IRichTextBlock_get_TextTrimming)(it, tmp.addr).check("RichTextBlock.get_TextTrimming")
-    result = TextTrimming(tmp)
+    result = tmp
 
 proc `textTrimming=`*(self: RichTextBlock, value: TextTrimming) =
   ## Microsoft.UI.Xaml.Controls.RichTextBlock.put_TextTrimming
   withIface(self.p, IID_IRichTextBlock, "IRichTextBlock", it):
-    vcall(it, Slot_IRichTextBlock_put_TextTrimming, Fn_IRichTextBlock_put_TextTrimming)(it, int32(value)).check("RichTextBlock.put_TextTrimming")
+    vcall(it, Slot_IRichTextBlock_put_TextTrimming, Fn_IRichTextBlock_put_TextTrimming)(it, value).check("RichTextBlock.put_TextTrimming")
 
 proc textAlignment*(self: RichTextBlock): TextAlignment =
   ## Microsoft.UI.Xaml.Controls.RichTextBlock.get_TextAlignment
   withIface(self.p, IID_IRichTextBlock, "IRichTextBlock", it):
-    var tmp: int32
+    var tmp: TextAlignment
     vcall(it, Slot_IRichTextBlock_get_TextAlignment, Fn_IRichTextBlock_get_TextAlignment)(it, tmp.addr).check("RichTextBlock.get_TextAlignment")
-    result = TextAlignment(tmp)
+    result = tmp
 
 proc `textAlignment=`*(self: RichTextBlock, value: TextAlignment) =
   ## Microsoft.UI.Xaml.Controls.RichTextBlock.put_TextAlignment
   withIface(self.p, IID_IRichTextBlock, "IRichTextBlock", it):
-    vcall(it, Slot_IRichTextBlock_put_TextAlignment, Fn_IRichTextBlock_put_TextAlignment)(it, int32(value)).check("RichTextBlock.put_TextAlignment")
+    vcall(it, Slot_IRichTextBlock_put_TextAlignment, Fn_IRichTextBlock_put_TextAlignment)(it, value).check("RichTextBlock.put_TextAlignment")
 
 proc padding*(self: RichTextBlock): Thickness =
   ## Microsoft.UI.Xaml.Controls.RichTextBlock.get_Padding
@@ -30481,14 +30480,14 @@ proc `lineHeight=`*(self: RichTextBlock, value: float64) =
 proc lineStackingStrategy*(self: RichTextBlock): LineStackingStrategy =
   ## Microsoft.UI.Xaml.Controls.RichTextBlock.get_LineStackingStrategy
   withIface(self.p, IID_IRichTextBlock, "IRichTextBlock", it):
-    var tmp: int32
+    var tmp: LineStackingStrategy
     vcall(it, Slot_IRichTextBlock_get_LineStackingStrategy, Fn_IRichTextBlock_get_LineStackingStrategy)(it, tmp.addr).check("RichTextBlock.get_LineStackingStrategy")
-    result = LineStackingStrategy(tmp)
+    result = tmp
 
 proc `lineStackingStrategy=`*(self: RichTextBlock, value: LineStackingStrategy) =
   ## Microsoft.UI.Xaml.Controls.RichTextBlock.put_LineStackingStrategy
   withIface(self.p, IID_IRichTextBlock, "IRichTextBlock", it):
-    vcall(it, Slot_IRichTextBlock_put_LineStackingStrategy, Fn_IRichTextBlock_put_LineStackingStrategy)(it, int32(value)).check("RichTextBlock.put_LineStackingStrategy")
+    vcall(it, Slot_IRichTextBlock_put_LineStackingStrategy, Fn_IRichTextBlock_put_LineStackingStrategy)(it, value).check("RichTextBlock.put_LineStackingStrategy")
 
 proc characterSpacing*(self: RichTextBlock): int32 =
   ## Microsoft.UI.Xaml.Controls.RichTextBlock.get_CharacterSpacing
@@ -30591,14 +30590,14 @@ proc `maxLines=`*(self: RichTextBlock, value: int32) =
 proc textLineBounds*(self: RichTextBlock): TextLineBounds =
   ## Microsoft.UI.Xaml.Controls.RichTextBlock.get_TextLineBounds
   withIface(self.p, IID_IRichTextBlock, "IRichTextBlock", it):
-    var tmp: int32
+    var tmp: TextLineBounds
     vcall(it, Slot_IRichTextBlock_get_TextLineBounds, Fn_IRichTextBlock_get_TextLineBounds)(it, tmp.addr).check("RichTextBlock.get_TextLineBounds")
-    result = TextLineBounds(tmp)
+    result = tmp
 
 proc `textLineBounds=`*(self: RichTextBlock, value: TextLineBounds) =
   ## Microsoft.UI.Xaml.Controls.RichTextBlock.put_TextLineBounds
   withIface(self.p, IID_IRichTextBlock, "IRichTextBlock", it):
-    vcall(it, Slot_IRichTextBlock_put_TextLineBounds, Fn_IRichTextBlock_put_TextLineBounds)(it, int32(value)).check("RichTextBlock.put_TextLineBounds")
+    vcall(it, Slot_IRichTextBlock_put_TextLineBounds, Fn_IRichTextBlock_put_TextLineBounds)(it, value).check("RichTextBlock.put_TextLineBounds")
 
 proc selectionHighlightColor*(self: RichTextBlock): SolidColorBrush =
   ## Microsoft.UI.Xaml.Controls.RichTextBlock.get_SelectionHighlightColor
@@ -30616,14 +30615,14 @@ proc `selectionHighlightColor=`*(self: RichTextBlock, value: SolidColorBrush) =
 proc opticalMarginAlignment*(self: RichTextBlock): OpticalMarginAlignment =
   ## Microsoft.UI.Xaml.Controls.RichTextBlock.get_OpticalMarginAlignment
   withIface(self.p, IID_IRichTextBlock, "IRichTextBlock", it):
-    var tmp: int32
+    var tmp: OpticalMarginAlignment
     vcall(it, Slot_IRichTextBlock_get_OpticalMarginAlignment, Fn_IRichTextBlock_get_OpticalMarginAlignment)(it, tmp.addr).check("RichTextBlock.get_OpticalMarginAlignment")
-    result = OpticalMarginAlignment(tmp)
+    result = tmp
 
 proc `opticalMarginAlignment=`*(self: RichTextBlock, value: OpticalMarginAlignment) =
   ## Microsoft.UI.Xaml.Controls.RichTextBlock.put_OpticalMarginAlignment
   withIface(self.p, IID_IRichTextBlock, "IRichTextBlock", it):
-    vcall(it, Slot_IRichTextBlock_put_OpticalMarginAlignment, Fn_IRichTextBlock_put_OpticalMarginAlignment)(it, int32(value)).check("RichTextBlock.put_OpticalMarginAlignment")
+    vcall(it, Slot_IRichTextBlock_put_OpticalMarginAlignment, Fn_IRichTextBlock_put_OpticalMarginAlignment)(it, value).check("RichTextBlock.put_OpticalMarginAlignment")
 
 proc isColorFontEnabled*(self: RichTextBlock): bool =
   ## Microsoft.UI.Xaml.Controls.RichTextBlock.get_IsColorFontEnabled
@@ -30640,14 +30639,14 @@ proc `isColorFontEnabled=`*(self: RichTextBlock, value: bool) =
 proc textReadingOrder*(self: RichTextBlock): TextReadingOrder =
   ## Microsoft.UI.Xaml.Controls.RichTextBlock.get_TextReadingOrder
   withIface(self.p, IID_IRichTextBlock, "IRichTextBlock", it):
-    var tmp: int32
+    var tmp: TextReadingOrder
     vcall(it, Slot_IRichTextBlock_get_TextReadingOrder, Fn_IRichTextBlock_get_TextReadingOrder)(it, tmp.addr).check("RichTextBlock.get_TextReadingOrder")
-    result = TextReadingOrder(tmp)
+    result = tmp
 
 proc `textReadingOrder=`*(self: RichTextBlock, value: TextReadingOrder) =
   ## Microsoft.UI.Xaml.Controls.RichTextBlock.put_TextReadingOrder
   withIface(self.p, IID_IRichTextBlock, "IRichTextBlock", it):
-    vcall(it, Slot_IRichTextBlock_put_TextReadingOrder, Fn_IRichTextBlock_put_TextReadingOrder)(it, int32(value)).check("RichTextBlock.put_TextReadingOrder")
+    vcall(it, Slot_IRichTextBlock_put_TextReadingOrder, Fn_IRichTextBlock_put_TextReadingOrder)(it, value).check("RichTextBlock.put_TextReadingOrder")
 
 proc isTextScaleFactorEnabled*(self: RichTextBlock): bool =
   ## Microsoft.UI.Xaml.Controls.RichTextBlock.get_IsTextScaleFactorEnabled
@@ -30683,14 +30682,14 @@ proc isTextTrimmed*(self: RichTextBlock): bool =
 proc horizontalTextAlignment*(self: RichTextBlock): TextAlignment =
   ## Microsoft.UI.Xaml.Controls.RichTextBlock.get_HorizontalTextAlignment
   withIface(self.p, IID_IRichTextBlock, "IRichTextBlock", it):
-    var tmp: int32
+    var tmp: TextAlignment
     vcall(it, Slot_IRichTextBlock_get_HorizontalTextAlignment, Fn_IRichTextBlock_get_HorizontalTextAlignment)(it, tmp.addr).check("RichTextBlock.get_HorizontalTextAlignment")
-    result = TextAlignment(tmp)
+    result = tmp
 
 proc `horizontalTextAlignment=`*(self: RichTextBlock, value: TextAlignment) =
   ## Microsoft.UI.Xaml.Controls.RichTextBlock.put_HorizontalTextAlignment
   withIface(self.p, IID_IRichTextBlock, "IRichTextBlock", it):
-    vcall(it, Slot_IRichTextBlock_put_HorizontalTextAlignment, Fn_IRichTextBlock_put_HorizontalTextAlignment)(it, int32(value)).check("RichTextBlock.put_HorizontalTextAlignment")
+    vcall(it, Slot_IRichTextBlock_put_HorizontalTextAlignment, Fn_IRichTextBlock_put_HorizontalTextAlignment)(it, value).check("RichTextBlock.put_HorizontalTextAlignment")
 
 proc selectionFlyout*(self: RichTextBlock): FlyoutBase =
   ## Microsoft.UI.Xaml.Controls.RichTextBlock.get_SelectionFlyout
@@ -31240,181 +31239,181 @@ proc scrollableHeight*(self: ScrollView): float64 =
 proc state*(self: ScrollView): ScrollingInteractionState =
   ## Microsoft.UI.Xaml.Controls.ScrollView.get_State
   withIface(self.p, IID_IScrollView, "IScrollView", it):
-    var tmp: int32
+    var tmp: ScrollingInteractionState
     vcall(it, Slot_IScrollView_get_State, Fn_IScrollView_get_State)(it, tmp.addr).check("ScrollView.get_State")
-    result = ScrollingInteractionState(tmp)
+    result = tmp
 
 proc horizontalScrollBarVisibility*(self: ScrollView): ScrollingScrollBarVisibility =
   ## Microsoft.UI.Xaml.Controls.ScrollView.get_HorizontalScrollBarVisibility
   withIface(self.p, IID_IScrollView, "IScrollView", it):
-    var tmp: int32
+    var tmp: ScrollingScrollBarVisibility
     vcall(it, Slot_IScrollView_get_HorizontalScrollBarVisibility, Fn_IScrollView_get_HorizontalScrollBarVisibility)(it, tmp.addr).check("ScrollView.get_HorizontalScrollBarVisibility")
-    result = ScrollingScrollBarVisibility(tmp)
+    result = tmp
 
 proc `horizontalScrollBarVisibility=`*(self: ScrollView, value: ScrollingScrollBarVisibility) =
   ## Microsoft.UI.Xaml.Controls.ScrollView.put_HorizontalScrollBarVisibility
   withIface(self.p, IID_IScrollView, "IScrollView", it):
-    vcall(it, Slot_IScrollView_put_HorizontalScrollBarVisibility, Fn_IScrollView_put_HorizontalScrollBarVisibility)(it, int32(value)).check("ScrollView.put_HorizontalScrollBarVisibility")
+    vcall(it, Slot_IScrollView_put_HorizontalScrollBarVisibility, Fn_IScrollView_put_HorizontalScrollBarVisibility)(it, value).check("ScrollView.put_HorizontalScrollBarVisibility")
 
 proc verticalScrollBarVisibility*(self: ScrollView): ScrollingScrollBarVisibility =
   ## Microsoft.UI.Xaml.Controls.ScrollView.get_VerticalScrollBarVisibility
   withIface(self.p, IID_IScrollView, "IScrollView", it):
-    var tmp: int32
+    var tmp: ScrollingScrollBarVisibility
     vcall(it, Slot_IScrollView_get_VerticalScrollBarVisibility, Fn_IScrollView_get_VerticalScrollBarVisibility)(it, tmp.addr).check("ScrollView.get_VerticalScrollBarVisibility")
-    result = ScrollingScrollBarVisibility(tmp)
+    result = tmp
 
 proc `verticalScrollBarVisibility=`*(self: ScrollView, value: ScrollingScrollBarVisibility) =
   ## Microsoft.UI.Xaml.Controls.ScrollView.put_VerticalScrollBarVisibility
   withIface(self.p, IID_IScrollView, "IScrollView", it):
-    vcall(it, Slot_IScrollView_put_VerticalScrollBarVisibility, Fn_IScrollView_put_VerticalScrollBarVisibility)(it, int32(value)).check("ScrollView.put_VerticalScrollBarVisibility")
+    vcall(it, Slot_IScrollView_put_VerticalScrollBarVisibility, Fn_IScrollView_put_VerticalScrollBarVisibility)(it, value).check("ScrollView.put_VerticalScrollBarVisibility")
 
 proc contentOrientation*(self: ScrollView): ScrollingContentOrientation =
   ## Microsoft.UI.Xaml.Controls.ScrollView.get_ContentOrientation
   withIface(self.p, IID_IScrollView, "IScrollView", it):
-    var tmp: int32
+    var tmp: ScrollingContentOrientation
     vcall(it, Slot_IScrollView_get_ContentOrientation, Fn_IScrollView_get_ContentOrientation)(it, tmp.addr).check("ScrollView.get_ContentOrientation")
-    result = ScrollingContentOrientation(tmp)
+    result = tmp
 
 proc `contentOrientation=`*(self: ScrollView, value: ScrollingContentOrientation) =
   ## Microsoft.UI.Xaml.Controls.ScrollView.put_ContentOrientation
   withIface(self.p, IID_IScrollView, "IScrollView", it):
-    vcall(it, Slot_IScrollView_put_ContentOrientation, Fn_IScrollView_put_ContentOrientation)(it, int32(value)).check("ScrollView.put_ContentOrientation")
+    vcall(it, Slot_IScrollView_put_ContentOrientation, Fn_IScrollView_put_ContentOrientation)(it, value).check("ScrollView.put_ContentOrientation")
 
 proc horizontalScrollChainMode*(self: ScrollView): ScrollingChainMode =
   ## Microsoft.UI.Xaml.Controls.ScrollView.get_HorizontalScrollChainMode
   withIface(self.p, IID_IScrollView, "IScrollView", it):
-    var tmp: int32
+    var tmp: ScrollingChainMode
     vcall(it, Slot_IScrollView_get_HorizontalScrollChainMode, Fn_IScrollView_get_HorizontalScrollChainMode)(it, tmp.addr).check("ScrollView.get_HorizontalScrollChainMode")
-    result = ScrollingChainMode(tmp)
+    result = tmp
 
 proc `horizontalScrollChainMode=`*(self: ScrollView, value: ScrollingChainMode) =
   ## Microsoft.UI.Xaml.Controls.ScrollView.put_HorizontalScrollChainMode
   withIface(self.p, IID_IScrollView, "IScrollView", it):
-    vcall(it, Slot_IScrollView_put_HorizontalScrollChainMode, Fn_IScrollView_put_HorizontalScrollChainMode)(it, int32(value)).check("ScrollView.put_HorizontalScrollChainMode")
+    vcall(it, Slot_IScrollView_put_HorizontalScrollChainMode, Fn_IScrollView_put_HorizontalScrollChainMode)(it, value).check("ScrollView.put_HorizontalScrollChainMode")
 
 proc verticalScrollChainMode*(self: ScrollView): ScrollingChainMode =
   ## Microsoft.UI.Xaml.Controls.ScrollView.get_VerticalScrollChainMode
   withIface(self.p, IID_IScrollView, "IScrollView", it):
-    var tmp: int32
+    var tmp: ScrollingChainMode
     vcall(it, Slot_IScrollView_get_VerticalScrollChainMode, Fn_IScrollView_get_VerticalScrollChainMode)(it, tmp.addr).check("ScrollView.get_VerticalScrollChainMode")
-    result = ScrollingChainMode(tmp)
+    result = tmp
 
 proc `verticalScrollChainMode=`*(self: ScrollView, value: ScrollingChainMode) =
   ## Microsoft.UI.Xaml.Controls.ScrollView.put_VerticalScrollChainMode
   withIface(self.p, IID_IScrollView, "IScrollView", it):
-    vcall(it, Slot_IScrollView_put_VerticalScrollChainMode, Fn_IScrollView_put_VerticalScrollChainMode)(it, int32(value)).check("ScrollView.put_VerticalScrollChainMode")
+    vcall(it, Slot_IScrollView_put_VerticalScrollChainMode, Fn_IScrollView_put_VerticalScrollChainMode)(it, value).check("ScrollView.put_VerticalScrollChainMode")
 
 proc horizontalScrollRailMode*(self: ScrollView): ScrollingRailMode =
   ## Microsoft.UI.Xaml.Controls.ScrollView.get_HorizontalScrollRailMode
   withIface(self.p, IID_IScrollView, "IScrollView", it):
-    var tmp: int32
+    var tmp: ScrollingRailMode
     vcall(it, Slot_IScrollView_get_HorizontalScrollRailMode, Fn_IScrollView_get_HorizontalScrollRailMode)(it, tmp.addr).check("ScrollView.get_HorizontalScrollRailMode")
-    result = ScrollingRailMode(tmp)
+    result = tmp
 
 proc `horizontalScrollRailMode=`*(self: ScrollView, value: ScrollingRailMode) =
   ## Microsoft.UI.Xaml.Controls.ScrollView.put_HorizontalScrollRailMode
   withIface(self.p, IID_IScrollView, "IScrollView", it):
-    vcall(it, Slot_IScrollView_put_HorizontalScrollRailMode, Fn_IScrollView_put_HorizontalScrollRailMode)(it, int32(value)).check("ScrollView.put_HorizontalScrollRailMode")
+    vcall(it, Slot_IScrollView_put_HorizontalScrollRailMode, Fn_IScrollView_put_HorizontalScrollRailMode)(it, value).check("ScrollView.put_HorizontalScrollRailMode")
 
 proc verticalScrollRailMode*(self: ScrollView): ScrollingRailMode =
   ## Microsoft.UI.Xaml.Controls.ScrollView.get_VerticalScrollRailMode
   withIface(self.p, IID_IScrollView, "IScrollView", it):
-    var tmp: int32
+    var tmp: ScrollingRailMode
     vcall(it, Slot_IScrollView_get_VerticalScrollRailMode, Fn_IScrollView_get_VerticalScrollRailMode)(it, tmp.addr).check("ScrollView.get_VerticalScrollRailMode")
-    result = ScrollingRailMode(tmp)
+    result = tmp
 
 proc `verticalScrollRailMode=`*(self: ScrollView, value: ScrollingRailMode) =
   ## Microsoft.UI.Xaml.Controls.ScrollView.put_VerticalScrollRailMode
   withIface(self.p, IID_IScrollView, "IScrollView", it):
-    vcall(it, Slot_IScrollView_put_VerticalScrollRailMode, Fn_IScrollView_put_VerticalScrollRailMode)(it, int32(value)).check("ScrollView.put_VerticalScrollRailMode")
+    vcall(it, Slot_IScrollView_put_VerticalScrollRailMode, Fn_IScrollView_put_VerticalScrollRailMode)(it, value).check("ScrollView.put_VerticalScrollRailMode")
 
 proc horizontalScrollMode*(self: ScrollView): ScrollingScrollMode =
   ## Microsoft.UI.Xaml.Controls.ScrollView.get_HorizontalScrollMode
   withIface(self.p, IID_IScrollView, "IScrollView", it):
-    var tmp: int32
+    var tmp: ScrollingScrollMode
     vcall(it, Slot_IScrollView_get_HorizontalScrollMode, Fn_IScrollView_get_HorizontalScrollMode)(it, tmp.addr).check("ScrollView.get_HorizontalScrollMode")
-    result = ScrollingScrollMode(tmp)
+    result = tmp
 
 proc `horizontalScrollMode=`*(self: ScrollView, value: ScrollingScrollMode) =
   ## Microsoft.UI.Xaml.Controls.ScrollView.put_HorizontalScrollMode
   withIface(self.p, IID_IScrollView, "IScrollView", it):
-    vcall(it, Slot_IScrollView_put_HorizontalScrollMode, Fn_IScrollView_put_HorizontalScrollMode)(it, int32(value)).check("ScrollView.put_HorizontalScrollMode")
+    vcall(it, Slot_IScrollView_put_HorizontalScrollMode, Fn_IScrollView_put_HorizontalScrollMode)(it, value).check("ScrollView.put_HorizontalScrollMode")
 
 proc verticalScrollMode*(self: ScrollView): ScrollingScrollMode =
   ## Microsoft.UI.Xaml.Controls.ScrollView.get_VerticalScrollMode
   withIface(self.p, IID_IScrollView, "IScrollView", it):
-    var tmp: int32
+    var tmp: ScrollingScrollMode
     vcall(it, Slot_IScrollView_get_VerticalScrollMode, Fn_IScrollView_get_VerticalScrollMode)(it, tmp.addr).check("ScrollView.get_VerticalScrollMode")
-    result = ScrollingScrollMode(tmp)
+    result = tmp
 
 proc `verticalScrollMode=`*(self: ScrollView, value: ScrollingScrollMode) =
   ## Microsoft.UI.Xaml.Controls.ScrollView.put_VerticalScrollMode
   withIface(self.p, IID_IScrollView, "IScrollView", it):
-    vcall(it, Slot_IScrollView_put_VerticalScrollMode, Fn_IScrollView_put_VerticalScrollMode)(it, int32(value)).check("ScrollView.put_VerticalScrollMode")
+    vcall(it, Slot_IScrollView_put_VerticalScrollMode, Fn_IScrollView_put_VerticalScrollMode)(it, value).check("ScrollView.put_VerticalScrollMode")
 
 proc computedHorizontalScrollBarVisibility*(self: ScrollView): Visibility =
   ## Microsoft.UI.Xaml.Controls.ScrollView.get_ComputedHorizontalScrollBarVisibility
   withIface(self.p, IID_IScrollView, "IScrollView", it):
-    var tmp: int32
+    var tmp: Visibility
     vcall(it, Slot_IScrollView_get_ComputedHorizontalScrollBarVisibility, Fn_IScrollView_get_ComputedHorizontalScrollBarVisibility)(it, tmp.addr).check("ScrollView.get_ComputedHorizontalScrollBarVisibility")
-    result = Visibility(tmp)
+    result = tmp
 
 proc computedVerticalScrollBarVisibility*(self: ScrollView): Visibility =
   ## Microsoft.UI.Xaml.Controls.ScrollView.get_ComputedVerticalScrollBarVisibility
   withIface(self.p, IID_IScrollView, "IScrollView", it):
-    var tmp: int32
+    var tmp: Visibility
     vcall(it, Slot_IScrollView_get_ComputedVerticalScrollBarVisibility, Fn_IScrollView_get_ComputedVerticalScrollBarVisibility)(it, tmp.addr).check("ScrollView.get_ComputedVerticalScrollBarVisibility")
-    result = Visibility(tmp)
+    result = tmp
 
 proc computedHorizontalScrollMode*(self: ScrollView): ScrollingScrollMode =
   ## Microsoft.UI.Xaml.Controls.ScrollView.get_ComputedHorizontalScrollMode
   withIface(self.p, IID_IScrollView, "IScrollView", it):
-    var tmp: int32
+    var tmp: ScrollingScrollMode
     vcall(it, Slot_IScrollView_get_ComputedHorizontalScrollMode, Fn_IScrollView_get_ComputedHorizontalScrollMode)(it, tmp.addr).check("ScrollView.get_ComputedHorizontalScrollMode")
-    result = ScrollingScrollMode(tmp)
+    result = tmp
 
 proc computedVerticalScrollMode*(self: ScrollView): ScrollingScrollMode =
   ## Microsoft.UI.Xaml.Controls.ScrollView.get_ComputedVerticalScrollMode
   withIface(self.p, IID_IScrollView, "IScrollView", it):
-    var tmp: int32
+    var tmp: ScrollingScrollMode
     vcall(it, Slot_IScrollView_get_ComputedVerticalScrollMode, Fn_IScrollView_get_ComputedVerticalScrollMode)(it, tmp.addr).check("ScrollView.get_ComputedVerticalScrollMode")
-    result = ScrollingScrollMode(tmp)
+    result = tmp
 
 proc zoomChainMode*(self: ScrollView): ScrollingChainMode =
   ## Microsoft.UI.Xaml.Controls.ScrollView.get_ZoomChainMode
   withIface(self.p, IID_IScrollView, "IScrollView", it):
-    var tmp: int32
+    var tmp: ScrollingChainMode
     vcall(it, Slot_IScrollView_get_ZoomChainMode, Fn_IScrollView_get_ZoomChainMode)(it, tmp.addr).check("ScrollView.get_ZoomChainMode")
-    result = ScrollingChainMode(tmp)
+    result = tmp
 
 proc `zoomChainMode=`*(self: ScrollView, value: ScrollingChainMode) =
   ## Microsoft.UI.Xaml.Controls.ScrollView.put_ZoomChainMode
   withIface(self.p, IID_IScrollView, "IScrollView", it):
-    vcall(it, Slot_IScrollView_put_ZoomChainMode, Fn_IScrollView_put_ZoomChainMode)(it, int32(value)).check("ScrollView.put_ZoomChainMode")
+    vcall(it, Slot_IScrollView_put_ZoomChainMode, Fn_IScrollView_put_ZoomChainMode)(it, value).check("ScrollView.put_ZoomChainMode")
 
 proc zoomMode*(self: ScrollView): ScrollingZoomMode =
   ## Microsoft.UI.Xaml.Controls.ScrollView.get_ZoomMode
   withIface(self.p, IID_IScrollView, "IScrollView", it):
-    var tmp: int32
+    var tmp: ScrollingZoomMode
     vcall(it, Slot_IScrollView_get_ZoomMode, Fn_IScrollView_get_ZoomMode)(it, tmp.addr).check("ScrollView.get_ZoomMode")
-    result = ScrollingZoomMode(tmp)
+    result = tmp
 
 proc `zoomMode=`*(self: ScrollView, value: ScrollingZoomMode) =
   ## Microsoft.UI.Xaml.Controls.ScrollView.put_ZoomMode
   withIface(self.p, IID_IScrollView, "IScrollView", it):
-    vcall(it, Slot_IScrollView_put_ZoomMode, Fn_IScrollView_put_ZoomMode)(it, int32(value)).check("ScrollView.put_ZoomMode")
+    vcall(it, Slot_IScrollView_put_ZoomMode, Fn_IScrollView_put_ZoomMode)(it, value).check("ScrollView.put_ZoomMode")
 
 proc ignoredInputKinds*(self: ScrollView): ScrollingInputKinds =
   ## Microsoft.UI.Xaml.Controls.ScrollView.get_IgnoredInputKinds
   withIface(self.p, IID_IScrollView, "IScrollView", it):
-    var tmp: int32
+    var tmp: ScrollingInputKinds
     vcall(it, Slot_IScrollView_get_IgnoredInputKinds, Fn_IScrollView_get_IgnoredInputKinds)(it, tmp.addr).check("ScrollView.get_IgnoredInputKinds")
-    result = ScrollingInputKinds(tmp)
+    result = tmp
 
 proc `ignoredInputKinds=`*(self: ScrollView, value: ScrollingInputKinds) =
   ## Microsoft.UI.Xaml.Controls.ScrollView.put_IgnoredInputKinds
   withIface(self.p, IID_IScrollView, "IScrollView", it):
-    vcall(it, Slot_IScrollView_put_IgnoredInputKinds, Fn_IScrollView_put_IgnoredInputKinds)(it, int32(value)).check("ScrollView.put_IgnoredInputKinds")
+    vcall(it, Slot_IScrollView_put_IgnoredInputKinds, Fn_IScrollView_put_IgnoredInputKinds)(it, value).check("ScrollView.put_IgnoredInputKinds")
 
 proc minZoomFactor*(self: ScrollView): float64 =
   ## Microsoft.UI.Xaml.Controls.ScrollView.get_MinZoomFactor
@@ -31693,26 +31692,26 @@ proc newScrollViewer*(): ScrollViewer =
 proc horizontalScrollBarVisibility*(self: ScrollViewer): ScrollBarVisibility =
   ## Microsoft.UI.Xaml.Controls.ScrollViewer.get_HorizontalScrollBarVisibility
   withIface(self.p, IID_IScrollViewer, "IScrollViewer", it):
-    var tmp: int32
+    var tmp: ScrollBarVisibility
     vcall(it, Slot_IScrollViewer_get_HorizontalScrollBarVisibility, Fn_IScrollViewer_get_HorizontalScrollBarVisibility)(it, tmp.addr).check("ScrollViewer.get_HorizontalScrollBarVisibility")
-    result = ScrollBarVisibility(tmp)
+    result = tmp
 
 proc `horizontalScrollBarVisibility=`*(self: ScrollViewer, value: ScrollBarVisibility) =
   ## Microsoft.UI.Xaml.Controls.ScrollViewer.put_HorizontalScrollBarVisibility
   withIface(self.p, IID_IScrollViewer, "IScrollViewer", it):
-    vcall(it, Slot_IScrollViewer_put_HorizontalScrollBarVisibility, Fn_IScrollViewer_put_HorizontalScrollBarVisibility)(it, int32(value)).check("ScrollViewer.put_HorizontalScrollBarVisibility")
+    vcall(it, Slot_IScrollViewer_put_HorizontalScrollBarVisibility, Fn_IScrollViewer_put_HorizontalScrollBarVisibility)(it, value).check("ScrollViewer.put_HorizontalScrollBarVisibility")
 
 proc verticalScrollBarVisibility*(self: ScrollViewer): ScrollBarVisibility =
   ## Microsoft.UI.Xaml.Controls.ScrollViewer.get_VerticalScrollBarVisibility
   withIface(self.p, IID_IScrollViewer, "IScrollViewer", it):
-    var tmp: int32
+    var tmp: ScrollBarVisibility
     vcall(it, Slot_IScrollViewer_get_VerticalScrollBarVisibility, Fn_IScrollViewer_get_VerticalScrollBarVisibility)(it, tmp.addr).check("ScrollViewer.get_VerticalScrollBarVisibility")
-    result = ScrollBarVisibility(tmp)
+    result = tmp
 
 proc `verticalScrollBarVisibility=`*(self: ScrollViewer, value: ScrollBarVisibility) =
   ## Microsoft.UI.Xaml.Controls.ScrollViewer.put_VerticalScrollBarVisibility
   withIface(self.p, IID_IScrollViewer, "IScrollViewer", it):
-    vcall(it, Slot_IScrollViewer_put_VerticalScrollBarVisibility, Fn_IScrollViewer_put_VerticalScrollBarVisibility)(it, int32(value)).check("ScrollViewer.put_VerticalScrollBarVisibility")
+    vcall(it, Slot_IScrollViewer_put_VerticalScrollBarVisibility, Fn_IScrollViewer_put_VerticalScrollBarVisibility)(it, value).check("ScrollViewer.put_VerticalScrollBarVisibility")
 
 proc isHorizontalRailEnabled*(self: ScrollViewer): bool =
   ## Microsoft.UI.Xaml.Controls.ScrollViewer.get_IsHorizontalRailEnabled
@@ -31801,98 +31800,98 @@ proc `isZoomInertiaEnabled=`*(self: ScrollViewer, value: bool) =
 proc horizontalScrollMode*(self: ScrollViewer): ScrollMode =
   ## Microsoft.UI.Xaml.Controls.ScrollViewer.get_HorizontalScrollMode
   withIface(self.p, IID_IScrollViewer, "IScrollViewer", it):
-    var tmp: int32
+    var tmp: ScrollMode
     vcall(it, Slot_IScrollViewer_get_HorizontalScrollMode, Fn_IScrollViewer_get_HorizontalScrollMode)(it, tmp.addr).check("ScrollViewer.get_HorizontalScrollMode")
-    result = ScrollMode(tmp)
+    result = tmp
 
 proc `horizontalScrollMode=`*(self: ScrollViewer, value: ScrollMode) =
   ## Microsoft.UI.Xaml.Controls.ScrollViewer.put_HorizontalScrollMode
   withIface(self.p, IID_IScrollViewer, "IScrollViewer", it):
-    vcall(it, Slot_IScrollViewer_put_HorizontalScrollMode, Fn_IScrollViewer_put_HorizontalScrollMode)(it, int32(value)).check("ScrollViewer.put_HorizontalScrollMode")
+    vcall(it, Slot_IScrollViewer_put_HorizontalScrollMode, Fn_IScrollViewer_put_HorizontalScrollMode)(it, value).check("ScrollViewer.put_HorizontalScrollMode")
 
 proc verticalScrollMode*(self: ScrollViewer): ScrollMode =
   ## Microsoft.UI.Xaml.Controls.ScrollViewer.get_VerticalScrollMode
   withIface(self.p, IID_IScrollViewer, "IScrollViewer", it):
-    var tmp: int32
+    var tmp: ScrollMode
     vcall(it, Slot_IScrollViewer_get_VerticalScrollMode, Fn_IScrollViewer_get_VerticalScrollMode)(it, tmp.addr).check("ScrollViewer.get_VerticalScrollMode")
-    result = ScrollMode(tmp)
+    result = tmp
 
 proc `verticalScrollMode=`*(self: ScrollViewer, value: ScrollMode) =
   ## Microsoft.UI.Xaml.Controls.ScrollViewer.put_VerticalScrollMode
   withIface(self.p, IID_IScrollViewer, "IScrollViewer", it):
-    vcall(it, Slot_IScrollViewer_put_VerticalScrollMode, Fn_IScrollViewer_put_VerticalScrollMode)(it, int32(value)).check("ScrollViewer.put_VerticalScrollMode")
+    vcall(it, Slot_IScrollViewer_put_VerticalScrollMode, Fn_IScrollViewer_put_VerticalScrollMode)(it, value).check("ScrollViewer.put_VerticalScrollMode")
 
 proc zoomMode*(self: ScrollViewer): ZoomMode =
   ## Microsoft.UI.Xaml.Controls.ScrollViewer.get_ZoomMode
   withIface(self.p, IID_IScrollViewer, "IScrollViewer", it):
-    var tmp: int32
+    var tmp: ZoomMode
     vcall(it, Slot_IScrollViewer_get_ZoomMode, Fn_IScrollViewer_get_ZoomMode)(it, tmp.addr).check("ScrollViewer.get_ZoomMode")
-    result = ZoomMode(tmp)
+    result = tmp
 
 proc `zoomMode=`*(self: ScrollViewer, value: ZoomMode) =
   ## Microsoft.UI.Xaml.Controls.ScrollViewer.put_ZoomMode
   withIface(self.p, IID_IScrollViewer, "IScrollViewer", it):
-    vcall(it, Slot_IScrollViewer_put_ZoomMode, Fn_IScrollViewer_put_ZoomMode)(it, int32(value)).check("ScrollViewer.put_ZoomMode")
+    vcall(it, Slot_IScrollViewer_put_ZoomMode, Fn_IScrollViewer_put_ZoomMode)(it, value).check("ScrollViewer.put_ZoomMode")
 
 proc horizontalSnapPointsAlignment*(self: ScrollViewer): SnapPointsAlignment =
   ## Microsoft.UI.Xaml.Controls.ScrollViewer.get_HorizontalSnapPointsAlignment
   withIface(self.p, IID_IScrollViewer, "IScrollViewer", it):
-    var tmp: int32
+    var tmp: SnapPointsAlignment
     vcall(it, Slot_IScrollViewer_get_HorizontalSnapPointsAlignment, Fn_IScrollViewer_get_HorizontalSnapPointsAlignment)(it, tmp.addr).check("ScrollViewer.get_HorizontalSnapPointsAlignment")
-    result = SnapPointsAlignment(tmp)
+    result = tmp
 
 proc `horizontalSnapPointsAlignment=`*(self: ScrollViewer, value: SnapPointsAlignment) =
   ## Microsoft.UI.Xaml.Controls.ScrollViewer.put_HorizontalSnapPointsAlignment
   withIface(self.p, IID_IScrollViewer, "IScrollViewer", it):
-    vcall(it, Slot_IScrollViewer_put_HorizontalSnapPointsAlignment, Fn_IScrollViewer_put_HorizontalSnapPointsAlignment)(it, int32(value)).check("ScrollViewer.put_HorizontalSnapPointsAlignment")
+    vcall(it, Slot_IScrollViewer_put_HorizontalSnapPointsAlignment, Fn_IScrollViewer_put_HorizontalSnapPointsAlignment)(it, value).check("ScrollViewer.put_HorizontalSnapPointsAlignment")
 
 proc verticalSnapPointsAlignment*(self: ScrollViewer): SnapPointsAlignment =
   ## Microsoft.UI.Xaml.Controls.ScrollViewer.get_VerticalSnapPointsAlignment
   withIface(self.p, IID_IScrollViewer, "IScrollViewer", it):
-    var tmp: int32
+    var tmp: SnapPointsAlignment
     vcall(it, Slot_IScrollViewer_get_VerticalSnapPointsAlignment, Fn_IScrollViewer_get_VerticalSnapPointsAlignment)(it, tmp.addr).check("ScrollViewer.get_VerticalSnapPointsAlignment")
-    result = SnapPointsAlignment(tmp)
+    result = tmp
 
 proc `verticalSnapPointsAlignment=`*(self: ScrollViewer, value: SnapPointsAlignment) =
   ## Microsoft.UI.Xaml.Controls.ScrollViewer.put_VerticalSnapPointsAlignment
   withIface(self.p, IID_IScrollViewer, "IScrollViewer", it):
-    vcall(it, Slot_IScrollViewer_put_VerticalSnapPointsAlignment, Fn_IScrollViewer_put_VerticalSnapPointsAlignment)(it, int32(value)).check("ScrollViewer.put_VerticalSnapPointsAlignment")
+    vcall(it, Slot_IScrollViewer_put_VerticalSnapPointsAlignment, Fn_IScrollViewer_put_VerticalSnapPointsAlignment)(it, value).check("ScrollViewer.put_VerticalSnapPointsAlignment")
 
 proc horizontalSnapPointsType*(self: ScrollViewer): SnapPointsType =
   ## Microsoft.UI.Xaml.Controls.ScrollViewer.get_HorizontalSnapPointsType
   withIface(self.p, IID_IScrollViewer, "IScrollViewer", it):
-    var tmp: int32
+    var tmp: SnapPointsType
     vcall(it, Slot_IScrollViewer_get_HorizontalSnapPointsType, Fn_IScrollViewer_get_HorizontalSnapPointsType)(it, tmp.addr).check("ScrollViewer.get_HorizontalSnapPointsType")
-    result = SnapPointsType(tmp)
+    result = tmp
 
 proc `horizontalSnapPointsType=`*(self: ScrollViewer, value: SnapPointsType) =
   ## Microsoft.UI.Xaml.Controls.ScrollViewer.put_HorizontalSnapPointsType
   withIface(self.p, IID_IScrollViewer, "IScrollViewer", it):
-    vcall(it, Slot_IScrollViewer_put_HorizontalSnapPointsType, Fn_IScrollViewer_put_HorizontalSnapPointsType)(it, int32(value)).check("ScrollViewer.put_HorizontalSnapPointsType")
+    vcall(it, Slot_IScrollViewer_put_HorizontalSnapPointsType, Fn_IScrollViewer_put_HorizontalSnapPointsType)(it, value).check("ScrollViewer.put_HorizontalSnapPointsType")
 
 proc verticalSnapPointsType*(self: ScrollViewer): SnapPointsType =
   ## Microsoft.UI.Xaml.Controls.ScrollViewer.get_VerticalSnapPointsType
   withIface(self.p, IID_IScrollViewer, "IScrollViewer", it):
-    var tmp: int32
+    var tmp: SnapPointsType
     vcall(it, Slot_IScrollViewer_get_VerticalSnapPointsType, Fn_IScrollViewer_get_VerticalSnapPointsType)(it, tmp.addr).check("ScrollViewer.get_VerticalSnapPointsType")
-    result = SnapPointsType(tmp)
+    result = tmp
 
 proc `verticalSnapPointsType=`*(self: ScrollViewer, value: SnapPointsType) =
   ## Microsoft.UI.Xaml.Controls.ScrollViewer.put_VerticalSnapPointsType
   withIface(self.p, IID_IScrollViewer, "IScrollViewer", it):
-    vcall(it, Slot_IScrollViewer_put_VerticalSnapPointsType, Fn_IScrollViewer_put_VerticalSnapPointsType)(it, int32(value)).check("ScrollViewer.put_VerticalSnapPointsType")
+    vcall(it, Slot_IScrollViewer_put_VerticalSnapPointsType, Fn_IScrollViewer_put_VerticalSnapPointsType)(it, value).check("ScrollViewer.put_VerticalSnapPointsType")
 
 proc zoomSnapPointsType*(self: ScrollViewer): SnapPointsType =
   ## Microsoft.UI.Xaml.Controls.ScrollViewer.get_ZoomSnapPointsType
   withIface(self.p, IID_IScrollViewer, "IScrollViewer", it):
-    var tmp: int32
+    var tmp: SnapPointsType
     vcall(it, Slot_IScrollViewer_get_ZoomSnapPointsType, Fn_IScrollViewer_get_ZoomSnapPointsType)(it, tmp.addr).check("ScrollViewer.get_ZoomSnapPointsType")
-    result = SnapPointsType(tmp)
+    result = tmp
 
 proc `zoomSnapPointsType=`*(self: ScrollViewer, value: SnapPointsType) =
   ## Microsoft.UI.Xaml.Controls.ScrollViewer.put_ZoomSnapPointsType
   withIface(self.p, IID_IScrollViewer, "IScrollViewer", it):
-    vcall(it, Slot_IScrollViewer_put_ZoomSnapPointsType, Fn_IScrollViewer_put_ZoomSnapPointsType)(it, int32(value)).check("ScrollViewer.put_ZoomSnapPointsType")
+    vcall(it, Slot_IScrollViewer_put_ZoomSnapPointsType, Fn_IScrollViewer_put_ZoomSnapPointsType)(it, value).check("ScrollViewer.put_ZoomSnapPointsType")
 
 proc horizontalOffset*(self: ScrollViewer): float64 =
   ## Microsoft.UI.Xaml.Controls.ScrollViewer.get_HorizontalOffset
@@ -31918,9 +31917,9 @@ proc scrollableWidth*(self: ScrollViewer): float64 =
 proc computedHorizontalScrollBarVisibility*(self: ScrollViewer): Visibility =
   ## Microsoft.UI.Xaml.Controls.ScrollViewer.get_ComputedHorizontalScrollBarVisibility
   withIface(self.p, IID_IScrollViewer, "IScrollViewer", it):
-    var tmp: int32
+    var tmp: Visibility
     vcall(it, Slot_IScrollViewer_get_ComputedHorizontalScrollBarVisibility, Fn_IScrollViewer_get_ComputedHorizontalScrollBarVisibility)(it, tmp.addr).check("ScrollViewer.get_ComputedHorizontalScrollBarVisibility")
-    result = Visibility(tmp)
+    result = tmp
 
 proc extentWidth*(self: ScrollViewer): float64 =
   ## Microsoft.UI.Xaml.Controls.ScrollViewer.get_ExtentWidth
@@ -31953,9 +31952,9 @@ proc scrollableHeight*(self: ScrollViewer): float64 =
 proc computedVerticalScrollBarVisibility*(self: ScrollViewer): Visibility =
   ## Microsoft.UI.Xaml.Controls.ScrollViewer.get_ComputedVerticalScrollBarVisibility
   withIface(self.p, IID_IScrollViewer, "IScrollViewer", it):
-    var tmp: int32
+    var tmp: Visibility
     vcall(it, Slot_IScrollViewer_get_ComputedVerticalScrollBarVisibility, Fn_IScrollViewer_get_ComputedVerticalScrollBarVisibility)(it, tmp.addr).check("ScrollViewer.get_ComputedVerticalScrollBarVisibility")
-    result = Visibility(tmp)
+    result = tmp
 
 proc extentHeight*(self: ScrollViewer): float64 =
   ## Microsoft.UI.Xaml.Controls.ScrollViewer.get_ExtentHeight
@@ -32314,14 +32313,14 @@ proc `anchorElement=`*(self: ScrollingAnchorRequestedEventArgs, value: UIElement
 proc snapPointsMode*(self: ScrollingBringingIntoViewEventArgs): ScrollingSnapPointsMode =
   ## Microsoft.UI.Xaml.Controls.ScrollingBringingIntoViewEventArgs.get_SnapPointsMode
   withIface(self.p, IID_IScrollingBringingIntoViewEventArgs, "IScrollingBringingIntoViewEventArgs", it):
-    var tmp: int32
+    var tmp: ScrollingSnapPointsMode
     vcall(it, Slot_IScrollingBringingIntoViewEventArgs_get_SnapPointsMode, Fn_IScrollingBringingIntoViewEventArgs_get_SnapPointsMode)(it, tmp.addr).check("ScrollingBringingIntoViewEventArgs.get_SnapPointsMode")
-    result = ScrollingSnapPointsMode(tmp)
+    result = tmp
 
 proc `snapPointsMode=`*(self: ScrollingBringingIntoViewEventArgs, value: ScrollingSnapPointsMode) =
   ## Microsoft.UI.Xaml.Controls.ScrollingBringingIntoViewEventArgs.put_SnapPointsMode
   withIface(self.p, IID_IScrollingBringingIntoViewEventArgs, "IScrollingBringingIntoViewEventArgs", it):
-    vcall(it, Slot_IScrollingBringingIntoViewEventArgs_put_SnapPointsMode, Fn_IScrollingBringingIntoViewEventArgs_put_SnapPointsMode)(it, int32(value)).check("ScrollingBringingIntoViewEventArgs.put_SnapPointsMode")
+    vcall(it, Slot_IScrollingBringingIntoViewEventArgs_put_SnapPointsMode, Fn_IScrollingBringingIntoViewEventArgs_put_SnapPointsMode)(it, value).check("ScrollingBringingIntoViewEventArgs.put_SnapPointsMode")
 
 proc requestEventArgs*(self: ScrollingBringingIntoViewEventArgs): BringIntoViewRequestedEventArgs =
   ## Microsoft.UI.Xaml.Controls.ScrollingBringingIntoViewEventArgs.get_RequestEventArgs
@@ -32399,26 +32398,26 @@ proc newScrollingScrollOptions*(): ScrollingScrollOptions =
 proc animationMode*(self: ScrollingScrollOptions): ScrollingAnimationMode =
   ## Microsoft.UI.Xaml.Controls.ScrollingScrollOptions.get_AnimationMode
   withIface(self.p, IID_IScrollingScrollOptions, "IScrollingScrollOptions", it):
-    var tmp: int32
+    var tmp: ScrollingAnimationMode
     vcall(it, Slot_IScrollingScrollOptions_get_AnimationMode, Fn_IScrollingScrollOptions_get_AnimationMode)(it, tmp.addr).check("ScrollingScrollOptions.get_AnimationMode")
-    result = ScrollingAnimationMode(tmp)
+    result = tmp
 
 proc `animationMode=`*(self: ScrollingScrollOptions, value: ScrollingAnimationMode) =
   ## Microsoft.UI.Xaml.Controls.ScrollingScrollOptions.put_AnimationMode
   withIface(self.p, IID_IScrollingScrollOptions, "IScrollingScrollOptions", it):
-    vcall(it, Slot_IScrollingScrollOptions_put_AnimationMode, Fn_IScrollingScrollOptions_put_AnimationMode)(it, int32(value)).check("ScrollingScrollOptions.put_AnimationMode")
+    vcall(it, Slot_IScrollingScrollOptions_put_AnimationMode, Fn_IScrollingScrollOptions_put_AnimationMode)(it, value).check("ScrollingScrollOptions.put_AnimationMode")
 
 proc snapPointsMode*(self: ScrollingScrollOptions): ScrollingSnapPointsMode =
   ## Microsoft.UI.Xaml.Controls.ScrollingScrollOptions.get_SnapPointsMode
   withIface(self.p, IID_IScrollingScrollOptions, "IScrollingScrollOptions", it):
-    var tmp: int32
+    var tmp: ScrollingSnapPointsMode
     vcall(it, Slot_IScrollingScrollOptions_get_SnapPointsMode, Fn_IScrollingScrollOptions_get_SnapPointsMode)(it, tmp.addr).check("ScrollingScrollOptions.get_SnapPointsMode")
-    result = ScrollingSnapPointsMode(tmp)
+    result = tmp
 
 proc `snapPointsMode=`*(self: ScrollingScrollOptions, value: ScrollingSnapPointsMode) =
   ## Microsoft.UI.Xaml.Controls.ScrollingScrollOptions.put_SnapPointsMode
   withIface(self.p, IID_IScrollingScrollOptions, "IScrollingScrollOptions", it):
-    vcall(it, Slot_IScrollingScrollOptions_put_SnapPointsMode, Fn_IScrollingScrollOptions_put_SnapPointsMode)(it, int32(value)).check("ScrollingScrollOptions.put_SnapPointsMode")
+    vcall(it, Slot_IScrollingScrollOptions_put_SnapPointsMode, Fn_IScrollingScrollOptions_put_SnapPointsMode)(it, value).check("ScrollingScrollOptions.put_SnapPointsMode")
 
 proc centerPoint*(self: ScrollingZoomAnimationStartingEventArgs): Vector2 =
   ## Microsoft.UI.Xaml.Controls.ScrollingZoomAnimationStartingEventArgs.get_CenterPoint
@@ -32463,26 +32462,26 @@ proc newScrollingZoomOptions*(): ScrollingZoomOptions =
 proc animationMode*(self: ScrollingZoomOptions): ScrollingAnimationMode =
   ## Microsoft.UI.Xaml.Controls.ScrollingZoomOptions.get_AnimationMode
   withIface(self.p, IID_IScrollingZoomOptions, "IScrollingZoomOptions", it):
-    var tmp: int32
+    var tmp: ScrollingAnimationMode
     vcall(it, Slot_IScrollingZoomOptions_get_AnimationMode, Fn_IScrollingZoomOptions_get_AnimationMode)(it, tmp.addr).check("ScrollingZoomOptions.get_AnimationMode")
-    result = ScrollingAnimationMode(tmp)
+    result = tmp
 
 proc `animationMode=`*(self: ScrollingZoomOptions, value: ScrollingAnimationMode) =
   ## Microsoft.UI.Xaml.Controls.ScrollingZoomOptions.put_AnimationMode
   withIface(self.p, IID_IScrollingZoomOptions, "IScrollingZoomOptions", it):
-    vcall(it, Slot_IScrollingZoomOptions_put_AnimationMode, Fn_IScrollingZoomOptions_put_AnimationMode)(it, int32(value)).check("ScrollingZoomOptions.put_AnimationMode")
+    vcall(it, Slot_IScrollingZoomOptions_put_AnimationMode, Fn_IScrollingZoomOptions_put_AnimationMode)(it, value).check("ScrollingZoomOptions.put_AnimationMode")
 
 proc snapPointsMode*(self: ScrollingZoomOptions): ScrollingSnapPointsMode =
   ## Microsoft.UI.Xaml.Controls.ScrollingZoomOptions.get_SnapPointsMode
   withIface(self.p, IID_IScrollingZoomOptions, "IScrollingZoomOptions", it):
-    var tmp: int32
+    var tmp: ScrollingSnapPointsMode
     vcall(it, Slot_IScrollingZoomOptions_get_SnapPointsMode, Fn_IScrollingZoomOptions_get_SnapPointsMode)(it, tmp.addr).check("ScrollingZoomOptions.get_SnapPointsMode")
-    result = ScrollingSnapPointsMode(tmp)
+    result = tmp
 
 proc `snapPointsMode=`*(self: ScrollingZoomOptions, value: ScrollingSnapPointsMode) =
   ## Microsoft.UI.Xaml.Controls.ScrollingZoomOptions.put_SnapPointsMode
   withIface(self.p, IID_IScrollingZoomOptions, "IScrollingZoomOptions", it):
-    vcall(it, Slot_IScrollingZoomOptions_put_SnapPointsMode, Fn_IScrollingZoomOptions_put_SnapPointsMode)(it, int32(value)).check("ScrollingZoomOptions.put_SnapPointsMode")
+    vcall(it, Slot_IScrollingZoomOptions_put_SnapPointsMode, Fn_IScrollingZoomOptions_put_SnapPointsMode)(it, value).check("ScrollingZoomOptions.put_SnapPointsMode")
 
 proc newSelectorBar*(): SelectorBar =
   ## Compose a `Microsoft.UI.Xaml.Controls.SelectorBar`.
@@ -32895,26 +32894,26 @@ proc `compactPaneLength=`*(self: SplitView, value: float64) =
 proc panePlacement*(self: SplitView): SplitViewPanePlacement =
   ## Microsoft.UI.Xaml.Controls.SplitView.get_PanePlacement
   withIface(self.p, IID_ISplitView, "ISplitView", it):
-    var tmp: int32
+    var tmp: SplitViewPanePlacement
     vcall(it, Slot_ISplitView_get_PanePlacement, Fn_ISplitView_get_PanePlacement)(it, tmp.addr).check("SplitView.get_PanePlacement")
-    result = SplitViewPanePlacement(tmp)
+    result = tmp
 
 proc `panePlacement=`*(self: SplitView, value: SplitViewPanePlacement) =
   ## Microsoft.UI.Xaml.Controls.SplitView.put_PanePlacement
   withIface(self.p, IID_ISplitView, "ISplitView", it):
-    vcall(it, Slot_ISplitView_put_PanePlacement, Fn_ISplitView_put_PanePlacement)(it, int32(value)).check("SplitView.put_PanePlacement")
+    vcall(it, Slot_ISplitView_put_PanePlacement, Fn_ISplitView_put_PanePlacement)(it, value).check("SplitView.put_PanePlacement")
 
 proc displayMode*(self: SplitView): SplitViewDisplayMode =
   ## Microsoft.UI.Xaml.Controls.SplitView.get_DisplayMode
   withIface(self.p, IID_ISplitView, "ISplitView", it):
-    var tmp: int32
+    var tmp: SplitViewDisplayMode
     vcall(it, Slot_ISplitView_get_DisplayMode, Fn_ISplitView_get_DisplayMode)(it, tmp.addr).check("SplitView.get_DisplayMode")
-    result = SplitViewDisplayMode(tmp)
+    result = tmp
 
 proc `displayMode=`*(self: SplitView, value: SplitViewDisplayMode) =
   ## Microsoft.UI.Xaml.Controls.SplitView.put_DisplayMode
   withIface(self.p, IID_ISplitView, "ISplitView", it):
-    vcall(it, Slot_ISplitView_put_DisplayMode, Fn_ISplitView_put_DisplayMode)(it, int32(value)).check("SplitView.put_DisplayMode")
+    vcall(it, Slot_ISplitView_put_DisplayMode, Fn_ISplitView_put_DisplayMode)(it, value).check("SplitView.put_DisplayMode")
 
 proc templateSettings*(self: SplitView): SplitViewTemplateSettings =
   ## Microsoft.UI.Xaml.Controls.SplitView.get_TemplateSettings
@@ -32939,14 +32938,14 @@ proc `paneBackground=`*(self: SplitView, value: Brush) =
 proc lightDismissOverlayMode*(self: SplitView): LightDismissOverlayMode =
   ## Microsoft.UI.Xaml.Controls.SplitView.get_LightDismissOverlayMode
   withIface(self.p, IID_ISplitView, "ISplitView", it):
-    var tmp: int32
+    var tmp: LightDismissOverlayMode
     vcall(it, Slot_ISplitView_get_LightDismissOverlayMode, Fn_ISplitView_get_LightDismissOverlayMode)(it, tmp.addr).check("SplitView.get_LightDismissOverlayMode")
-    result = LightDismissOverlayMode(tmp)
+    result = tmp
 
 proc `lightDismissOverlayMode=`*(self: SplitView, value: LightDismissOverlayMode) =
   ## Microsoft.UI.Xaml.Controls.SplitView.put_LightDismissOverlayMode
   withIface(self.p, IID_ISplitView, "ISplitView", it):
-    vcall(it, Slot_ISplitView_put_LightDismissOverlayMode, Fn_ISplitView_put_LightDismissOverlayMode)(it, int32(value)).check("SplitView.put_LightDismissOverlayMode")
+    vcall(it, Slot_ISplitView_put_LightDismissOverlayMode, Fn_ISplitView_put_LightDismissOverlayMode)(it, value).check("SplitView.put_LightDismissOverlayMode")
 
 proc onPaneClosing*(self: SplitView,
     handler: proc(sender: pointer, args: SplitViewPaneClosingEventArgs)): EventRegistrationToken {.discardable.} =
@@ -33048,14 +33047,14 @@ proc newStackLayout*(): StackLayout =
 proc orientation*(self: StackLayout): Orientation =
   ## Microsoft.UI.Xaml.Controls.StackLayout.get_Orientation
   withIface(self.p, IID_IStackLayout, "IStackLayout", it):
-    var tmp: int32
+    var tmp: Orientation
     vcall(it, Slot_IStackLayout_get_Orientation, Fn_IStackLayout_get_Orientation)(it, tmp.addr).check("StackLayout.get_Orientation")
-    result = Orientation(tmp)
+    result = tmp
 
 proc `orientation=`*(self: StackLayout, value: Orientation) =
   ## Microsoft.UI.Xaml.Controls.StackLayout.put_Orientation
   withIface(self.p, IID_IStackLayout, "IStackLayout", it):
-    vcall(it, Slot_IStackLayout_put_Orientation, Fn_IStackLayout_put_Orientation)(it, int32(value)).check("StackLayout.put_Orientation")
+    vcall(it, Slot_IStackLayout_put_Orientation, Fn_IStackLayout_put_Orientation)(it, value).check("StackLayout.put_Orientation")
 
 proc spacing*(self: StackLayout): float64 =
   ## Microsoft.UI.Xaml.Controls.StackLayout.get_Spacing
@@ -33089,26 +33088,26 @@ proc `areScrollSnapPointsRegular=`*(self: StackPanel, value: bool) =
 proc orientation*(self: StackPanel): Orientation =
   ## Microsoft.UI.Xaml.Controls.StackPanel.get_Orientation
   withIface(self.p, IID_IStackPanel, "IStackPanel", it):
-    var tmp: int32
+    var tmp: Orientation
     vcall(it, Slot_IStackPanel_get_Orientation, Fn_IStackPanel_get_Orientation)(it, tmp.addr).check("StackPanel.get_Orientation")
-    result = Orientation(tmp)
+    result = tmp
 
 proc `orientation=`*(self: StackPanel, value: Orientation) =
   ## Microsoft.UI.Xaml.Controls.StackPanel.put_Orientation
   withIface(self.p, IID_IStackPanel, "IStackPanel", it):
-    vcall(it, Slot_IStackPanel_put_Orientation, Fn_IStackPanel_put_Orientation)(it, int32(value)).check("StackPanel.put_Orientation")
+    vcall(it, Slot_IStackPanel_put_Orientation, Fn_IStackPanel_put_Orientation)(it, value).check("StackPanel.put_Orientation")
 
 proc backgroundSizing*(self: StackPanel): BackgroundSizing =
   ## Microsoft.UI.Xaml.Controls.StackPanel.get_BackgroundSizing
   withIface(self.p, IID_IStackPanel, "IStackPanel", it):
-    var tmp: int32
+    var tmp: BackgroundSizing
     vcall(it, Slot_IStackPanel_get_BackgroundSizing, Fn_IStackPanel_get_BackgroundSizing)(it, tmp.addr).check("StackPanel.get_BackgroundSizing")
-    result = BackgroundSizing(tmp)
+    result = tmp
 
 proc `backgroundSizing=`*(self: StackPanel, value: BackgroundSizing) =
   ## Microsoft.UI.Xaml.Controls.StackPanel.put_BackgroundSizing
   withIface(self.p, IID_IStackPanel, "IStackPanel", it):
-    vcall(it, Slot_IStackPanel_put_BackgroundSizing, Fn_IStackPanel_put_BackgroundSizing)(it, int32(value)).check("StackPanel.put_BackgroundSizing")
+    vcall(it, Slot_IStackPanel_put_BackgroundSizing, Fn_IStackPanel_put_BackgroundSizing)(it, value).check("StackPanel.put_BackgroundSizing")
 
 proc borderBrush*(self: StackPanel): Brush =
   ## Microsoft.UI.Xaml.Controls.StackPanel.get_BorderBrush
@@ -33436,14 +33435,14 @@ proc `commandParameter=`*(self: SwipeItem, value: pointer) =
 proc behaviorOnInvoked*(self: SwipeItem): SwipeBehaviorOnInvoked =
   ## Microsoft.UI.Xaml.Controls.SwipeItem.get_BehaviorOnInvoked
   withIface(self.p, IID_ISwipeItem, "ISwipeItem", it):
-    var tmp: int32
+    var tmp: SwipeBehaviorOnInvoked
     vcall(it, Slot_ISwipeItem_get_BehaviorOnInvoked, Fn_ISwipeItem_get_BehaviorOnInvoked)(it, tmp.addr).check("SwipeItem.get_BehaviorOnInvoked")
-    result = SwipeBehaviorOnInvoked(tmp)
+    result = tmp
 
 proc `behaviorOnInvoked=`*(self: SwipeItem, value: SwipeBehaviorOnInvoked) =
   ## Microsoft.UI.Xaml.Controls.SwipeItem.put_BehaviorOnInvoked
   withIface(self.p, IID_ISwipeItem, "ISwipeItem", it):
-    vcall(it, Slot_ISwipeItem_put_BehaviorOnInvoked, Fn_ISwipeItem_put_BehaviorOnInvoked)(it, int32(value)).check("SwipeItem.put_BehaviorOnInvoked")
+    vcall(it, Slot_ISwipeItem_put_BehaviorOnInvoked, Fn_ISwipeItem_put_BehaviorOnInvoked)(it, value).check("SwipeItem.put_BehaviorOnInvoked")
 
 proc onInvoked*(self: SwipeItem,
     handler: proc(sender: pointer, args: SwipeItemInvokedEventArgs)): EventRegistrationToken {.discardable.} =
@@ -33480,14 +33479,14 @@ proc newSwipeItems*(): SwipeItems =
 proc mode*(self: SwipeItems): SwipeMode =
   ## Microsoft.UI.Xaml.Controls.SwipeItems.get_Mode
   withIface(self.p, IID_ISwipeItems, "ISwipeItems", it):
-    var tmp: int32
+    var tmp: SwipeMode
     vcall(it, Slot_ISwipeItems_get_Mode, Fn_ISwipeItems_get_Mode)(it, tmp.addr).check("SwipeItems.get_Mode")
-    result = SwipeMode(tmp)
+    result = tmp
 
 proc `mode=`*(self: SwipeItems, value: SwipeMode) =
   ## Microsoft.UI.Xaml.Controls.SwipeItems.put_Mode
   withIface(self.p, IID_ISwipeItems, "ISwipeItems", it):
-    vcall(it, Slot_ISwipeItems_put_Mode, Fn_ISwipeItems_put_Mode)(it, int32(value)).check("SwipeItems.put_Mode")
+    vcall(it, Slot_ISwipeItems_put_Mode, Fn_ISwipeItems_put_Mode)(it, value).check("SwipeItems.put_Mode")
 
 proc newSymbolIcon*(): SymbolIcon =
   ## Activate a `Microsoft.UI.Xaml.Controls.SymbolIcon`.
@@ -33496,14 +33495,14 @@ proc newSymbolIcon*(): SymbolIcon =
 proc symbol*(self: SymbolIcon): Symbol =
   ## Microsoft.UI.Xaml.Controls.SymbolIcon.get_Symbol
   withIface(self.p, IID_ISymbolIcon, "ISymbolIcon", it):
-    var tmp: int32
+    var tmp: Symbol
     vcall(it, Slot_ISymbolIcon_get_Symbol, Fn_ISymbolIcon_get_Symbol)(it, tmp.addr).check("SymbolIcon.get_Symbol")
-    result = Symbol(tmp)
+    result = tmp
 
 proc `symbol=`*(self: SymbolIcon, value: Symbol) =
   ## Microsoft.UI.Xaml.Controls.SymbolIcon.put_Symbol
   withIface(self.p, IID_ISymbolIcon, "ISymbolIcon", it):
-    vcall(it, Slot_ISymbolIcon_put_Symbol, Fn_ISymbolIcon_put_Symbol)(it, int32(value)).check("SymbolIcon.put_Symbol")
+    vcall(it, Slot_ISymbolIcon_put_Symbol, Fn_ISymbolIcon_put_Symbol)(it, value).check("SymbolIcon.put_Symbol")
 
 proc newSymbolIconSource*(): SymbolIconSource =
   ## Compose a `Microsoft.UI.Xaml.Controls.SymbolIconSource`.
@@ -33513,14 +33512,14 @@ proc newSymbolIconSource*(): SymbolIconSource =
 proc symbol*(self: SymbolIconSource): Symbol =
   ## Microsoft.UI.Xaml.Controls.SymbolIconSource.get_Symbol
   withIface(self.p, IID_ISymbolIconSource, "ISymbolIconSource", it):
-    var tmp: int32
+    var tmp: Symbol
     vcall(it, Slot_ISymbolIconSource_get_Symbol, Fn_ISymbolIconSource_get_Symbol)(it, tmp.addr).check("SymbolIconSource.get_Symbol")
-    result = Symbol(tmp)
+    result = tmp
 
 proc `symbol=`*(self: SymbolIconSource, value: Symbol) =
   ## Microsoft.UI.Xaml.Controls.SymbolIconSource.put_Symbol
   withIface(self.p, IID_ISymbolIconSource, "ISymbolIconSource", it):
-    vcall(it, Slot_ISymbolIconSource_put_Symbol, Fn_ISymbolIconSource_put_Symbol)(it, int32(value)).check("SymbolIconSource.put_Symbol")
+    vcall(it, Slot_ISymbolIconSource_put_Symbol, Fn_ISymbolIconSource_put_Symbol)(it, value).check("SymbolIconSource.put_Symbol")
 
 proc newSystemBackdropElement*(): SystemBackdropElement =
   ## Compose a `Microsoft.UI.Xaml.Controls.SystemBackdropElement`.
@@ -33560,26 +33559,26 @@ proc newTabView*(): TabView =
 proc tabWidthMode*(self: TabView): TabViewWidthMode =
   ## Microsoft.UI.Xaml.Controls.TabView.get_TabWidthMode
   withIface(self.p, IID_ITabView, "ITabView", it):
-    var tmp: int32
+    var tmp: TabViewWidthMode
     vcall(it, Slot_ITabView_get_TabWidthMode, Fn_ITabView_get_TabWidthMode)(it, tmp.addr).check("TabView.get_TabWidthMode")
-    result = TabViewWidthMode(tmp)
+    result = tmp
 
 proc `tabWidthMode=`*(self: TabView, value: TabViewWidthMode) =
   ## Microsoft.UI.Xaml.Controls.TabView.put_TabWidthMode
   withIface(self.p, IID_ITabView, "ITabView", it):
-    vcall(it, Slot_ITabView_put_TabWidthMode, Fn_ITabView_put_TabWidthMode)(it, int32(value)).check("TabView.put_TabWidthMode")
+    vcall(it, Slot_ITabView_put_TabWidthMode, Fn_ITabView_put_TabWidthMode)(it, value).check("TabView.put_TabWidthMode")
 
 proc closeButtonOverlayMode*(self: TabView): TabViewCloseButtonOverlayMode =
   ## Microsoft.UI.Xaml.Controls.TabView.get_CloseButtonOverlayMode
   withIface(self.p, IID_ITabView, "ITabView", it):
-    var tmp: int32
+    var tmp: TabViewCloseButtonOverlayMode
     vcall(it, Slot_ITabView_get_CloseButtonOverlayMode, Fn_ITabView_get_CloseButtonOverlayMode)(it, tmp.addr).check("TabView.get_CloseButtonOverlayMode")
-    result = TabViewCloseButtonOverlayMode(tmp)
+    result = tmp
 
 proc `closeButtonOverlayMode=`*(self: TabView, value: TabViewCloseButtonOverlayMode) =
   ## Microsoft.UI.Xaml.Controls.TabView.put_CloseButtonOverlayMode
   withIface(self.p, IID_ITabView, "ITabView", it):
-    vcall(it, Slot_ITabView_put_CloseButtonOverlayMode, Fn_ITabView_put_CloseButtonOverlayMode)(it, int32(value)).check("TabView.put_CloseButtonOverlayMode")
+    vcall(it, Slot_ITabView_put_CloseButtonOverlayMode, Fn_ITabView_put_CloseButtonOverlayMode)(it, value).check("TabView.put_CloseButtonOverlayMode")
 
 proc tabStripHeader*(self: TabView): pointer =
   ## Microsoft.UI.Xaml.Controls.TabView.get_TabStripHeader
@@ -34328,14 +34327,14 @@ proc `target=`*(self: TeachingTip, value: FrameworkElement) =
 proc tailVisibility*(self: TeachingTip): TeachingTipTailVisibility =
   ## Microsoft.UI.Xaml.Controls.TeachingTip.get_TailVisibility
   withIface(self.p, IID_ITeachingTip, "ITeachingTip", it):
-    var tmp: int32
+    var tmp: TeachingTipTailVisibility
     vcall(it, Slot_ITeachingTip_get_TailVisibility, Fn_ITeachingTip_get_TailVisibility)(it, tmp.addr).check("TeachingTip.get_TailVisibility")
-    result = TeachingTipTailVisibility(tmp)
+    result = tmp
 
 proc `tailVisibility=`*(self: TeachingTip, value: TeachingTipTailVisibility) =
   ## Microsoft.UI.Xaml.Controls.TeachingTip.put_TailVisibility
   withIface(self.p, IID_ITeachingTip, "ITeachingTip", it):
-    vcall(it, Slot_ITeachingTip_put_TailVisibility, Fn_ITeachingTip_put_TailVisibility)(it, int32(value)).check("TeachingTip.put_TailVisibility")
+    vcall(it, Slot_ITeachingTip_put_TailVisibility, Fn_ITeachingTip_put_TailVisibility)(it, value).check("TeachingTip.put_TailVisibility")
 
 proc actionButtonContent*(self: TeachingTip): pointer =
   ## Microsoft.UI.Xaml.Controls.TeachingTip.get_ActionButtonContent
@@ -34474,26 +34473,26 @@ proc `isLightDismissEnabled=`*(self: TeachingTip, value: bool) =
 proc preferredPlacement*(self: TeachingTip): TeachingTipPlacementMode =
   ## Microsoft.UI.Xaml.Controls.TeachingTip.get_PreferredPlacement
   withIface(self.p, IID_ITeachingTip, "ITeachingTip", it):
-    var tmp: int32
+    var tmp: TeachingTipPlacementMode
     vcall(it, Slot_ITeachingTip_get_PreferredPlacement, Fn_ITeachingTip_get_PreferredPlacement)(it, tmp.addr).check("TeachingTip.get_PreferredPlacement")
-    result = TeachingTipPlacementMode(tmp)
+    result = tmp
 
 proc `preferredPlacement=`*(self: TeachingTip, value: TeachingTipPlacementMode) =
   ## Microsoft.UI.Xaml.Controls.TeachingTip.put_PreferredPlacement
   withIface(self.p, IID_ITeachingTip, "ITeachingTip", it):
-    vcall(it, Slot_ITeachingTip_put_PreferredPlacement, Fn_ITeachingTip_put_PreferredPlacement)(it, int32(value)).check("TeachingTip.put_PreferredPlacement")
+    vcall(it, Slot_ITeachingTip_put_PreferredPlacement, Fn_ITeachingTip_put_PreferredPlacement)(it, value).check("TeachingTip.put_PreferredPlacement")
 
 proc heroContentPlacement*(self: TeachingTip): TeachingTipHeroContentPlacementMode =
   ## Microsoft.UI.Xaml.Controls.TeachingTip.get_HeroContentPlacement
   withIface(self.p, IID_ITeachingTip, "ITeachingTip", it):
-    var tmp: int32
+    var tmp: TeachingTipHeroContentPlacementMode
     vcall(it, Slot_ITeachingTip_get_HeroContentPlacement, Fn_ITeachingTip_get_HeroContentPlacement)(it, tmp.addr).check("TeachingTip.get_HeroContentPlacement")
-    result = TeachingTipHeroContentPlacementMode(tmp)
+    result = tmp
 
 proc `heroContentPlacement=`*(self: TeachingTip, value: TeachingTipHeroContentPlacementMode) =
   ## Microsoft.UI.Xaml.Controls.TeachingTip.put_HeroContentPlacement
   withIface(self.p, IID_ITeachingTip, "ITeachingTip", it):
-    vcall(it, Slot_ITeachingTip_put_HeroContentPlacement, Fn_ITeachingTip_put_HeroContentPlacement)(it, int32(value)).check("TeachingTip.put_HeroContentPlacement")
+    vcall(it, Slot_ITeachingTip_put_HeroContentPlacement, Fn_ITeachingTip_put_HeroContentPlacement)(it, value).check("TeachingTip.put_HeroContentPlacement")
 
 proc heroContent*(self: TeachingTip): UIElement =
   ## Microsoft.UI.Xaml.Controls.TeachingTip.get_HeroContent
@@ -34611,16 +34610,16 @@ proc removeClosed*(self: TeachingTip, token: EventRegistrationToken) =
 proc reason*(self: TeachingTipClosedEventArgs): TeachingTipCloseReason =
   ## Microsoft.UI.Xaml.Controls.TeachingTipClosedEventArgs.get_Reason
   withIface(self.p, IID_ITeachingTipClosedEventArgs, "ITeachingTipClosedEventArgs", it):
-    var tmp: int32
+    var tmp: TeachingTipCloseReason
     vcall(it, Slot_ITeachingTipClosedEventArgs_get_Reason, Fn_ITeachingTipClosedEventArgs_get_Reason)(it, tmp.addr).check("TeachingTipClosedEventArgs.get_Reason")
-    result = TeachingTipCloseReason(tmp)
+    result = tmp
 
 proc reason*(self: TeachingTipClosingEventArgs): TeachingTipCloseReason =
   ## Microsoft.UI.Xaml.Controls.TeachingTipClosingEventArgs.get_Reason
   withIface(self.p, IID_ITeachingTipClosingEventArgs, "ITeachingTipClosingEventArgs", it):
-    var tmp: int32
+    var tmp: TeachingTipCloseReason
     vcall(it, Slot_ITeachingTipClosingEventArgs_get_Reason, Fn_ITeachingTipClosingEventArgs_get_Reason)(it, tmp.addr).check("TeachingTipClosingEventArgs.get_Reason")
-    result = TeachingTipCloseReason(tmp)
+    result = tmp
 
 proc cancel*(self: TeachingTipClosingEventArgs): bool =
   ## Microsoft.UI.Xaml.Controls.TeachingTipClosingEventArgs.get_Cancel
@@ -34769,38 +34768,38 @@ proc `foreground=`*(self: TextBlock, value: Brush) =
 proc textWrapping*(self: TextBlock): TextWrapping =
   ## Microsoft.UI.Xaml.Controls.TextBlock.get_TextWrapping
   withIface(self.p, IID_ITextBlock, "ITextBlock", it):
-    var tmp: int32
+    var tmp: TextWrapping
     vcall(it, Slot_ITextBlock_get_TextWrapping, Fn_ITextBlock_get_TextWrapping)(it, tmp.addr).check("TextBlock.get_TextWrapping")
-    result = TextWrapping(tmp)
+    result = tmp
 
 proc `textWrapping=`*(self: TextBlock, value: TextWrapping) =
   ## Microsoft.UI.Xaml.Controls.TextBlock.put_TextWrapping
   withIface(self.p, IID_ITextBlock, "ITextBlock", it):
-    vcall(it, Slot_ITextBlock_put_TextWrapping, Fn_ITextBlock_put_TextWrapping)(it, int32(value)).check("TextBlock.put_TextWrapping")
+    vcall(it, Slot_ITextBlock_put_TextWrapping, Fn_ITextBlock_put_TextWrapping)(it, value).check("TextBlock.put_TextWrapping")
 
 proc textTrimming*(self: TextBlock): TextTrimming =
   ## Microsoft.UI.Xaml.Controls.TextBlock.get_TextTrimming
   withIface(self.p, IID_ITextBlock, "ITextBlock", it):
-    var tmp: int32
+    var tmp: TextTrimming
     vcall(it, Slot_ITextBlock_get_TextTrimming, Fn_ITextBlock_get_TextTrimming)(it, tmp.addr).check("TextBlock.get_TextTrimming")
-    result = TextTrimming(tmp)
+    result = tmp
 
 proc `textTrimming=`*(self: TextBlock, value: TextTrimming) =
   ## Microsoft.UI.Xaml.Controls.TextBlock.put_TextTrimming
   withIface(self.p, IID_ITextBlock, "ITextBlock", it):
-    vcall(it, Slot_ITextBlock_put_TextTrimming, Fn_ITextBlock_put_TextTrimming)(it, int32(value)).check("TextBlock.put_TextTrimming")
+    vcall(it, Slot_ITextBlock_put_TextTrimming, Fn_ITextBlock_put_TextTrimming)(it, value).check("TextBlock.put_TextTrimming")
 
 proc textAlignment*(self: TextBlock): TextAlignment =
   ## Microsoft.UI.Xaml.Controls.TextBlock.get_TextAlignment
   withIface(self.p, IID_ITextBlock, "ITextBlock", it):
-    var tmp: int32
+    var tmp: TextAlignment
     vcall(it, Slot_ITextBlock_get_TextAlignment, Fn_ITextBlock_get_TextAlignment)(it, tmp.addr).check("TextBlock.get_TextAlignment")
-    result = TextAlignment(tmp)
+    result = tmp
 
 proc `textAlignment=`*(self: TextBlock, value: TextAlignment) =
   ## Microsoft.UI.Xaml.Controls.TextBlock.put_TextAlignment
   withIface(self.p, IID_ITextBlock, "ITextBlock", it):
-    vcall(it, Slot_ITextBlock_put_TextAlignment, Fn_ITextBlock_put_TextAlignment)(it, int32(value)).check("TextBlock.put_TextAlignment")
+    vcall(it, Slot_ITextBlock_put_TextAlignment, Fn_ITextBlock_put_TextAlignment)(it, value).check("TextBlock.put_TextAlignment")
 
 proc text*(self: TextBlock): string =
   ## Microsoft.UI.Xaml.Controls.TextBlock.get_Text
@@ -34842,14 +34841,14 @@ proc `lineHeight=`*(self: TextBlock, value: float64) =
 proc lineStackingStrategy*(self: TextBlock): LineStackingStrategy =
   ## Microsoft.UI.Xaml.Controls.TextBlock.get_LineStackingStrategy
   withIface(self.p, IID_ITextBlock, "ITextBlock", it):
-    var tmp: int32
+    var tmp: LineStackingStrategy
     vcall(it, Slot_ITextBlock_get_LineStackingStrategy, Fn_ITextBlock_get_LineStackingStrategy)(it, tmp.addr).check("TextBlock.get_LineStackingStrategy")
-    result = LineStackingStrategy(tmp)
+    result = tmp
 
 proc `lineStackingStrategy=`*(self: TextBlock, value: LineStackingStrategy) =
   ## Microsoft.UI.Xaml.Controls.TextBlock.put_LineStackingStrategy
   withIface(self.p, IID_ITextBlock, "ITextBlock", it):
-    vcall(it, Slot_ITextBlock_put_LineStackingStrategy, Fn_ITextBlock_put_LineStackingStrategy)(it, int32(value)).check("TextBlock.put_LineStackingStrategy")
+    vcall(it, Slot_ITextBlock_put_LineStackingStrategy, Fn_ITextBlock_put_LineStackingStrategy)(it, value).check("TextBlock.put_LineStackingStrategy")
 
 proc isTextSelectionEnabled*(self: TextBlock): bool =
   ## Microsoft.UI.Xaml.Controls.TextBlock.get_IsTextSelectionEnabled
@@ -34933,26 +34932,26 @@ proc `maxLines=`*(self: TextBlock, value: int32) =
 proc textLineBounds*(self: TextBlock): TextLineBounds =
   ## Microsoft.UI.Xaml.Controls.TextBlock.get_TextLineBounds
   withIface(self.p, IID_ITextBlock, "ITextBlock", it):
-    var tmp: int32
+    var tmp: TextLineBounds
     vcall(it, Slot_ITextBlock_get_TextLineBounds, Fn_ITextBlock_get_TextLineBounds)(it, tmp.addr).check("TextBlock.get_TextLineBounds")
-    result = TextLineBounds(tmp)
+    result = tmp
 
 proc `textLineBounds=`*(self: TextBlock, value: TextLineBounds) =
   ## Microsoft.UI.Xaml.Controls.TextBlock.put_TextLineBounds
   withIface(self.p, IID_ITextBlock, "ITextBlock", it):
-    vcall(it, Slot_ITextBlock_put_TextLineBounds, Fn_ITextBlock_put_TextLineBounds)(it, int32(value)).check("TextBlock.put_TextLineBounds")
+    vcall(it, Slot_ITextBlock_put_TextLineBounds, Fn_ITextBlock_put_TextLineBounds)(it, value).check("TextBlock.put_TextLineBounds")
 
 proc opticalMarginAlignment*(self: TextBlock): OpticalMarginAlignment =
   ## Microsoft.UI.Xaml.Controls.TextBlock.get_OpticalMarginAlignment
   withIface(self.p, IID_ITextBlock, "ITextBlock", it):
-    var tmp: int32
+    var tmp: OpticalMarginAlignment
     vcall(it, Slot_ITextBlock_get_OpticalMarginAlignment, Fn_ITextBlock_get_OpticalMarginAlignment)(it, tmp.addr).check("TextBlock.get_OpticalMarginAlignment")
-    result = OpticalMarginAlignment(tmp)
+    result = tmp
 
 proc `opticalMarginAlignment=`*(self: TextBlock, value: OpticalMarginAlignment) =
   ## Microsoft.UI.Xaml.Controls.TextBlock.put_OpticalMarginAlignment
   withIface(self.p, IID_ITextBlock, "ITextBlock", it):
-    vcall(it, Slot_ITextBlock_put_OpticalMarginAlignment, Fn_ITextBlock_put_OpticalMarginAlignment)(it, int32(value)).check("TextBlock.put_OpticalMarginAlignment")
+    vcall(it, Slot_ITextBlock_put_OpticalMarginAlignment, Fn_ITextBlock_put_OpticalMarginAlignment)(it, value).check("TextBlock.put_OpticalMarginAlignment")
 
 proc isColorFontEnabled*(self: TextBlock): bool =
   ## Microsoft.UI.Xaml.Controls.TextBlock.get_IsColorFontEnabled
@@ -34969,14 +34968,14 @@ proc `isColorFontEnabled=`*(self: TextBlock, value: bool) =
 proc textReadingOrder*(self: TextBlock): TextReadingOrder =
   ## Microsoft.UI.Xaml.Controls.TextBlock.get_TextReadingOrder
   withIface(self.p, IID_ITextBlock, "ITextBlock", it):
-    var tmp: int32
+    var tmp: TextReadingOrder
     vcall(it, Slot_ITextBlock_get_TextReadingOrder, Fn_ITextBlock_get_TextReadingOrder)(it, tmp.addr).check("TextBlock.get_TextReadingOrder")
-    result = TextReadingOrder(tmp)
+    result = tmp
 
 proc `textReadingOrder=`*(self: TextBlock, value: TextReadingOrder) =
   ## Microsoft.UI.Xaml.Controls.TextBlock.put_TextReadingOrder
   withIface(self.p, IID_ITextBlock, "ITextBlock", it):
-    vcall(it, Slot_ITextBlock_put_TextReadingOrder, Fn_ITextBlock_put_TextReadingOrder)(it, int32(value)).check("TextBlock.put_TextReadingOrder")
+    vcall(it, Slot_ITextBlock_put_TextReadingOrder, Fn_ITextBlock_put_TextReadingOrder)(it, value).check("TextBlock.put_TextReadingOrder")
 
 proc isTextScaleFactorEnabled*(self: TextBlock): bool =
   ## Microsoft.UI.Xaml.Controls.TextBlock.get_IsTextScaleFactorEnabled
@@ -35012,14 +35011,14 @@ proc isTextTrimmed*(self: TextBlock): bool =
 proc horizontalTextAlignment*(self: TextBlock): TextAlignment =
   ## Microsoft.UI.Xaml.Controls.TextBlock.get_HorizontalTextAlignment
   withIface(self.p, IID_ITextBlock, "ITextBlock", it):
-    var tmp: int32
+    var tmp: TextAlignment
     vcall(it, Slot_ITextBlock_get_HorizontalTextAlignment, Fn_ITextBlock_get_HorizontalTextAlignment)(it, tmp.addr).check("TextBlock.get_HorizontalTextAlignment")
-    result = TextAlignment(tmp)
+    result = tmp
 
 proc `horizontalTextAlignment=`*(self: TextBlock, value: TextAlignment) =
   ## Microsoft.UI.Xaml.Controls.TextBlock.put_HorizontalTextAlignment
   withIface(self.p, IID_ITextBlock, "ITextBlock", it):
-    vcall(it, Slot_ITextBlock_put_HorizontalTextAlignment, Fn_ITextBlock_put_HorizontalTextAlignment)(it, int32(value)).check("TextBlock.put_HorizontalTextAlignment")
+    vcall(it, Slot_ITextBlock_put_HorizontalTextAlignment, Fn_ITextBlock_put_HorizontalTextAlignment)(it, value).check("TextBlock.put_HorizontalTextAlignment")
 
 proc selectionFlyout*(self: TextBlock): FlyoutBase =
   ## Microsoft.UI.Xaml.Controls.TextBlock.get_SelectionFlyout
@@ -35205,26 +35204,26 @@ proc `acceptsReturn=`*(self: TextBox, value: bool) =
 proc textAlignment*(self: TextBox): TextAlignment =
   ## Microsoft.UI.Xaml.Controls.TextBox.get_TextAlignment
   withIface(self.p, IID_ITextBox, "ITextBox", it):
-    var tmp: int32
+    var tmp: TextAlignment
     vcall(it, Slot_ITextBox_get_TextAlignment, Fn_ITextBox_get_TextAlignment)(it, tmp.addr).check("TextBox.get_TextAlignment")
-    result = TextAlignment(tmp)
+    result = tmp
 
 proc `textAlignment=`*(self: TextBox, value: TextAlignment) =
   ## Microsoft.UI.Xaml.Controls.TextBox.put_TextAlignment
   withIface(self.p, IID_ITextBox, "ITextBox", it):
-    vcall(it, Slot_ITextBox_put_TextAlignment, Fn_ITextBox_put_TextAlignment)(it, int32(value)).check("TextBox.put_TextAlignment")
+    vcall(it, Slot_ITextBox_put_TextAlignment, Fn_ITextBox_put_TextAlignment)(it, value).check("TextBox.put_TextAlignment")
 
 proc textWrapping*(self: TextBox): TextWrapping =
   ## Microsoft.UI.Xaml.Controls.TextBox.get_TextWrapping
   withIface(self.p, IID_ITextBox, "ITextBox", it):
-    var tmp: int32
+    var tmp: TextWrapping
     vcall(it, Slot_ITextBox_get_TextWrapping, Fn_ITextBox_get_TextWrapping)(it, tmp.addr).check("TextBox.get_TextWrapping")
-    result = TextWrapping(tmp)
+    result = tmp
 
 proc `textWrapping=`*(self: TextBox, value: TextWrapping) =
   ## Microsoft.UI.Xaml.Controls.TextBox.put_TextWrapping
   withIface(self.p, IID_ITextBox, "ITextBox", it):
-    vcall(it, Slot_ITextBox_put_TextWrapping, Fn_ITextBox_put_TextWrapping)(it, int32(value)).check("TextBox.put_TextWrapping")
+    vcall(it, Slot_ITextBox_put_TextWrapping, Fn_ITextBox_put_TextWrapping)(it, value).check("TextBox.put_TextWrapping")
 
 proc isSpellCheckEnabled*(self: TextBox): bool =
   ## Microsoft.UI.Xaml.Controls.TextBox.get_IsSpellCheckEnabled
@@ -35354,26 +35353,26 @@ proc `selectionHighlightColorWhenNotFocused=`*(self: TextBox, value: SolidColorB
 proc horizontalTextAlignment*(self: TextBox): TextAlignment =
   ## Microsoft.UI.Xaml.Controls.TextBox.get_HorizontalTextAlignment
   withIface(self.p, IID_ITextBox, "ITextBox", it):
-    var tmp: int32
+    var tmp: TextAlignment
     vcall(it, Slot_ITextBox_get_HorizontalTextAlignment, Fn_ITextBox_get_HorizontalTextAlignment)(it, tmp.addr).check("TextBox.get_HorizontalTextAlignment")
-    result = TextAlignment(tmp)
+    result = tmp
 
 proc `horizontalTextAlignment=`*(self: TextBox, value: TextAlignment) =
   ## Microsoft.UI.Xaml.Controls.TextBox.put_HorizontalTextAlignment
   withIface(self.p, IID_ITextBox, "ITextBox", it):
-    vcall(it, Slot_ITextBox_put_HorizontalTextAlignment, Fn_ITextBox_put_HorizontalTextAlignment)(it, int32(value)).check("TextBox.put_HorizontalTextAlignment")
+    vcall(it, Slot_ITextBox_put_HorizontalTextAlignment, Fn_ITextBox_put_HorizontalTextAlignment)(it, value).check("TextBox.put_HorizontalTextAlignment")
 
 proc characterCasing*(self: TextBox): CharacterCasing =
   ## Microsoft.UI.Xaml.Controls.TextBox.get_CharacterCasing
   withIface(self.p, IID_ITextBox, "ITextBox", it):
-    var tmp: int32
+    var tmp: CharacterCasing
     vcall(it, Slot_ITextBox_get_CharacterCasing, Fn_ITextBox_get_CharacterCasing)(it, tmp.addr).check("TextBox.get_CharacterCasing")
-    result = CharacterCasing(tmp)
+    result = tmp
 
 proc `characterCasing=`*(self: TextBox, value: CharacterCasing) =
   ## Microsoft.UI.Xaml.Controls.TextBox.put_CharacterCasing
   withIface(self.p, IID_ITextBox, "ITextBox", it):
-    vcall(it, Slot_ITextBox_put_CharacterCasing, Fn_ITextBox_put_CharacterCasing)(it, int32(value)).check("TextBox.put_CharacterCasing")
+    vcall(it, Slot_ITextBox_put_CharacterCasing, Fn_ITextBox_put_CharacterCasing)(it, value).check("TextBox.put_CharacterCasing")
 
 proc placeholderForeground*(self: TextBox): Brush =
   ## Microsoft.UI.Xaml.Controls.TextBox.get_PlaceholderForeground
@@ -35711,26 +35710,26 @@ proc clearUndoRedoHistory*(self: TextBox) =
 proc textReadingOrder*(self: TextBox): TextReadingOrder =
   ## Microsoft.UI.Xaml.Controls.TextBox.get_TextReadingOrder
   withIface(self.p, IID_ITextBox, "ITextBox", it):
-    var tmp: int32
+    var tmp: TextReadingOrder
     vcall(it, Slot_ITextBox_get_TextReadingOrder, Fn_ITextBox_get_TextReadingOrder)(it, tmp.addr).check("TextBox.get_TextReadingOrder")
-    result = TextReadingOrder(tmp)
+    result = tmp
 
 proc `textReadingOrder=`*(self: TextBox, value: TextReadingOrder) =
   ## Microsoft.UI.Xaml.Controls.TextBox.put_TextReadingOrder
   withIface(self.p, IID_ITextBox, "ITextBox", it):
-    vcall(it, Slot_ITextBox_put_TextReadingOrder, Fn_ITextBox_put_TextReadingOrder)(it, int32(value)).check("TextBox.put_TextReadingOrder")
+    vcall(it, Slot_ITextBox_put_TextReadingOrder, Fn_ITextBox_put_TextReadingOrder)(it, value).check("TextBox.put_TextReadingOrder")
 
 proc desiredCandidateWindowAlignment*(self: TextBox): CandidateWindowAlignment =
   ## Microsoft.UI.Xaml.Controls.TextBox.get_DesiredCandidateWindowAlignment
   withIface(self.p, IID_ITextBox, "ITextBox", it):
-    var tmp: int32
+    var tmp: CandidateWindowAlignment
     vcall(it, Slot_ITextBox_get_DesiredCandidateWindowAlignment, Fn_ITextBox_get_DesiredCandidateWindowAlignment)(it, tmp.addr).check("TextBox.get_DesiredCandidateWindowAlignment")
-    result = CandidateWindowAlignment(tmp)
+    result = tmp
 
 proc `desiredCandidateWindowAlignment=`*(self: TextBox, value: CandidateWindowAlignment) =
   ## Microsoft.UI.Xaml.Controls.TextBox.put_DesiredCandidateWindowAlignment
   withIface(self.p, IID_ITextBox, "ITextBox", it):
-    vcall(it, Slot_ITextBox_put_DesiredCandidateWindowAlignment, Fn_ITextBox_put_DesiredCandidateWindowAlignment)(it, int32(value)).check("TextBox.put_DesiredCandidateWindowAlignment")
+    vcall(it, Slot_ITextBox_put_DesiredCandidateWindowAlignment, Fn_ITextBox_put_DesiredCandidateWindowAlignment)(it, value).check("TextBox.put_DesiredCandidateWindowAlignment")
 
 proc onCandidateWindowBoundsChanged*(self: TextBox,
     handler: proc(sender: pointer, args: CandidateWindowBoundsChangedEventArgs)): EventRegistrationToken {.discardable.} =
@@ -35995,14 +35994,14 @@ proc `time=`*(self: TimePicker, value: TimeSpan) =
 proc lightDismissOverlayMode*(self: TimePicker): LightDismissOverlayMode =
   ## Microsoft.UI.Xaml.Controls.TimePicker.get_LightDismissOverlayMode
   withIface(self.p, IID_ITimePicker, "ITimePicker", it):
-    var tmp: int32
+    var tmp: LightDismissOverlayMode
     vcall(it, Slot_ITimePicker_get_LightDismissOverlayMode, Fn_ITimePicker_get_LightDismissOverlayMode)(it, tmp.addr).check("TimePicker.get_LightDismissOverlayMode")
-    result = LightDismissOverlayMode(tmp)
+    result = tmp
 
 proc `lightDismissOverlayMode=`*(self: TimePicker, value: LightDismissOverlayMode) =
   ## Microsoft.UI.Xaml.Controls.TimePicker.put_LightDismissOverlayMode
   withIface(self.p, IID_ITimePicker, "ITimePicker", it):
-    vcall(it, Slot_ITimePicker_put_LightDismissOverlayMode, Fn_ITimePicker_put_LightDismissOverlayMode)(it, int32(value)).check("TimePicker.put_LightDismissOverlayMode")
+    vcall(it, Slot_ITimePicker_put_LightDismissOverlayMode, Fn_ITimePicker_put_LightDismissOverlayMode)(it, value).check("TimePicker.put_LightDismissOverlayMode")
 
 proc onTimeChanged*(self: TimePicker,
     handler: proc(sender: pointer, args: TimePickerValueChangedEventArgs)): EventRegistrationToken {.discardable.} =
@@ -36561,14 +36560,14 @@ proc `isOpen=`*(self: ToolTip, value: bool) =
 proc placement*(self: ToolTip): PlacementMode =
   ## Microsoft.UI.Xaml.Controls.ToolTip.get_Placement
   withIface(self.p, IID_IToolTip, "IToolTip", it):
-    var tmp: int32
+    var tmp: PlacementMode
     vcall(it, Slot_IToolTip_get_Placement, Fn_IToolTip_get_Placement)(it, tmp.addr).check("ToolTip.get_Placement")
-    result = PlacementMode(tmp)
+    result = tmp
 
 proc `placement=`*(self: ToolTip, value: PlacementMode) =
   ## Microsoft.UI.Xaml.Controls.ToolTip.put_Placement
   withIface(self.p, IID_IToolTip, "IToolTip", it):
-    vcall(it, Slot_IToolTip_put_Placement, Fn_IToolTip_put_Placement)(it, int32(value)).check("ToolTip.put_Placement")
+    vcall(it, Slot_IToolTip_put_Placement, Fn_IToolTip_put_Placement)(it, value).check("ToolTip.put_Placement")
 
 proc placementTarget*(self: ToolTip): UIElement =
   ## Microsoft.UI.Xaml.Controls.ToolTip.get_PlacementTarget
@@ -36650,14 +36649,14 @@ proc newTreeView*(): TreeView =
 proc selectionMode*(self: TreeView): TreeViewSelectionMode =
   ## Microsoft.UI.Xaml.Controls.TreeView.get_SelectionMode
   withIface(self.p, IID_ITreeView, "ITreeView", it):
-    var tmp: int32
+    var tmp: TreeViewSelectionMode
     vcall(it, Slot_ITreeView_get_SelectionMode, Fn_ITreeView_get_SelectionMode)(it, tmp.addr).check("TreeView.get_SelectionMode")
-    result = TreeViewSelectionMode(tmp)
+    result = tmp
 
 proc `selectionMode=`*(self: TreeView, value: TreeViewSelectionMode) =
   ## Microsoft.UI.Xaml.Controls.TreeView.put_SelectionMode
   withIface(self.p, IID_ITreeView, "ITreeView", it):
-    vcall(it, Slot_ITreeView_put_SelectionMode, Fn_ITreeView_put_SelectionMode)(it, int32(value)).check("TreeView.put_SelectionMode")
+    vcall(it, Slot_ITreeView_put_SelectionMode, Fn_ITreeView_put_SelectionMode)(it, value).check("TreeView.put_SelectionMode")
 
 proc expand*(self: TreeView, a1: TreeViewNode) =
   ## Microsoft.UI.Xaml.Controls.TreeView.Expand
@@ -37132,16 +37131,16 @@ proc newTreeViewItemTemplateSettings*(): TreeViewItemTemplateSettings =
 proc expandedGlyphVisibility*(self: TreeViewItemTemplateSettings): Visibility =
   ## Microsoft.UI.Xaml.Controls.TreeViewItemTemplateSettings.get_ExpandedGlyphVisibility
   withIface(self.p, IID_ITreeViewItemTemplateSettings, "ITreeViewItemTemplateSettings", it):
-    var tmp: int32
+    var tmp: Visibility
     vcall(it, Slot_ITreeViewItemTemplateSettings_get_ExpandedGlyphVisibility, Fn_ITreeViewItemTemplateSettings_get_ExpandedGlyphVisibility)(it, tmp.addr).check("TreeViewItemTemplateSettings.get_ExpandedGlyphVisibility")
-    result = Visibility(tmp)
+    result = tmp
 
 proc collapsedGlyphVisibility*(self: TreeViewItemTemplateSettings): Visibility =
   ## Microsoft.UI.Xaml.Controls.TreeViewItemTemplateSettings.get_CollapsedGlyphVisibility
   withIface(self.p, IID_ITreeViewItemTemplateSettings, "ITreeViewItemTemplateSettings", it):
-    var tmp: int32
+    var tmp: Visibility
     vcall(it, Slot_ITreeViewItemTemplateSettings_get_CollapsedGlyphVisibility, Fn_ITreeViewItemTemplateSettings_get_CollapsedGlyphVisibility)(it, tmp.addr).check("TreeViewItemTemplateSettings.get_CollapsedGlyphVisibility")
-    result = Visibility(tmp)
+    result = tmp
 
 proc indentation*(self: TreeViewItemTemplateSettings): Thickness =
   ## Microsoft.UI.Xaml.Controls.TreeViewItemTemplateSettings.get_Indentation
@@ -37282,45 +37281,45 @@ proc `pane2Length=`*(self: TwoPaneView, value: GridLength) =
 proc panePriority*(self: TwoPaneView): TwoPaneViewPriority =
   ## Microsoft.UI.Xaml.Controls.TwoPaneView.get_PanePriority
   withIface(self.p, IID_ITwoPaneView, "ITwoPaneView", it):
-    var tmp: int32
+    var tmp: TwoPaneViewPriority
     vcall(it, Slot_ITwoPaneView_get_PanePriority, Fn_ITwoPaneView_get_PanePriority)(it, tmp.addr).check("TwoPaneView.get_PanePriority")
-    result = TwoPaneViewPriority(tmp)
+    result = tmp
 
 proc `panePriority=`*(self: TwoPaneView, value: TwoPaneViewPriority) =
   ## Microsoft.UI.Xaml.Controls.TwoPaneView.put_PanePriority
   withIface(self.p, IID_ITwoPaneView, "ITwoPaneView", it):
-    vcall(it, Slot_ITwoPaneView_put_PanePriority, Fn_ITwoPaneView_put_PanePriority)(it, int32(value)).check("TwoPaneView.put_PanePriority")
+    vcall(it, Slot_ITwoPaneView_put_PanePriority, Fn_ITwoPaneView_put_PanePriority)(it, value).check("TwoPaneView.put_PanePriority")
 
 proc mode*(self: TwoPaneView): TwoPaneViewMode =
   ## Microsoft.UI.Xaml.Controls.TwoPaneView.get_Mode
   withIface(self.p, IID_ITwoPaneView, "ITwoPaneView", it):
-    var tmp: int32
+    var tmp: TwoPaneViewMode
     vcall(it, Slot_ITwoPaneView_get_Mode, Fn_ITwoPaneView_get_Mode)(it, tmp.addr).check("TwoPaneView.get_Mode")
-    result = TwoPaneViewMode(tmp)
+    result = tmp
 
 proc wideModeConfiguration*(self: TwoPaneView): TwoPaneViewWideModeConfiguration =
   ## Microsoft.UI.Xaml.Controls.TwoPaneView.get_WideModeConfiguration
   withIface(self.p, IID_ITwoPaneView, "ITwoPaneView", it):
-    var tmp: int32
+    var tmp: TwoPaneViewWideModeConfiguration
     vcall(it, Slot_ITwoPaneView_get_WideModeConfiguration, Fn_ITwoPaneView_get_WideModeConfiguration)(it, tmp.addr).check("TwoPaneView.get_WideModeConfiguration")
-    result = TwoPaneViewWideModeConfiguration(tmp)
+    result = tmp
 
 proc `wideModeConfiguration=`*(self: TwoPaneView, value: TwoPaneViewWideModeConfiguration) =
   ## Microsoft.UI.Xaml.Controls.TwoPaneView.put_WideModeConfiguration
   withIface(self.p, IID_ITwoPaneView, "ITwoPaneView", it):
-    vcall(it, Slot_ITwoPaneView_put_WideModeConfiguration, Fn_ITwoPaneView_put_WideModeConfiguration)(it, int32(value)).check("TwoPaneView.put_WideModeConfiguration")
+    vcall(it, Slot_ITwoPaneView_put_WideModeConfiguration, Fn_ITwoPaneView_put_WideModeConfiguration)(it, value).check("TwoPaneView.put_WideModeConfiguration")
 
 proc tallModeConfiguration*(self: TwoPaneView): TwoPaneViewTallModeConfiguration =
   ## Microsoft.UI.Xaml.Controls.TwoPaneView.get_TallModeConfiguration
   withIface(self.p, IID_ITwoPaneView, "ITwoPaneView", it):
-    var tmp: int32
+    var tmp: TwoPaneViewTallModeConfiguration
     vcall(it, Slot_ITwoPaneView_get_TallModeConfiguration, Fn_ITwoPaneView_get_TallModeConfiguration)(it, tmp.addr).check("TwoPaneView.get_TallModeConfiguration")
-    result = TwoPaneViewTallModeConfiguration(tmp)
+    result = tmp
 
 proc `tallModeConfiguration=`*(self: TwoPaneView, value: TwoPaneViewTallModeConfiguration) =
   ## Microsoft.UI.Xaml.Controls.TwoPaneView.put_TallModeConfiguration
   withIface(self.p, IID_ITwoPaneView, "ITwoPaneView", it):
-    vcall(it, Slot_ITwoPaneView_put_TallModeConfiguration, Fn_ITwoPaneView_put_TallModeConfiguration)(it, int32(value)).check("TwoPaneView.put_TallModeConfiguration")
+    vcall(it, Slot_ITwoPaneView_put_TallModeConfiguration, Fn_ITwoPaneView_put_TallModeConfiguration)(it, value).check("TwoPaneView.put_TallModeConfiguration")
 
 proc minWideModeWidth*(self: TwoPaneView): float64 =
   ## Microsoft.UI.Xaml.Controls.TwoPaneView.get_MinWideModeWidth
@@ -37379,14 +37378,14 @@ proc newUniformGridLayout*(): UniformGridLayout =
 proc orientation*(self: UniformGridLayout): Orientation =
   ## Microsoft.UI.Xaml.Controls.UniformGridLayout.get_Orientation
   withIface(self.p, IID_IUniformGridLayout, "IUniformGridLayout", it):
-    var tmp: int32
+    var tmp: Orientation
     vcall(it, Slot_IUniformGridLayout_get_Orientation, Fn_IUniformGridLayout_get_Orientation)(it, tmp.addr).check("UniformGridLayout.get_Orientation")
-    result = Orientation(tmp)
+    result = tmp
 
 proc `orientation=`*(self: UniformGridLayout, value: Orientation) =
   ## Microsoft.UI.Xaml.Controls.UniformGridLayout.put_Orientation
   withIface(self.p, IID_IUniformGridLayout, "IUniformGridLayout", it):
-    vcall(it, Slot_IUniformGridLayout_put_Orientation, Fn_IUniformGridLayout_put_Orientation)(it, int32(value)).check("UniformGridLayout.put_Orientation")
+    vcall(it, Slot_IUniformGridLayout_put_Orientation, Fn_IUniformGridLayout_put_Orientation)(it, value).check("UniformGridLayout.put_Orientation")
 
 proc minItemWidth*(self: UniformGridLayout): float64 =
   ## Microsoft.UI.Xaml.Controls.UniformGridLayout.get_MinItemWidth
@@ -37439,26 +37438,26 @@ proc `minColumnSpacing=`*(self: UniformGridLayout, value: float64) =
 proc itemsJustification*(self: UniformGridLayout): UniformGridLayoutItemsJustification =
   ## Microsoft.UI.Xaml.Controls.UniformGridLayout.get_ItemsJustification
   withIface(self.p, IID_IUniformGridLayout, "IUniformGridLayout", it):
-    var tmp: int32
+    var tmp: UniformGridLayoutItemsJustification
     vcall(it, Slot_IUniformGridLayout_get_ItemsJustification, Fn_IUniformGridLayout_get_ItemsJustification)(it, tmp.addr).check("UniformGridLayout.get_ItemsJustification")
-    result = UniformGridLayoutItemsJustification(tmp)
+    result = tmp
 
 proc `itemsJustification=`*(self: UniformGridLayout, value: UniformGridLayoutItemsJustification) =
   ## Microsoft.UI.Xaml.Controls.UniformGridLayout.put_ItemsJustification
   withIface(self.p, IID_IUniformGridLayout, "IUniformGridLayout", it):
-    vcall(it, Slot_IUniformGridLayout_put_ItemsJustification, Fn_IUniformGridLayout_put_ItemsJustification)(it, int32(value)).check("UniformGridLayout.put_ItemsJustification")
+    vcall(it, Slot_IUniformGridLayout_put_ItemsJustification, Fn_IUniformGridLayout_put_ItemsJustification)(it, value).check("UniformGridLayout.put_ItemsJustification")
 
 proc itemsStretch*(self: UniformGridLayout): UniformGridLayoutItemsStretch =
   ## Microsoft.UI.Xaml.Controls.UniformGridLayout.get_ItemsStretch
   withIface(self.p, IID_IUniformGridLayout, "IUniformGridLayout", it):
-    var tmp: int32
+    var tmp: UniformGridLayoutItemsStretch
     vcall(it, Slot_IUniformGridLayout_get_ItemsStretch, Fn_IUniformGridLayout_get_ItemsStretch)(it, tmp.addr).check("UniformGridLayout.get_ItemsStretch")
-    result = UniformGridLayoutItemsStretch(tmp)
+    result = tmp
 
 proc `itemsStretch=`*(self: UniformGridLayout, value: UniformGridLayoutItemsStretch) =
   ## Microsoft.UI.Xaml.Controls.UniformGridLayout.put_ItemsStretch
   withIface(self.p, IID_IUniformGridLayout, "IUniformGridLayout", it):
-    vcall(it, Slot_IUniformGridLayout_put_ItemsStretch, Fn_IUniformGridLayout_put_ItemsStretch)(it, int32(value)).check("UniformGridLayout.put_ItemsStretch")
+    vcall(it, Slot_IUniformGridLayout_put_ItemsStretch, Fn_IUniformGridLayout_put_ItemsStretch)(it, value).check("UniformGridLayout.put_ItemsStretch")
 
 proc maximumRowsOrColumns*(self: UniformGridLayout): int32 =
   ## Microsoft.UI.Xaml.Controls.UniformGridLayout.get_MaximumRowsOrColumns
@@ -37503,38 +37502,38 @@ proc `itemWidth=`*(self: VariableSizedWrapGrid, value: float64) =
 proc orientation*(self: VariableSizedWrapGrid): Orientation =
   ## Microsoft.UI.Xaml.Controls.VariableSizedWrapGrid.get_Orientation
   withIface(self.p, IID_IVariableSizedWrapGrid, "IVariableSizedWrapGrid", it):
-    var tmp: int32
+    var tmp: Orientation
     vcall(it, Slot_IVariableSizedWrapGrid_get_Orientation, Fn_IVariableSizedWrapGrid_get_Orientation)(it, tmp.addr).check("VariableSizedWrapGrid.get_Orientation")
-    result = Orientation(tmp)
+    result = tmp
 
 proc `orientation=`*(self: VariableSizedWrapGrid, value: Orientation) =
   ## Microsoft.UI.Xaml.Controls.VariableSizedWrapGrid.put_Orientation
   withIface(self.p, IID_IVariableSizedWrapGrid, "IVariableSizedWrapGrid", it):
-    vcall(it, Slot_IVariableSizedWrapGrid_put_Orientation, Fn_IVariableSizedWrapGrid_put_Orientation)(it, int32(value)).check("VariableSizedWrapGrid.put_Orientation")
+    vcall(it, Slot_IVariableSizedWrapGrid_put_Orientation, Fn_IVariableSizedWrapGrid_put_Orientation)(it, value).check("VariableSizedWrapGrid.put_Orientation")
 
 proc horizontalChildrenAlignment*(self: VariableSizedWrapGrid): HorizontalAlignment =
   ## Microsoft.UI.Xaml.Controls.VariableSizedWrapGrid.get_HorizontalChildrenAlignment
   withIface(self.p, IID_IVariableSizedWrapGrid, "IVariableSizedWrapGrid", it):
-    var tmp: int32
+    var tmp: HorizontalAlignment
     vcall(it, Slot_IVariableSizedWrapGrid_get_HorizontalChildrenAlignment, Fn_IVariableSizedWrapGrid_get_HorizontalChildrenAlignment)(it, tmp.addr).check("VariableSizedWrapGrid.get_HorizontalChildrenAlignment")
-    result = HorizontalAlignment(tmp)
+    result = tmp
 
 proc `horizontalChildrenAlignment=`*(self: VariableSizedWrapGrid, value: HorizontalAlignment) =
   ## Microsoft.UI.Xaml.Controls.VariableSizedWrapGrid.put_HorizontalChildrenAlignment
   withIface(self.p, IID_IVariableSizedWrapGrid, "IVariableSizedWrapGrid", it):
-    vcall(it, Slot_IVariableSizedWrapGrid_put_HorizontalChildrenAlignment, Fn_IVariableSizedWrapGrid_put_HorizontalChildrenAlignment)(it, int32(value)).check("VariableSizedWrapGrid.put_HorizontalChildrenAlignment")
+    vcall(it, Slot_IVariableSizedWrapGrid_put_HorizontalChildrenAlignment, Fn_IVariableSizedWrapGrid_put_HorizontalChildrenAlignment)(it, value).check("VariableSizedWrapGrid.put_HorizontalChildrenAlignment")
 
 proc verticalChildrenAlignment*(self: VariableSizedWrapGrid): VerticalAlignment =
   ## Microsoft.UI.Xaml.Controls.VariableSizedWrapGrid.get_VerticalChildrenAlignment
   withIface(self.p, IID_IVariableSizedWrapGrid, "IVariableSizedWrapGrid", it):
-    var tmp: int32
+    var tmp: VerticalAlignment
     vcall(it, Slot_IVariableSizedWrapGrid_get_VerticalChildrenAlignment, Fn_IVariableSizedWrapGrid_get_VerticalChildrenAlignment)(it, tmp.addr).check("VariableSizedWrapGrid.get_VerticalChildrenAlignment")
-    result = VerticalAlignment(tmp)
+    result = tmp
 
 proc `verticalChildrenAlignment=`*(self: VariableSizedWrapGrid, value: VerticalAlignment) =
   ## Microsoft.UI.Xaml.Controls.VariableSizedWrapGrid.put_VerticalChildrenAlignment
   withIface(self.p, IID_IVariableSizedWrapGrid, "IVariableSizedWrapGrid", it):
-    vcall(it, Slot_IVariableSizedWrapGrid_put_VerticalChildrenAlignment, Fn_IVariableSizedWrapGrid_put_VerticalChildrenAlignment)(it, int32(value)).check("VariableSizedWrapGrid.put_VerticalChildrenAlignment")
+    vcall(it, Slot_IVariableSizedWrapGrid_put_VerticalChildrenAlignment, Fn_IVariableSizedWrapGrid_put_VerticalChildrenAlignment)(it, value).check("VariableSizedWrapGrid.put_VerticalChildrenAlignment")
 
 proc maximumRowsOrColumns*(self: VariableSizedWrapGrid): int32 =
   ## Microsoft.UI.Xaml.Controls.VariableSizedWrapGrid.get_MaximumRowsOrColumns
@@ -37568,26 +37567,26 @@ proc `child=`*(self: Viewbox, value: UIElement) =
 proc stretch*(self: Viewbox): Stretch =
   ## Microsoft.UI.Xaml.Controls.Viewbox.get_Stretch
   withIface(self.p, IID_IViewbox, "IViewbox", it):
-    var tmp: int32
+    var tmp: Stretch
     vcall(it, Slot_IViewbox_get_Stretch, Fn_IViewbox_get_Stretch)(it, tmp.addr).check("Viewbox.get_Stretch")
-    result = Stretch(tmp)
+    result = tmp
 
 proc `stretch=`*(self: Viewbox, value: Stretch) =
   ## Microsoft.UI.Xaml.Controls.Viewbox.put_Stretch
   withIface(self.p, IID_IViewbox, "IViewbox", it):
-    vcall(it, Slot_IViewbox_put_Stretch, Fn_IViewbox_put_Stretch)(it, int32(value)).check("Viewbox.put_Stretch")
+    vcall(it, Slot_IViewbox_put_Stretch, Fn_IViewbox_put_Stretch)(it, value).check("Viewbox.put_Stretch")
 
 proc stretchDirection*(self: Viewbox): StretchDirection =
   ## Microsoft.UI.Xaml.Controls.Viewbox.get_StretchDirection
   withIface(self.p, IID_IViewbox, "IViewbox", it):
-    var tmp: int32
+    var tmp: StretchDirection
     vcall(it, Slot_IViewbox_get_StretchDirection, Fn_IViewbox_get_StretchDirection)(it, tmp.addr).check("Viewbox.get_StretchDirection")
-    result = StretchDirection(tmp)
+    result = tmp
 
 proc `stretchDirection=`*(self: Viewbox, value: StretchDirection) =
   ## Microsoft.UI.Xaml.Controls.Viewbox.put_StretchDirection
   withIface(self.p, IID_IViewbox, "IViewbox", it):
-    vcall(it, Slot_IViewbox_put_StretchDirection, Fn_IViewbox_put_StretchDirection)(it, int32(value)).check("Viewbox.put_StretchDirection")
+    vcall(it, Slot_IViewbox_put_StretchDirection, Fn_IViewbox_put_StretchDirection)(it, value).check("Viewbox.put_StretchDirection")
 
 proc newVirtualizingLayoutContext*(): VirtualizingLayoutContext =
   ## Compose a `Microsoft.UI.Xaml.Controls.VirtualizingLayoutContext`.
@@ -37626,7 +37625,7 @@ proc getOrCreateElementAt*(self: VirtualizingLayoutContext, a1: int32, a2: Eleme
   ## Microsoft.UI.Xaml.Controls.VirtualizingLayoutContext.GetOrCreateElementAt
   withIface(self.p, IID_IVirtualizingLayoutContext, "IVirtualizingLayoutContext", it):
     var tmp: pointer
-    vcall(it, Slot_IVirtualizingLayoutContext_GetOrCreateElementAt2, Fn_IVirtualizingLayoutContext_GetOrCreateElementAt2)(it, a1, int32(a2), tmp.addr).check("VirtualizingLayoutContext.GetOrCreateElementAt")
+    vcall(it, Slot_IVirtualizingLayoutContext_GetOrCreateElementAt2, Fn_IVirtualizingLayoutContext_GetOrCreateElementAt2)(it, a1, a2, tmp.addr).check("VirtualizingLayoutContext.GetOrCreateElementAt")
     result = owned[UIElement](tmp)
 
 proc recycleElement*(self: VirtualizingLayoutContext, a1: UIElement) =
@@ -37686,7 +37685,7 @@ proc getOrCreateElementAtCore*(self: VirtualizingLayoutContext, a1: int32, a2: E
   ## Microsoft.UI.Xaml.Controls.VirtualizingLayoutContext.GetOrCreateElementAtCore
   withIface(self.p, IID_IVirtualizingLayoutContextOverrides, "IVirtualizingLayoutContextOverrides", it):
     var tmp: pointer
-    vcall(it, Slot_IVirtualizingLayoutContextOverrides_GetOrCreateElementAtCore, Fn_IVirtualizingLayoutContextOverrides_GetOrCreateElementAtCore)(it, a1, int32(a2), tmp.addr).check("VirtualizingLayoutContext.GetOrCreateElementAtCore")
+    vcall(it, Slot_IVirtualizingLayoutContextOverrides_GetOrCreateElementAtCore, Fn_IVirtualizingLayoutContextOverrides_GetOrCreateElementAtCore)(it, a1, a2, tmp.addr).check("VirtualizingLayoutContext.GetOrCreateElementAtCore")
     result = owned[UIElement](tmp)
 
 proc recycleElementCore*(self: VirtualizingLayoutContext, a1: UIElement) =
@@ -37740,14 +37739,14 @@ proc `areScrollSnapPointsRegular=`*(self: VirtualizingStackPanel, value: bool) =
 proc orientation*(self: VirtualizingStackPanel): Orientation =
   ## Microsoft.UI.Xaml.Controls.VirtualizingStackPanel.get_Orientation
   withIface(self.p, IID_IVirtualizingStackPanel, "IVirtualizingStackPanel", it):
-    var tmp: int32
+    var tmp: Orientation
     vcall(it, Slot_IVirtualizingStackPanel_get_Orientation, Fn_IVirtualizingStackPanel_get_Orientation)(it, tmp.addr).check("VirtualizingStackPanel.get_Orientation")
-    result = Orientation(tmp)
+    result = tmp
 
 proc `orientation=`*(self: VirtualizingStackPanel, value: Orientation) =
   ## Microsoft.UI.Xaml.Controls.VirtualizingStackPanel.put_Orientation
   withIface(self.p, IID_IVirtualizingStackPanel, "IVirtualizingStackPanel", it):
-    vcall(it, Slot_IVirtualizingStackPanel_put_Orientation, Fn_IVirtualizingStackPanel_put_Orientation)(it, int32(value)).check("VirtualizingStackPanel.put_Orientation")
+    vcall(it, Slot_IVirtualizingStackPanel_put_Orientation, Fn_IVirtualizingStackPanel_put_Orientation)(it, value).check("VirtualizingStackPanel.put_Orientation")
 
 proc onCleanUpVirtualizedItemEvent*(self: VirtualizingStackPanel,
     handler: proc(sender: pointer, args: CleanUpVirtualizedItemEventArgs)): EventRegistrationToken {.discardable.} =
@@ -37913,38 +37912,38 @@ proc `itemHeight=`*(self: WrapGrid, value: float64) =
 proc orientation*(self: WrapGrid): Orientation =
   ## Microsoft.UI.Xaml.Controls.WrapGrid.get_Orientation
   withIface(self.p, IID_IWrapGrid, "IWrapGrid", it):
-    var tmp: int32
+    var tmp: Orientation
     vcall(it, Slot_IWrapGrid_get_Orientation, Fn_IWrapGrid_get_Orientation)(it, tmp.addr).check("WrapGrid.get_Orientation")
-    result = Orientation(tmp)
+    result = tmp
 
 proc `orientation=`*(self: WrapGrid, value: Orientation) =
   ## Microsoft.UI.Xaml.Controls.WrapGrid.put_Orientation
   withIface(self.p, IID_IWrapGrid, "IWrapGrid", it):
-    vcall(it, Slot_IWrapGrid_put_Orientation, Fn_IWrapGrid_put_Orientation)(it, int32(value)).check("WrapGrid.put_Orientation")
+    vcall(it, Slot_IWrapGrid_put_Orientation, Fn_IWrapGrid_put_Orientation)(it, value).check("WrapGrid.put_Orientation")
 
 proc horizontalChildrenAlignment*(self: WrapGrid): HorizontalAlignment =
   ## Microsoft.UI.Xaml.Controls.WrapGrid.get_HorizontalChildrenAlignment
   withIface(self.p, IID_IWrapGrid, "IWrapGrid", it):
-    var tmp: int32
+    var tmp: HorizontalAlignment
     vcall(it, Slot_IWrapGrid_get_HorizontalChildrenAlignment, Fn_IWrapGrid_get_HorizontalChildrenAlignment)(it, tmp.addr).check("WrapGrid.get_HorizontalChildrenAlignment")
-    result = HorizontalAlignment(tmp)
+    result = tmp
 
 proc `horizontalChildrenAlignment=`*(self: WrapGrid, value: HorizontalAlignment) =
   ## Microsoft.UI.Xaml.Controls.WrapGrid.put_HorizontalChildrenAlignment
   withIface(self.p, IID_IWrapGrid, "IWrapGrid", it):
-    vcall(it, Slot_IWrapGrid_put_HorizontalChildrenAlignment, Fn_IWrapGrid_put_HorizontalChildrenAlignment)(it, int32(value)).check("WrapGrid.put_HorizontalChildrenAlignment")
+    vcall(it, Slot_IWrapGrid_put_HorizontalChildrenAlignment, Fn_IWrapGrid_put_HorizontalChildrenAlignment)(it, value).check("WrapGrid.put_HorizontalChildrenAlignment")
 
 proc verticalChildrenAlignment*(self: WrapGrid): VerticalAlignment =
   ## Microsoft.UI.Xaml.Controls.WrapGrid.get_VerticalChildrenAlignment
   withIface(self.p, IID_IWrapGrid, "IWrapGrid", it):
-    var tmp: int32
+    var tmp: VerticalAlignment
     vcall(it, Slot_IWrapGrid_get_VerticalChildrenAlignment, Fn_IWrapGrid_get_VerticalChildrenAlignment)(it, tmp.addr).check("WrapGrid.get_VerticalChildrenAlignment")
-    result = VerticalAlignment(tmp)
+    result = tmp
 
 proc `verticalChildrenAlignment=`*(self: WrapGrid, value: VerticalAlignment) =
   ## Microsoft.UI.Xaml.Controls.WrapGrid.put_VerticalChildrenAlignment
   withIface(self.p, IID_IWrapGrid, "IWrapGrid", it):
-    vcall(it, Slot_IWrapGrid_put_VerticalChildrenAlignment, Fn_IWrapGrid_put_VerticalChildrenAlignment)(it, int32(value)).check("WrapGrid.put_VerticalChildrenAlignment")
+    vcall(it, Slot_IWrapGrid_put_VerticalChildrenAlignment, Fn_IWrapGrid_put_VerticalChildrenAlignment)(it, value).check("WrapGrid.put_VerticalChildrenAlignment")
 
 proc maximumRowsOrColumns*(self: WrapGrid): int32 =
   ## Microsoft.UI.Xaml.Controls.WrapGrid.get_MaximumRowsOrColumns
@@ -38000,14 +37999,14 @@ proc `path=`*(self: Binding, value: PropertyPath) =
 proc mode*(self: Binding): BindingMode =
   ## Microsoft.UI.Xaml.Data.Binding.get_Mode
   withIface(self.p, IID_IBinding, "IBinding", it):
-    var tmp: int32
+    var tmp: BindingMode
     vcall(it, Slot_IBinding_get_Mode, Fn_IBinding_get_Mode)(it, tmp.addr).check("Binding.get_Mode")
-    result = BindingMode(tmp)
+    result = tmp
 
 proc `mode=`*(self: Binding, value: BindingMode) =
   ## Microsoft.UI.Xaml.Data.Binding.put_Mode
   withIface(self.p, IID_IBinding, "IBinding", it):
-    vcall(it, Slot_IBinding_put_Mode, Fn_IBinding_put_Mode)(it, int32(value)).check("Binding.put_Mode")
+    vcall(it, Slot_IBinding_put_Mode, Fn_IBinding_put_Mode)(it, value).check("Binding.put_Mode")
 
 proc source*(self: Binding): pointer =
   ## Microsoft.UI.Xaml.Data.Binding.get_Source
@@ -38111,14 +38110,14 @@ proc `targetNullValue=`*(self: Binding, value: pointer) =
 proc updateSourceTrigger*(self: Binding): UpdateSourceTrigger =
   ## Microsoft.UI.Xaml.Data.Binding.get_UpdateSourceTrigger
   withIface(self.p, IID_IBinding, "IBinding", it):
-    var tmp: int32
+    var tmp: UpdateSourceTrigger
     vcall(it, Slot_IBinding_get_UpdateSourceTrigger, Fn_IBinding_get_UpdateSourceTrigger)(it, tmp.addr).check("Binding.get_UpdateSourceTrigger")
-    result = UpdateSourceTrigger(tmp)
+    result = tmp
 
 proc `updateSourceTrigger=`*(self: Binding, value: UpdateSourceTrigger) =
   ## Microsoft.UI.Xaml.Data.Binding.put_UpdateSourceTrigger
   withIface(self.p, IID_IBinding, "IBinding", it):
-    vcall(it, Slot_IBinding_put_UpdateSourceTrigger, Fn_IBinding_put_UpdateSourceTrigger)(it, int32(value)).check("Binding.put_UpdateSourceTrigger")
+    vcall(it, Slot_IBinding_put_UpdateSourceTrigger, Fn_IBinding_put_UpdateSourceTrigger)(it, value).check("Binding.put_UpdateSourceTrigger")
 
 proc dataItem*(self: BindingExpression): pointer =
   ## Microsoft.UI.Xaml.Data.BindingExpression.get_DataItem
@@ -38274,14 +38273,14 @@ proc newRelativeSource*(): RelativeSource =
 proc mode*(self: RelativeSource): RelativeSourceMode =
   ## Microsoft.UI.Xaml.Data.RelativeSource.get_Mode
   withIface(self.p, IID_IRelativeSource, "IRelativeSource", it):
-    var tmp: int32
+    var tmp: RelativeSourceMode
     vcall(it, Slot_IRelativeSource_get_Mode, Fn_IRelativeSource_get_Mode)(it, tmp.addr).check("RelativeSource.get_Mode")
-    result = RelativeSourceMode(tmp)
+    result = tmp
 
 proc `mode=`*(self: RelativeSource, value: RelativeSourceMode) =
   ## Microsoft.UI.Xaml.Data.RelativeSource.put_Mode
   withIface(self.p, IID_IRelativeSource, "IRelativeSource", it):
-    vcall(it, Slot_IRelativeSource_put_Mode, Fn_IRelativeSource_put_Mode)(it, int32(value)).check("RelativeSource.put_Mode")
+    vcall(it, Slot_IRelativeSource_put_Mode, Fn_IRelativeSource_put_Mode)(it, value).check("RelativeSource.put_Mode")
 
 proc newValue*(self: DataContextChangedEventArgs): pointer =
   ## Microsoft.UI.Xaml.DataContextChangedEventArgs.get_NewValue
@@ -38448,26 +38447,26 @@ proc removeXamlResourceReferenceFailed*(self: DebugSettings, token: EventRegistr
 proc layoutCycleTracingLevel*(self: DebugSettings): LayoutCycleTracingLevel =
   ## Microsoft.UI.Xaml.DebugSettings.get_LayoutCycleTracingLevel
   withIface(self.p, IID_IDebugSettings3, "IDebugSettings3", it):
-    var tmp: int32
+    var tmp: LayoutCycleTracingLevel
     vcall(it, Slot_IDebugSettings3_get_LayoutCycleTracingLevel, Fn_IDebugSettings3_get_LayoutCycleTracingLevel)(it, tmp.addr).check("DebugSettings.get_LayoutCycleTracingLevel")
-    result = LayoutCycleTracingLevel(tmp)
+    result = tmp
 
 proc `layoutCycleTracingLevel=`*(self: DebugSettings, value: LayoutCycleTracingLevel) =
   ## Microsoft.UI.Xaml.DebugSettings.put_LayoutCycleTracingLevel
   withIface(self.p, IID_IDebugSettings3, "IDebugSettings3", it):
-    vcall(it, Slot_IDebugSettings3_put_LayoutCycleTracingLevel, Fn_IDebugSettings3_put_LayoutCycleTracingLevel)(it, int32(value)).check("DebugSettings.put_LayoutCycleTracingLevel")
+    vcall(it, Slot_IDebugSettings3_put_LayoutCycleTracingLevel, Fn_IDebugSettings3_put_LayoutCycleTracingLevel)(it, value).check("DebugSettings.put_LayoutCycleTracingLevel")
 
 proc layoutCycleDebugBreakLevel*(self: DebugSettings): LayoutCycleDebugBreakLevel =
   ## Microsoft.UI.Xaml.DebugSettings.get_LayoutCycleDebugBreakLevel
   withIface(self.p, IID_IDebugSettings3, "IDebugSettings3", it):
-    var tmp: int32
+    var tmp: LayoutCycleDebugBreakLevel
     vcall(it, Slot_IDebugSettings3_get_LayoutCycleDebugBreakLevel, Fn_IDebugSettings3_get_LayoutCycleDebugBreakLevel)(it, tmp.addr).check("DebugSettings.get_LayoutCycleDebugBreakLevel")
-    result = LayoutCycleDebugBreakLevel(tmp)
+    result = tmp
 
 proc `layoutCycleDebugBreakLevel=`*(self: DebugSettings, value: LayoutCycleDebugBreakLevel) =
   ## Microsoft.UI.Xaml.DebugSettings.put_LayoutCycleDebugBreakLevel
   withIface(self.p, IID_IDebugSettings3, "IDebugSettings3", it):
-    vcall(it, Slot_IDebugSettings3_put_LayoutCycleDebugBreakLevel, Fn_IDebugSettings3_put_LayoutCycleDebugBreakLevel)(it, int32(value)).check("DebugSettings.put_LayoutCycleDebugBreakLevel")
+    vcall(it, Slot_IDebugSettings3_put_LayoutCycleDebugBreakLevel, Fn_IDebugSettings3_put_LayoutCycleDebugBreakLevel)(it, value).check("DebugSettings.put_LayoutCycleDebugBreakLevel")
 
 proc getMetadata*(self: DependencyProperty, a1: TypeName): PropertyMetadata =
   ## Microsoft.UI.Xaml.DependencyProperty.GetMetadata
@@ -38774,14 +38773,14 @@ proc `accessKeyScopeOwner=`*(self: TextElement, value: DependencyObject) =
 proc keyTipPlacementMode*(self: TextElement): KeyTipPlacementMode =
   ## Microsoft.UI.Xaml.Documents.TextElement.get_KeyTipPlacementMode
   withIface(self.p, IID_ITextElement, "ITextElement", it):
-    var tmp: int32
+    var tmp: KeyTipPlacementMode
     vcall(it, Slot_ITextElement_get_KeyTipPlacementMode, Fn_ITextElement_get_KeyTipPlacementMode)(it, tmp.addr).check("TextElement.get_KeyTipPlacementMode")
-    result = KeyTipPlacementMode(tmp)
+    result = tmp
 
 proc `keyTipPlacementMode=`*(self: TextElement, value: KeyTipPlacementMode) =
   ## Microsoft.UI.Xaml.Documents.TextElement.put_KeyTipPlacementMode
   withIface(self.p, IID_ITextElement, "ITextElement", it):
-    vcall(it, Slot_ITextElement_put_KeyTipPlacementMode, Fn_ITextElement_put_KeyTipPlacementMode)(it, int32(value)).check("TextElement.put_KeyTipPlacementMode")
+    vcall(it, Slot_ITextElement_put_KeyTipPlacementMode, Fn_ITextElement_put_KeyTipPlacementMode)(it, value).check("TextElement.put_KeyTipPlacementMode")
 
 proc keyTipHorizontalOffset*(self: TextElement): float64 =
   ## Microsoft.UI.Xaml.Documents.TextElement.get_KeyTipHorizontalOffset
@@ -38901,26 +38900,26 @@ proc newBlock*(): Block =
 proc textAlignment*(self: Block): TextAlignment =
   ## Microsoft.UI.Xaml.Documents.Block.get_TextAlignment
   withIface(self.p, IID_IBlock, "IBlock", it):
-    var tmp: int32
+    var tmp: TextAlignment
     vcall(it, Slot_IBlock_get_TextAlignment, Fn_IBlock_get_TextAlignment)(it, tmp.addr).check("Block.get_TextAlignment")
-    result = TextAlignment(tmp)
+    result = tmp
 
 proc `textAlignment=`*(self: Block, value: TextAlignment) =
   ## Microsoft.UI.Xaml.Documents.Block.put_TextAlignment
   withIface(self.p, IID_IBlock, "IBlock", it):
-    vcall(it, Slot_IBlock_put_TextAlignment, Fn_IBlock_put_TextAlignment)(it, int32(value)).check("Block.put_TextAlignment")
+    vcall(it, Slot_IBlock_put_TextAlignment, Fn_IBlock_put_TextAlignment)(it, value).check("Block.put_TextAlignment")
 
 proc horizontalTextAlignment*(self: Block): TextAlignment =
   ## Microsoft.UI.Xaml.Documents.Block.get_HorizontalTextAlignment
   withIface(self.p, IID_IBlock, "IBlock", it):
-    var tmp: int32
+    var tmp: TextAlignment
     vcall(it, Slot_IBlock_get_HorizontalTextAlignment, Fn_IBlock_get_HorizontalTextAlignment)(it, tmp.addr).check("Block.get_HorizontalTextAlignment")
-    result = TextAlignment(tmp)
+    result = tmp
 
 proc `horizontalTextAlignment=`*(self: Block, value: TextAlignment) =
   ## Microsoft.UI.Xaml.Documents.Block.put_HorizontalTextAlignment
   withIface(self.p, IID_IBlock, "IBlock", it):
-    vcall(it, Slot_IBlock_put_HorizontalTextAlignment, Fn_IBlock_put_HorizontalTextAlignment)(it, int32(value)).check("Block.put_HorizontalTextAlignment")
+    vcall(it, Slot_IBlock_put_HorizontalTextAlignment, Fn_IBlock_put_HorizontalTextAlignment)(it, value).check("Block.put_HorizontalTextAlignment")
 
 proc lineHeight*(self: Block): float64 =
   ## Microsoft.UI.Xaml.Documents.Block.get_LineHeight
@@ -38937,14 +38936,14 @@ proc `lineHeight=`*(self: Block, value: float64) =
 proc lineStackingStrategy*(self: Block): LineStackingStrategy =
   ## Microsoft.UI.Xaml.Documents.Block.get_LineStackingStrategy
   withIface(self.p, IID_IBlock, "IBlock", it):
-    var tmp: int32
+    var tmp: LineStackingStrategy
     vcall(it, Slot_IBlock_get_LineStackingStrategy, Fn_IBlock_get_LineStackingStrategy)(it, tmp.addr).check("Block.get_LineStackingStrategy")
-    result = LineStackingStrategy(tmp)
+    result = tmp
 
 proc `lineStackingStrategy=`*(self: Block, value: LineStackingStrategy) =
   ## Microsoft.UI.Xaml.Documents.Block.put_LineStackingStrategy
   withIface(self.p, IID_IBlock, "IBlock", it):
-    vcall(it, Slot_IBlock_put_LineStackingStrategy, Fn_IBlock_put_LineStackingStrategy)(it, int32(value)).check("Block.put_LineStackingStrategy")
+    vcall(it, Slot_IBlock_put_LineStackingStrategy, Fn_IBlock_put_LineStackingStrategy)(it, value).check("Block.put_LineStackingStrategy")
 
 proc margin*(self: Block): Thickness =
   ## Microsoft.UI.Xaml.Documents.Block.get_Margin
@@ -39005,14 +39004,14 @@ proc `indices=`*(self: Glyphs, value: string) =
 proc styleSimulations*(self: Glyphs): StyleSimulations =
   ## Microsoft.UI.Xaml.Documents.Glyphs.get_StyleSimulations
   withIface(self.p, IID_IGlyphs, "IGlyphs", it):
-    var tmp: int32
+    var tmp: StyleSimulations
     vcall(it, Slot_IGlyphs_get_StyleSimulations, Fn_IGlyphs_get_StyleSimulations)(it, tmp.addr).check("Glyphs.get_StyleSimulations")
-    result = StyleSimulations(tmp)
+    result = tmp
 
 proc `styleSimulations=`*(self: Glyphs, value: StyleSimulations) =
   ## Microsoft.UI.Xaml.Documents.Glyphs.put_StyleSimulations
   withIface(self.p, IID_IGlyphs, "IGlyphs", it):
-    vcall(it, Slot_IGlyphs_put_StyleSimulations, Fn_IGlyphs_put_StyleSimulations)(it, int32(value)).check("Glyphs.put_StyleSimulations")
+    vcall(it, Slot_IGlyphs_put_StyleSimulations, Fn_IGlyphs_put_StyleSimulations)(it, value).check("Glyphs.put_StyleSimulations")
 
 proc fontRenderingEmSize*(self: Glyphs): float64 =
   ## Microsoft.UI.Xaml.Documents.Glyphs.get_FontRenderingEmSize
@@ -39094,14 +39093,14 @@ proc newHyperlink*(): Hyperlink =
 proc underlineStyle*(self: Hyperlink): UnderlineStyle =
   ## Microsoft.UI.Xaml.Documents.Hyperlink.get_UnderlineStyle
   withIface(self.p, IID_IHyperlink, "IHyperlink", it):
-    var tmp: int32
+    var tmp: UnderlineStyle
     vcall(it, Slot_IHyperlink_get_UnderlineStyle, Fn_IHyperlink_get_UnderlineStyle)(it, tmp.addr).check("Hyperlink.get_UnderlineStyle")
-    result = UnderlineStyle(tmp)
+    result = tmp
 
 proc `underlineStyle=`*(self: Hyperlink, value: UnderlineStyle) =
   ## Microsoft.UI.Xaml.Documents.Hyperlink.put_UnderlineStyle
   withIface(self.p, IID_IHyperlink, "IHyperlink", it):
-    vcall(it, Slot_IHyperlink_put_UnderlineStyle, Fn_IHyperlink_put_UnderlineStyle)(it, int32(value)).check("Hyperlink.put_UnderlineStyle")
+    vcall(it, Slot_IHyperlink_put_UnderlineStyle, Fn_IHyperlink_put_UnderlineStyle)(it, value).check("Hyperlink.put_UnderlineStyle")
 
 proc xYFocusLeft*(self: Hyperlink): DependencyObject =
   ## Microsoft.UI.Xaml.Documents.Hyperlink.get_XYFocusLeft
@@ -39158,69 +39157,69 @@ proc `xYFocusDown=`*(self: Hyperlink, value: DependencyObject) =
 proc elementSoundMode*(self: Hyperlink): ElementSoundMode =
   ## Microsoft.UI.Xaml.Documents.Hyperlink.get_ElementSoundMode
   withIface(self.p, IID_IHyperlink, "IHyperlink", it):
-    var tmp: int32
+    var tmp: ElementSoundMode
     vcall(it, Slot_IHyperlink_get_ElementSoundMode, Fn_IHyperlink_get_ElementSoundMode)(it, tmp.addr).check("Hyperlink.get_ElementSoundMode")
-    result = ElementSoundMode(tmp)
+    result = tmp
 
 proc `elementSoundMode=`*(self: Hyperlink, value: ElementSoundMode) =
   ## Microsoft.UI.Xaml.Documents.Hyperlink.put_ElementSoundMode
   withIface(self.p, IID_IHyperlink, "IHyperlink", it):
-    vcall(it, Slot_IHyperlink_put_ElementSoundMode, Fn_IHyperlink_put_ElementSoundMode)(it, int32(value)).check("Hyperlink.put_ElementSoundMode")
+    vcall(it, Slot_IHyperlink_put_ElementSoundMode, Fn_IHyperlink_put_ElementSoundMode)(it, value).check("Hyperlink.put_ElementSoundMode")
 
 proc focusState*(self: Hyperlink): FocusState =
   ## Microsoft.UI.Xaml.Documents.Hyperlink.get_FocusState
   withIface(self.p, IID_IHyperlink, "IHyperlink", it):
-    var tmp: int32
+    var tmp: FocusState
     vcall(it, Slot_IHyperlink_get_FocusState, Fn_IHyperlink_get_FocusState)(it, tmp.addr).check("Hyperlink.get_FocusState")
-    result = FocusState(tmp)
+    result = tmp
 
 proc xYFocusUpNavigationStrategy*(self: Hyperlink): XYFocusNavigationStrategy =
   ## Microsoft.UI.Xaml.Documents.Hyperlink.get_XYFocusUpNavigationStrategy
   withIface(self.p, IID_IHyperlink, "IHyperlink", it):
-    var tmp: int32
+    var tmp: XYFocusNavigationStrategy
     vcall(it, Slot_IHyperlink_get_XYFocusUpNavigationStrategy, Fn_IHyperlink_get_XYFocusUpNavigationStrategy)(it, tmp.addr).check("Hyperlink.get_XYFocusUpNavigationStrategy")
-    result = XYFocusNavigationStrategy(tmp)
+    result = tmp
 
 proc `xYFocusUpNavigationStrategy=`*(self: Hyperlink, value: XYFocusNavigationStrategy) =
   ## Microsoft.UI.Xaml.Documents.Hyperlink.put_XYFocusUpNavigationStrategy
   withIface(self.p, IID_IHyperlink, "IHyperlink", it):
-    vcall(it, Slot_IHyperlink_put_XYFocusUpNavigationStrategy, Fn_IHyperlink_put_XYFocusUpNavigationStrategy)(it, int32(value)).check("Hyperlink.put_XYFocusUpNavigationStrategy")
+    vcall(it, Slot_IHyperlink_put_XYFocusUpNavigationStrategy, Fn_IHyperlink_put_XYFocusUpNavigationStrategy)(it, value).check("Hyperlink.put_XYFocusUpNavigationStrategy")
 
 proc xYFocusDownNavigationStrategy*(self: Hyperlink): XYFocusNavigationStrategy =
   ## Microsoft.UI.Xaml.Documents.Hyperlink.get_XYFocusDownNavigationStrategy
   withIface(self.p, IID_IHyperlink, "IHyperlink", it):
-    var tmp: int32
+    var tmp: XYFocusNavigationStrategy
     vcall(it, Slot_IHyperlink_get_XYFocusDownNavigationStrategy, Fn_IHyperlink_get_XYFocusDownNavigationStrategy)(it, tmp.addr).check("Hyperlink.get_XYFocusDownNavigationStrategy")
-    result = XYFocusNavigationStrategy(tmp)
+    result = tmp
 
 proc `xYFocusDownNavigationStrategy=`*(self: Hyperlink, value: XYFocusNavigationStrategy) =
   ## Microsoft.UI.Xaml.Documents.Hyperlink.put_XYFocusDownNavigationStrategy
   withIface(self.p, IID_IHyperlink, "IHyperlink", it):
-    vcall(it, Slot_IHyperlink_put_XYFocusDownNavigationStrategy, Fn_IHyperlink_put_XYFocusDownNavigationStrategy)(it, int32(value)).check("Hyperlink.put_XYFocusDownNavigationStrategy")
+    vcall(it, Slot_IHyperlink_put_XYFocusDownNavigationStrategy, Fn_IHyperlink_put_XYFocusDownNavigationStrategy)(it, value).check("Hyperlink.put_XYFocusDownNavigationStrategy")
 
 proc xYFocusLeftNavigationStrategy*(self: Hyperlink): XYFocusNavigationStrategy =
   ## Microsoft.UI.Xaml.Documents.Hyperlink.get_XYFocusLeftNavigationStrategy
   withIface(self.p, IID_IHyperlink, "IHyperlink", it):
-    var tmp: int32
+    var tmp: XYFocusNavigationStrategy
     vcall(it, Slot_IHyperlink_get_XYFocusLeftNavigationStrategy, Fn_IHyperlink_get_XYFocusLeftNavigationStrategy)(it, tmp.addr).check("Hyperlink.get_XYFocusLeftNavigationStrategy")
-    result = XYFocusNavigationStrategy(tmp)
+    result = tmp
 
 proc `xYFocusLeftNavigationStrategy=`*(self: Hyperlink, value: XYFocusNavigationStrategy) =
   ## Microsoft.UI.Xaml.Documents.Hyperlink.put_XYFocusLeftNavigationStrategy
   withIface(self.p, IID_IHyperlink, "IHyperlink", it):
-    vcall(it, Slot_IHyperlink_put_XYFocusLeftNavigationStrategy, Fn_IHyperlink_put_XYFocusLeftNavigationStrategy)(it, int32(value)).check("Hyperlink.put_XYFocusLeftNavigationStrategy")
+    vcall(it, Slot_IHyperlink_put_XYFocusLeftNavigationStrategy, Fn_IHyperlink_put_XYFocusLeftNavigationStrategy)(it, value).check("Hyperlink.put_XYFocusLeftNavigationStrategy")
 
 proc xYFocusRightNavigationStrategy*(self: Hyperlink): XYFocusNavigationStrategy =
   ## Microsoft.UI.Xaml.Documents.Hyperlink.get_XYFocusRightNavigationStrategy
   withIface(self.p, IID_IHyperlink, "IHyperlink", it):
-    var tmp: int32
+    var tmp: XYFocusNavigationStrategy
     vcall(it, Slot_IHyperlink_get_XYFocusRightNavigationStrategy, Fn_IHyperlink_get_XYFocusRightNavigationStrategy)(it, tmp.addr).check("Hyperlink.get_XYFocusRightNavigationStrategy")
-    result = XYFocusNavigationStrategy(tmp)
+    result = tmp
 
 proc `xYFocusRightNavigationStrategy=`*(self: Hyperlink, value: XYFocusNavigationStrategy) =
   ## Microsoft.UI.Xaml.Documents.Hyperlink.put_XYFocusRightNavigationStrategy
   withIface(self.p, IID_IHyperlink, "IHyperlink", it):
-    vcall(it, Slot_IHyperlink_put_XYFocusRightNavigationStrategy, Fn_IHyperlink_put_XYFocusRightNavigationStrategy)(it, int32(value)).check("Hyperlink.put_XYFocusRightNavigationStrategy")
+    vcall(it, Slot_IHyperlink_put_XYFocusRightNavigationStrategy, Fn_IHyperlink_put_XYFocusRightNavigationStrategy)(it, value).check("Hyperlink.put_XYFocusRightNavigationStrategy")
 
 proc isTabStop*(self: Hyperlink): bool =
   ## Microsoft.UI.Xaml.Documents.Hyperlink.get_IsTabStop
@@ -39310,7 +39309,7 @@ proc focus*(self: Hyperlink, a1: FocusState): bool =
   ## Microsoft.UI.Xaml.Documents.Hyperlink.Focus
   withIface(self.p, IID_IHyperlink, "IHyperlink", it):
     var tmp: bool
-    vcall(it, Slot_IHyperlink_Focus, Fn_IHyperlink_Focus)(it, int32(a1), tmp.addr).check("Hyperlink.Focus")
+    vcall(it, Slot_IHyperlink_Focus, Fn_IHyperlink_Focus)(it, a1, tmp.addr).check("Hyperlink.Focus")
     result = tmp
 
 proc newInlineUIContainer*(): InlineUIContainer =
@@ -39374,14 +39373,14 @@ proc `text=`*(self: Run, value: string) =
 proc flowDirection*(self: Run): FlowDirection =
   ## Microsoft.UI.Xaml.Documents.Run.get_FlowDirection
   withIface(self.p, IID_IRun, "IRun", it):
-    var tmp: int32
+    var tmp: FlowDirection
     vcall(it, Slot_IRun_get_FlowDirection, Fn_IRun_get_FlowDirection)(it, tmp.addr).check("Run.get_FlowDirection")
-    result = FlowDirection(tmp)
+    result = tmp
 
 proc `flowDirection=`*(self: Run, value: FlowDirection) =
   ## Microsoft.UI.Xaml.Documents.Run.put_FlowDirection
   withIface(self.p, IID_IRun, "IRun", it):
-    vcall(it, Slot_IRun_put_FlowDirection, Fn_IRun_put_FlowDirection)(it, int32(value)).check("Run.put_FlowDirection")
+    vcall(it, Slot_IRun_put_FlowDirection, Fn_IRun_put_FlowDirection)(it, value).check("Run.put_FlowDirection")
 
 proc newTextHighlighter*(): TextHighlighter =
   ## Compose a `Microsoft.UI.Xaml.Documents.TextHighlighter`.
@@ -39431,9 +39430,9 @@ proc visualParent*(self: TextPointer): FrameworkElement =
 proc logicalDirection*(self: TextPointer): LogicalDirection =
   ## Microsoft.UI.Xaml.Documents.TextPointer.get_LogicalDirection
   withIface(self.p, IID_ITextPointer, "ITextPointer", it):
-    var tmp: int32
+    var tmp: LogicalDirection
     vcall(it, Slot_ITextPointer_get_LogicalDirection, Fn_ITextPointer_get_LogicalDirection)(it, tmp.addr).check("TextPointer.get_LogicalDirection")
-    result = LogicalDirection(tmp)
+    result = tmp
 
 proc offset*(self: TextPointer): int32 =
   ## Microsoft.UI.Xaml.Documents.TextPointer.get_Offset
@@ -39446,14 +39445,14 @@ proc getCharacterRect*(self: TextPointer, a1: LogicalDirection): Rect =
   ## Microsoft.UI.Xaml.Documents.TextPointer.GetCharacterRect
   withIface(self.p, IID_ITextPointer, "ITextPointer", it):
     var tmp: Rect
-    vcall(it, Slot_ITextPointer_GetCharacterRect, Fn_ITextPointer_GetCharacterRect)(it, int32(a1), tmp.addr).check("TextPointer.GetCharacterRect")
+    vcall(it, Slot_ITextPointer_GetCharacterRect, Fn_ITextPointer_GetCharacterRect)(it, a1, tmp.addr).check("TextPointer.GetCharacterRect")
     result = tmp
 
 proc getPositionAtOffset*(self: TextPointer, a1: int32, a2: LogicalDirection): TextPointer =
   ## Microsoft.UI.Xaml.Documents.TextPointer.GetPositionAtOffset
   withIface(self.p, IID_ITextPointer, "ITextPointer", it):
     var tmp: pointer
-    vcall(it, Slot_ITextPointer_GetPositionAtOffset, Fn_ITextPointer_GetPositionAtOffset)(it, a1, int32(a2), tmp.addr).check("TextPointer.GetPositionAtOffset")
+    vcall(it, Slot_ITextPointer_GetPositionAtOffset, Fn_ITextPointer_GetPositionAtOffset)(it, a1, a2, tmp.addr).check("TextPointer.GetPositionAtOffset")
     result = owned[TextPointer](tmp)
 
 proc newUnderline*(): Underline =
@@ -39926,9 +39925,9 @@ proc newXamlSourceFocusNavigationRequest*(): XamlSourceFocusNavigationRequest =
 proc reason*(self: XamlSourceFocusNavigationRequest): XamlSourceFocusNavigationReason =
   ## Microsoft.UI.Xaml.Hosting.XamlSourceFocusNavigationRequest.get_Reason
   withIface(self.p, IID_IXamlSourceFocusNavigationRequest, "IXamlSourceFocusNavigationRequest", it):
-    var tmp: int32
+    var tmp: XamlSourceFocusNavigationReason
     vcall(it, Slot_IXamlSourceFocusNavigationRequest_get_Reason, Fn_IXamlSourceFocusNavigationRequest_get_Reason)(it, tmp.addr).check("XamlSourceFocusNavigationRequest.get_Reason")
-    result = XamlSourceFocusNavigationReason(tmp)
+    result = tmp
 
 proc hintRect*(self: XamlSourceFocusNavigationRequest): Rect =
   ## Microsoft.UI.Xaml.Hosting.XamlSourceFocusNavigationRequest.get_HintRect
@@ -40129,14 +40128,14 @@ proc `hintRect=`*(self: FindNextElementOptions, value: Rect) =
 proc xYFocusNavigationStrategyOverride*(self: FindNextElementOptions): XYFocusNavigationStrategyOverride =
   ## Microsoft.UI.Xaml.Input.FindNextElementOptions.get_XYFocusNavigationStrategyOverride
   withIface(self.p, IID_IFindNextElementOptions, "IFindNextElementOptions", it):
-    var tmp: int32
+    var tmp: XYFocusNavigationStrategyOverride
     vcall(it, Slot_IFindNextElementOptions_get_XYFocusNavigationStrategyOverride, Fn_IFindNextElementOptions_get_XYFocusNavigationStrategyOverride)(it, tmp.addr).check("FindNextElementOptions.get_XYFocusNavigationStrategyOverride")
-    result = XYFocusNavigationStrategyOverride(tmp)
+    result = tmp
 
 proc `xYFocusNavigationStrategyOverride=`*(self: FindNextElementOptions, value: XYFocusNavigationStrategyOverride) =
   ## Microsoft.UI.Xaml.Input.FindNextElementOptions.put_XYFocusNavigationStrategyOverride
   withIface(self.p, IID_IFindNextElementOptions, "IFindNextElementOptions", it):
-    vcall(it, Slot_IFindNextElementOptions_put_XYFocusNavigationStrategyOverride, Fn_IFindNextElementOptions_put_XYFocusNavigationStrategyOverride)(it, int32(value)).check("FindNextElementOptions.put_XYFocusNavigationStrategyOverride")
+    vcall(it, Slot_IFindNextElementOptions_put_XYFocusNavigationStrategyOverride, Fn_IFindNextElementOptions_put_XYFocusNavigationStrategyOverride)(it, value).check("FindNextElementOptions.put_XYFocusNavigationStrategyOverride")
 
 proc newFocusedElement*(self: FocusManagerGotFocusEventArgs): DependencyObject =
   ## Microsoft.UI.Xaml.Input.FocusManagerGotFocusEventArgs.get_NewFocusedElement
@@ -40196,16 +40195,16 @@ proc `newFocusedElement=`*(self: GettingFocusEventArgs, value: DependencyObject)
 proc focusState*(self: GettingFocusEventArgs): FocusState =
   ## Microsoft.UI.Xaml.Input.GettingFocusEventArgs.get_FocusState
   withIface(self.p, IID_IGettingFocusEventArgs, "IGettingFocusEventArgs", it):
-    var tmp: int32
+    var tmp: FocusState
     vcall(it, Slot_IGettingFocusEventArgs_get_FocusState, Fn_IGettingFocusEventArgs_get_FocusState)(it, tmp.addr).check("GettingFocusEventArgs.get_FocusState")
-    result = FocusState(tmp)
+    result = tmp
 
 proc direction*(self: GettingFocusEventArgs): FocusNavigationDirection =
   ## Microsoft.UI.Xaml.Input.GettingFocusEventArgs.get_Direction
   withIface(self.p, IID_IGettingFocusEventArgs, "IGettingFocusEventArgs", it):
-    var tmp: int32
+    var tmp: FocusNavigationDirection
     vcall(it, Slot_IGettingFocusEventArgs_get_Direction, Fn_IGettingFocusEventArgs_get_Direction)(it, tmp.addr).check("GettingFocusEventArgs.get_Direction")
-    result = FocusNavigationDirection(tmp)
+    result = tmp
 
 proc handled*(self: GettingFocusEventArgs): bool =
   ## Microsoft.UI.Xaml.Input.GettingFocusEventArgs.get_Handled
@@ -40222,9 +40221,9 @@ proc `handled=`*(self: GettingFocusEventArgs, value: bool) =
 proc inputDevice*(self: GettingFocusEventArgs): FocusInputDeviceKind =
   ## Microsoft.UI.Xaml.Input.GettingFocusEventArgs.get_InputDevice
   withIface(self.p, IID_IGettingFocusEventArgs, "IGettingFocusEventArgs", it):
-    var tmp: int32
+    var tmp: FocusInputDeviceKind
     vcall(it, Slot_IGettingFocusEventArgs_get_InputDevice, Fn_IGettingFocusEventArgs_get_InputDevice)(it, tmp.addr).check("GettingFocusEventArgs.get_InputDevice")
-    result = FocusInputDeviceKind(tmp)
+    result = tmp
 
 proc cancel*(self: GettingFocusEventArgs): bool =
   ## Microsoft.UI.Xaml.Input.GettingFocusEventArgs.get_Cancel
@@ -40381,14 +40380,14 @@ proc newInputScopeName*(): InputScopeName =
 proc nameValue*(self: InputScopeName): InputScopeNameValue =
   ## Microsoft.UI.Xaml.Input.InputScopeName.get_NameValue
   withIface(self.p, IID_IInputScopeName, "IInputScopeName", it):
-    var tmp: int32
+    var tmp: InputScopeNameValue
     vcall(it, Slot_IInputScopeName_get_NameValue, Fn_IInputScopeName_get_NameValue)(it, tmp.addr).check("InputScopeName.get_NameValue")
-    result = InputScopeNameValue(tmp)
+    result = tmp
 
 proc `nameValue=`*(self: InputScopeName, value: InputScopeNameValue) =
   ## Microsoft.UI.Xaml.Input.InputScopeName.put_NameValue
   withIface(self.p, IID_IInputScopeName, "IInputScopeName", it):
-    vcall(it, Slot_IInputScopeName_put_NameValue, Fn_IInputScopeName_put_NameValue)(it, int32(value)).check("InputScopeName.put_NameValue")
+    vcall(it, Slot_IInputScopeName_put_NameValue, Fn_IInputScopeName_put_NameValue)(it, value).check("InputScopeName.put_NameValue")
 
 proc key*(self: KeyRoutedEventArgs): int32 =
   ## Microsoft.UI.Xaml.Input.KeyRoutedEventArgs.get_Key
@@ -40553,16 +40552,16 @@ proc `newFocusedElement=`*(self: LosingFocusEventArgs, value: DependencyObject) 
 proc focusState*(self: LosingFocusEventArgs): FocusState =
   ## Microsoft.UI.Xaml.Input.LosingFocusEventArgs.get_FocusState
   withIface(self.p, IID_ILosingFocusEventArgs, "ILosingFocusEventArgs", it):
-    var tmp: int32
+    var tmp: FocusState
     vcall(it, Slot_ILosingFocusEventArgs_get_FocusState, Fn_ILosingFocusEventArgs_get_FocusState)(it, tmp.addr).check("LosingFocusEventArgs.get_FocusState")
-    result = FocusState(tmp)
+    result = tmp
 
 proc direction*(self: LosingFocusEventArgs): FocusNavigationDirection =
   ## Microsoft.UI.Xaml.Input.LosingFocusEventArgs.get_Direction
   withIface(self.p, IID_ILosingFocusEventArgs, "ILosingFocusEventArgs", it):
-    var tmp: int32
+    var tmp: FocusNavigationDirection
     vcall(it, Slot_ILosingFocusEventArgs_get_Direction, Fn_ILosingFocusEventArgs_get_Direction)(it, tmp.addr).check("LosingFocusEventArgs.get_Direction")
-    result = FocusNavigationDirection(tmp)
+    result = tmp
 
 proc handled*(self: LosingFocusEventArgs): bool =
   ## Microsoft.UI.Xaml.Input.LosingFocusEventArgs.get_Handled
@@ -40579,9 +40578,9 @@ proc `handled=`*(self: LosingFocusEventArgs, value: bool) =
 proc inputDevice*(self: LosingFocusEventArgs): FocusInputDeviceKind =
   ## Microsoft.UI.Xaml.Input.LosingFocusEventArgs.get_InputDevice
   withIface(self.p, IID_ILosingFocusEventArgs, "ILosingFocusEventArgs", it):
-    var tmp: int32
+    var tmp: FocusInputDeviceKind
     vcall(it, Slot_ILosingFocusEventArgs_get_InputDevice, Fn_ILosingFocusEventArgs_get_InputDevice)(it, tmp.addr).check("LosingFocusEventArgs.get_InputDevice")
-    result = FocusInputDeviceKind(tmp)
+    result = tmp
 
 proc cancel*(self: LosingFocusEventArgs): bool =
   ## Microsoft.UI.Xaml.Input.LosingFocusEventArgs.get_Cancel
@@ -40920,14 +40919,14 @@ proc newManipulationStartingRoutedEventArgs*(): ManipulationStartingRoutedEventA
 proc mode*(self: ManipulationStartingRoutedEventArgs): ManipulationModes =
   ## Microsoft.UI.Xaml.Input.ManipulationStartingRoutedEventArgs.get_Mode
   withIface(self.p, IID_IManipulationStartingRoutedEventArgs, "IManipulationStartingRoutedEventArgs", it):
-    var tmp: int32
+    var tmp: ManipulationModes
     vcall(it, Slot_IManipulationStartingRoutedEventArgs_get_Mode, Fn_IManipulationStartingRoutedEventArgs_get_Mode)(it, tmp.addr).check("ManipulationStartingRoutedEventArgs.get_Mode")
-    result = ManipulationModes(tmp)
+    result = tmp
 
 proc `mode=`*(self: ManipulationStartingRoutedEventArgs, value: ManipulationModes) =
   ## Microsoft.UI.Xaml.Input.ManipulationStartingRoutedEventArgs.put_Mode
   withIface(self.p, IID_IManipulationStartingRoutedEventArgs, "IManipulationStartingRoutedEventArgs", it):
-    vcall(it, Slot_IManipulationStartingRoutedEventArgs_put_Mode, Fn_IManipulationStartingRoutedEventArgs_put_Mode)(it, int32(value)).check("ManipulationStartingRoutedEventArgs.put_Mode")
+    vcall(it, Slot_IManipulationStartingRoutedEventArgs_put_Mode, Fn_IManipulationStartingRoutedEventArgs_put_Mode)(it, value).check("ManipulationStartingRoutedEventArgs.put_Mode")
 
 proc container*(self: ManipulationStartingRoutedEventArgs): UIElement =
   ## Microsoft.UI.Xaml.Input.ManipulationStartingRoutedEventArgs.get_Container
@@ -40970,9 +40969,9 @@ proc `handled=`*(self: ManipulationStartingRoutedEventArgs, value: bool) =
 proc direction*(self: NoFocusCandidateFoundEventArgs): FocusNavigationDirection =
   ## Microsoft.UI.Xaml.Input.NoFocusCandidateFoundEventArgs.get_Direction
   withIface(self.p, IID_INoFocusCandidateFoundEventArgs, "INoFocusCandidateFoundEventArgs", it):
-    var tmp: int32
+    var tmp: FocusNavigationDirection
     vcall(it, Slot_INoFocusCandidateFoundEventArgs_get_Direction, Fn_INoFocusCandidateFoundEventArgs_get_Direction)(it, tmp.addr).check("NoFocusCandidateFoundEventArgs.get_Direction")
-    result = FocusNavigationDirection(tmp)
+    result = tmp
 
 proc handled*(self: NoFocusCandidateFoundEventArgs): bool =
   ## Microsoft.UI.Xaml.Input.NoFocusCandidateFoundEventArgs.get_Handled
@@ -40989,9 +40988,9 @@ proc `handled=`*(self: NoFocusCandidateFoundEventArgs, value: bool) =
 proc inputDevice*(self: NoFocusCandidateFoundEventArgs): FocusInputDeviceKind =
   ## Microsoft.UI.Xaml.Input.NoFocusCandidateFoundEventArgs.get_InputDevice
   withIface(self.p, IID_INoFocusCandidateFoundEventArgs, "INoFocusCandidateFoundEventArgs", it):
-    var tmp: int32
+    var tmp: FocusInputDeviceKind
     vcall(it, Slot_INoFocusCandidateFoundEventArgs_get_InputDevice, Fn_INoFocusCandidateFoundEventArgs_get_InputDevice)(it, tmp.addr).check("NoFocusCandidateFoundEventArgs.get_InputDevice")
-    result = FocusInputDeviceKind(tmp)
+    result = tmp
 
 proc pointerId*(self: Pointer): uint32 =
   ## Microsoft.UI.Xaml.Input.Pointer.get_PointerId
@@ -41265,14 +41264,14 @@ proc newStandardUICommand*(): StandardUICommand =
 proc kind*(self: StandardUICommand): StandardUICommandKind =
   ## Microsoft.UI.Xaml.Input.StandardUICommand.get_Kind
   withIface(self.p, IID_IStandardUICommand, "IStandardUICommand", it):
-    var tmp: int32
+    var tmp: StandardUICommandKind
     vcall(it, Slot_IStandardUICommand_get_Kind, Fn_IStandardUICommand_get_Kind)(it, tmp.addr).check("StandardUICommand.get_Kind")
-    result = StandardUICommandKind(tmp)
+    result = tmp
 
 proc `kind=`*(self: StandardUICommand, value: StandardUICommandKind) =
   ## Microsoft.UI.Xaml.Input.StandardUICommand.put_Kind
   withIface(self.p, IID_IStandardUICommand, "IStandardUICommand", it):
-    vcall(it, Slot_IStandardUICommand_put_Kind, Fn_IStandardUICommand_put_Kind)(it, int32(value)).check("StandardUICommand.put_Kind")
+    vcall(it, Slot_IStandardUICommand_put_Kind, Fn_IStandardUICommand_put_Kind)(it, value).check("StandardUICommand.put_Kind")
 
 proc newTappedRoutedEventArgs*(): TappedRoutedEventArgs =
   ## Activate a `Microsoft.UI.Xaml.Input.TappedRoutedEventArgs`.
@@ -41308,9 +41307,9 @@ proc getPosition*(self: TappedRoutedEventArgs, a1: UIElement): Point =
 proc action*(self: NotifyCollectionChangedEventArgs): NotifyCollectionChangedAction =
   ## Microsoft.UI.Xaml.Interop.NotifyCollectionChangedEventArgs.get_Action
   withIface(self.p, IID_INotifyCollectionChangedEventArgs, "INotifyCollectionChangedEventArgs", it):
-    var tmp: int32
+    var tmp: NotifyCollectionChangedAction
     vcall(it, Slot_INotifyCollectionChangedEventArgs_get_Action, Fn_INotifyCollectionChangedEventArgs_get_Action)(it, tmp.addr).check("NotifyCollectionChangedEventArgs.get_Action")
-    result = NotifyCollectionChangedAction(tmp)
+    result = tmp
 
 proc newItems*(self: NotifyCollectionChangedEventArgs): pointer =
   ## Microsoft.UI.Xaml.Interop.NotifyCollectionChangedEventArgs.get_NewItems
@@ -41521,14 +41520,14 @@ proc newAddDeleteThemeTransition*(): AddDeleteThemeTransition =
 proc easingMode*(self: EasingFunctionBase): EasingMode =
   ## Microsoft.UI.Xaml.Media.Animation.EasingFunctionBase.get_EasingMode
   withIface(self.p, IID_IEasingFunctionBase, "IEasingFunctionBase", it):
-    var tmp: int32
+    var tmp: EasingMode
     vcall(it, Slot_IEasingFunctionBase_get_EasingMode, Fn_IEasingFunctionBase_get_EasingMode)(it, tmp.addr).check("EasingFunctionBase.get_EasingMode")
-    result = EasingMode(tmp)
+    result = tmp
 
 proc `easingMode=`*(self: EasingFunctionBase, value: EasingMode) =
   ## Microsoft.UI.Xaml.Media.Animation.EasingFunctionBase.put_EasingMode
   withIface(self.p, IID_IEasingFunctionBase, "IEasingFunctionBase", it):
-    vcall(it, Slot_IEasingFunctionBase_put_EasingMode, Fn_IEasingFunctionBase_put_EasingMode)(it, int32(value)).check("EasingFunctionBase.put_EasingMode")
+    vcall(it, Slot_IEasingFunctionBase_put_EasingMode, Fn_IEasingFunctionBase_put_EasingMode)(it, value).check("EasingFunctionBase.put_EasingMode")
 
 proc ease*(self: EasingFunctionBase, a1: float64): float64 =
   ## Microsoft.UI.Xaml.Media.Animation.EasingFunctionBase.Ease
@@ -41651,14 +41650,14 @@ proc `speedRatio=`*(self: Timeline, value: float64) =
 proc fillBehavior*(self: Timeline): FillBehavior =
   ## Microsoft.UI.Xaml.Media.Animation.Timeline.get_FillBehavior
   withIface(self.p, IID_ITimeline, "ITimeline", it):
-    var tmp: int32
+    var tmp: FillBehavior
     vcall(it, Slot_ITimeline_get_FillBehavior, Fn_ITimeline_get_FillBehavior)(it, tmp.addr).check("Timeline.get_FillBehavior")
-    result = FillBehavior(tmp)
+    result = tmp
 
 proc `fillBehavior=`*(self: Timeline, value: FillBehavior) =
   ## Microsoft.UI.Xaml.Media.Animation.Timeline.put_FillBehavior
   withIface(self.p, IID_ITimeline, "ITimeline", it):
-    vcall(it, Slot_ITimeline_put_FillBehavior, Fn_ITimeline_put_FillBehavior)(it, int32(value)).check("Timeline.put_FillBehavior")
+    vcall(it, Slot_ITimeline_put_FillBehavior, Fn_ITimeline_put_FillBehavior)(it, value).check("Timeline.put_FillBehavior")
 
 proc repeatBehavior*(self: Timeline): RepeatBehavior =
   ## Microsoft.UI.Xaml.Media.Animation.Timeline.get_RepeatBehavior
@@ -42138,14 +42137,14 @@ proc `toOffset=`*(self: DragOverThemeAnimation, value: float64) =
 proc direction*(self: DragOverThemeAnimation): AnimationDirection =
   ## Microsoft.UI.Xaml.Media.Animation.DragOverThemeAnimation.get_Direction
   withIface(self.p, IID_IDragOverThemeAnimation, "IDragOverThemeAnimation", it):
-    var tmp: int32
+    var tmp: AnimationDirection
     vcall(it, Slot_IDragOverThemeAnimation_get_Direction, Fn_IDragOverThemeAnimation_get_Direction)(it, tmp.addr).check("DragOverThemeAnimation.get_Direction")
-    result = AnimationDirection(tmp)
+    result = tmp
 
 proc `direction=`*(self: DragOverThemeAnimation, value: AnimationDirection) =
   ## Microsoft.UI.Xaml.Media.Animation.DragOverThemeAnimation.put_Direction
   withIface(self.p, IID_IDragOverThemeAnimation, "IDragOverThemeAnimation", it):
-    vcall(it, Slot_IDragOverThemeAnimation_put_Direction, Fn_IDragOverThemeAnimation_put_Direction)(it, int32(value)).check("DragOverThemeAnimation.put_Direction")
+    vcall(it, Slot_IDragOverThemeAnimation_put_Direction, Fn_IDragOverThemeAnimation_put_Direction)(it, value).check("DragOverThemeAnimation.put_Direction")
 
 proc newDrillInNavigationTransitionInfo*(): DrillInNavigationTransitionInfo =
   ## Activate a `Microsoft.UI.Xaml.Media.Animation.DrillInNavigationTransitionInfo`.
@@ -42338,14 +42337,14 @@ proc newEdgeUIThemeTransition*(): EdgeUIThemeTransition =
 proc edge*(self: EdgeUIThemeTransition): EdgeTransitionLocation =
   ## Microsoft.UI.Xaml.Media.Animation.EdgeUIThemeTransition.get_Edge
   withIface(self.p, IID_IEdgeUIThemeTransition, "IEdgeUIThemeTransition", it):
-    var tmp: int32
+    var tmp: EdgeTransitionLocation
     vcall(it, Slot_IEdgeUIThemeTransition_get_Edge, Fn_IEdgeUIThemeTransition_get_Edge)(it, tmp.addr).check("EdgeUIThemeTransition.get_Edge")
-    result = EdgeTransitionLocation(tmp)
+    result = tmp
 
 proc `edge=`*(self: EdgeUIThemeTransition, value: EdgeTransitionLocation) =
   ## Microsoft.UI.Xaml.Media.Animation.EdgeUIThemeTransition.put_Edge
   withIface(self.p, IID_IEdgeUIThemeTransition, "IEdgeUIThemeTransition", it):
-    vcall(it, Slot_IEdgeUIThemeTransition_put_Edge, Fn_IEdgeUIThemeTransition_put_Edge)(it, int32(value)).check("EdgeUIThemeTransition.put_Edge")
+    vcall(it, Slot_IEdgeUIThemeTransition_put_Edge, Fn_IEdgeUIThemeTransition_put_Edge)(it, value).check("EdgeUIThemeTransition.put_Edge")
 
 proc newElasticEase*(): ElasticEase =
   ## Activate a `Microsoft.UI.Xaml.Media.Animation.ElasticEase`.
@@ -42566,14 +42565,14 @@ proc newPaneThemeTransition*(): PaneThemeTransition =
 proc edge*(self: PaneThemeTransition): EdgeTransitionLocation =
   ## Microsoft.UI.Xaml.Media.Animation.PaneThemeTransition.get_Edge
   withIface(self.p, IID_IPaneThemeTransition, "IPaneThemeTransition", it):
-    var tmp: int32
+    var tmp: EdgeTransitionLocation
     vcall(it, Slot_IPaneThemeTransition_get_Edge, Fn_IPaneThemeTransition_get_Edge)(it, tmp.addr).check("PaneThemeTransition.get_Edge")
-    result = EdgeTransitionLocation(tmp)
+    result = tmp
 
 proc `edge=`*(self: PaneThemeTransition, value: EdgeTransitionLocation) =
   ## Microsoft.UI.Xaml.Media.Animation.PaneThemeTransition.put_Edge
   withIface(self.p, IID_IPaneThemeTransition, "IPaneThemeTransition", it):
-    vcall(it, Slot_IPaneThemeTransition_put_Edge, Fn_IPaneThemeTransition_put_Edge)(it, int32(value)).check("PaneThemeTransition.put_Edge")
+    vcall(it, Slot_IPaneThemeTransition_put_Edge, Fn_IPaneThemeTransition_put_Edge)(it, value).check("PaneThemeTransition.put_Edge")
 
 proc newPointAnimation*(): PointAnimation =
   ## Activate a `Microsoft.UI.Xaml.Media.Animation.PointAnimation`.
@@ -42840,14 +42839,14 @@ proc newSlideNavigationTransitionInfo*(): SlideNavigationTransitionInfo =
 proc effect*(self: SlideNavigationTransitionInfo): SlideNavigationTransitionEffect =
   ## Microsoft.UI.Xaml.Media.Animation.SlideNavigationTransitionInfo.get_Effect
   withIface(self.p, IID_ISlideNavigationTransitionInfo, "ISlideNavigationTransitionInfo", it):
-    var tmp: int32
+    var tmp: SlideNavigationTransitionEffect
     vcall(it, Slot_ISlideNavigationTransitionInfo_get_Effect, Fn_ISlideNavigationTransitionInfo_get_Effect)(it, tmp.addr).check("SlideNavigationTransitionInfo.get_Effect")
-    result = SlideNavigationTransitionEffect(tmp)
+    result = tmp
 
 proc `effect=`*(self: SlideNavigationTransitionInfo, value: SlideNavigationTransitionEffect) =
   ## Microsoft.UI.Xaml.Media.Animation.SlideNavigationTransitionInfo.put_Effect
   withIface(self.p, IID_ISlideNavigationTransitionInfo, "ISlideNavigationTransitionInfo", it):
-    vcall(it, Slot_ISlideNavigationTransitionInfo_put_Effect, Fn_ISlideNavigationTransitionInfo_put_Effect)(it, int32(value)).check("SlideNavigationTransitionInfo.put_Effect")
+    vcall(it, Slot_ISlideNavigationTransitionInfo_put_Effect, Fn_ISlideNavigationTransitionInfo_put_Effect)(it, value).check("SlideNavigationTransitionInfo.put_Effect")
 
 proc newSplineColorKeyFrame*(): SplineColorKeyFrame =
   ## Activate a `Microsoft.UI.Xaml.Media.Animation.SplineColorKeyFrame`.
@@ -43021,14 +43020,14 @@ proc `offsetFromCenter=`*(self: SplitCloseThemeAnimation, value: float64) =
 proc contentTranslationDirection*(self: SplitCloseThemeAnimation): AnimationDirection =
   ## Microsoft.UI.Xaml.Media.Animation.SplitCloseThemeAnimation.get_ContentTranslationDirection
   withIface(self.p, IID_ISplitCloseThemeAnimation, "ISplitCloseThemeAnimation", it):
-    var tmp: int32
+    var tmp: AnimationDirection
     vcall(it, Slot_ISplitCloseThemeAnimation_get_ContentTranslationDirection, Fn_ISplitCloseThemeAnimation_get_ContentTranslationDirection)(it, tmp.addr).check("SplitCloseThemeAnimation.get_ContentTranslationDirection")
-    result = AnimationDirection(tmp)
+    result = tmp
 
 proc `contentTranslationDirection=`*(self: SplitCloseThemeAnimation, value: AnimationDirection) =
   ## Microsoft.UI.Xaml.Media.Animation.SplitCloseThemeAnimation.put_ContentTranslationDirection
   withIface(self.p, IID_ISplitCloseThemeAnimation, "ISplitCloseThemeAnimation", it):
-    vcall(it, Slot_ISplitCloseThemeAnimation_put_ContentTranslationDirection, Fn_ISplitCloseThemeAnimation_put_ContentTranslationDirection)(it, int32(value)).check("SplitCloseThemeAnimation.put_ContentTranslationDirection")
+    vcall(it, Slot_ISplitCloseThemeAnimation_put_ContentTranslationDirection, Fn_ISplitCloseThemeAnimation_put_ContentTranslationDirection)(it, value).check("SplitCloseThemeAnimation.put_ContentTranslationDirection")
 
 proc contentTranslationOffset*(self: SplitCloseThemeAnimation): float64 =
   ## Microsoft.UI.Xaml.Media.Animation.SplitCloseThemeAnimation.get_ContentTranslationOffset
@@ -43163,14 +43162,14 @@ proc `offsetFromCenter=`*(self: SplitOpenThemeAnimation, value: float64) =
 proc contentTranslationDirection*(self: SplitOpenThemeAnimation): AnimationDirection =
   ## Microsoft.UI.Xaml.Media.Animation.SplitOpenThemeAnimation.get_ContentTranslationDirection
   withIface(self.p, IID_ISplitOpenThemeAnimation, "ISplitOpenThemeAnimation", it):
-    var tmp: int32
+    var tmp: AnimationDirection
     vcall(it, Slot_ISplitOpenThemeAnimation_get_ContentTranslationDirection, Fn_ISplitOpenThemeAnimation_get_ContentTranslationDirection)(it, tmp.addr).check("SplitOpenThemeAnimation.get_ContentTranslationDirection")
-    result = AnimationDirection(tmp)
+    result = tmp
 
 proc `contentTranslationDirection=`*(self: SplitOpenThemeAnimation, value: AnimationDirection) =
   ## Microsoft.UI.Xaml.Media.Animation.SplitOpenThemeAnimation.put_ContentTranslationDirection
   withIface(self.p, IID_ISplitOpenThemeAnimation, "ISplitOpenThemeAnimation", it):
-    vcall(it, Slot_ISplitOpenThemeAnimation_put_ContentTranslationDirection, Fn_ISplitOpenThemeAnimation_put_ContentTranslationDirection)(it, int32(value)).check("SplitOpenThemeAnimation.put_ContentTranslationDirection")
+    vcall(it, Slot_ISplitOpenThemeAnimation_put_ContentTranslationDirection, Fn_ISplitOpenThemeAnimation_put_ContentTranslationDirection)(it, value).check("SplitOpenThemeAnimation.put_ContentTranslationDirection")
 
 proc contentTranslationOffset*(self: SplitOpenThemeAnimation): float64 =
   ## Microsoft.UI.Xaml.Media.Animation.SplitOpenThemeAnimation.get_ContentTranslationOffset
@@ -43216,9 +43215,9 @@ proc resume*(self: Storyboard) =
 proc getCurrentState*(self: Storyboard): ClockState =
   ## Microsoft.UI.Xaml.Media.Animation.Storyboard.GetCurrentState
   withIface(self.p, IID_IStoryboard, "IStoryboard", it):
-    var tmp: int32
+    var tmp: ClockState
     vcall(it, Slot_IStoryboard_GetCurrentState, Fn_IStoryboard_GetCurrentState)(it, tmp.addr).check("Storyboard.GetCurrentState")
-    result = ClockState(tmp)
+    result = tmp
 
 proc getCurrentTime*(self: Storyboard): TimeSpan =
   ## Microsoft.UI.Xaml.Media.Animation.Storyboard.GetCurrentTime
@@ -43378,14 +43377,14 @@ proc `isLargeArc=`*(self: ArcSegment, value: bool) =
 proc sweepDirection*(self: ArcSegment): SweepDirection =
   ## Microsoft.UI.Xaml.Media.ArcSegment.get_SweepDirection
   withIface(self.p, IID_IArcSegment, "IArcSegment", it):
-    var tmp: int32
+    var tmp: SweepDirection
     vcall(it, Slot_IArcSegment_get_SweepDirection, Fn_IArcSegment_get_SweepDirection)(it, tmp.addr).check("ArcSegment.get_SweepDirection")
-    result = SweepDirection(tmp)
+    result = tmp
 
 proc `sweepDirection=`*(self: ArcSegment, value: SweepDirection) =
   ## Microsoft.UI.Xaml.Media.ArcSegment.put_SweepDirection
   withIface(self.p, IID_IArcSegment, "IArcSegment", it):
-    vcall(it, Slot_IArcSegment_put_SweepDirection, Fn_IArcSegment_put_SweepDirection)(it, int32(value)).check("ArcSegment.put_SweepDirection")
+    vcall(it, Slot_IArcSegment_put_SweepDirection, Fn_IArcSegment_put_SweepDirection)(it, value).check("ArcSegment.put_SweepDirection")
 
 proc newBezierSegment*(): BezierSegment =
   ## Activate a `Microsoft.UI.Xaml.Media.BezierSegment`.
@@ -43672,14 +43671,14 @@ proc newGeometryGroup*(): GeometryGroup =
 proc fillRule*(self: GeometryGroup): FillRule =
   ## Microsoft.UI.Xaml.Media.GeometryGroup.get_FillRule
   withIface(self.p, IID_IGeometryGroup, "IGeometryGroup", it):
-    var tmp: int32
+    var tmp: FillRule
     vcall(it, Slot_IGeometryGroup_get_FillRule, Fn_IGeometryGroup_get_FillRule)(it, tmp.addr).check("GeometryGroup.get_FillRule")
-    result = FillRule(tmp)
+    result = tmp
 
 proc `fillRule=`*(self: GeometryGroup, value: FillRule) =
   ## Microsoft.UI.Xaml.Media.GeometryGroup.put_FillRule
   withIface(self.p, IID_IGeometryGroup, "IGeometryGroup", it):
-    vcall(it, Slot_IGeometryGroup_put_FillRule, Fn_IGeometryGroup_put_FillRule)(it, int32(value)).check("GeometryGroup.put_FillRule")
+    vcall(it, Slot_IGeometryGroup_put_FillRule, Fn_IGeometryGroup_put_FillRule)(it, value).check("GeometryGroup.put_FillRule")
 
 proc newGradientBrush*(): GradientBrush =
   ## Compose a `Microsoft.UI.Xaml.Media.GradientBrush`.
@@ -43689,38 +43688,38 @@ proc newGradientBrush*(): GradientBrush =
 proc spreadMethod*(self: GradientBrush): GradientSpreadMethod =
   ## Microsoft.UI.Xaml.Media.GradientBrush.get_SpreadMethod
   withIface(self.p, IID_IGradientBrush, "IGradientBrush", it):
-    var tmp: int32
+    var tmp: GradientSpreadMethod
     vcall(it, Slot_IGradientBrush_get_SpreadMethod, Fn_IGradientBrush_get_SpreadMethod)(it, tmp.addr).check("GradientBrush.get_SpreadMethod")
-    result = GradientSpreadMethod(tmp)
+    result = tmp
 
 proc `spreadMethod=`*(self: GradientBrush, value: GradientSpreadMethod) =
   ## Microsoft.UI.Xaml.Media.GradientBrush.put_SpreadMethod
   withIface(self.p, IID_IGradientBrush, "IGradientBrush", it):
-    vcall(it, Slot_IGradientBrush_put_SpreadMethod, Fn_IGradientBrush_put_SpreadMethod)(it, int32(value)).check("GradientBrush.put_SpreadMethod")
+    vcall(it, Slot_IGradientBrush_put_SpreadMethod, Fn_IGradientBrush_put_SpreadMethod)(it, value).check("GradientBrush.put_SpreadMethod")
 
 proc mappingMode*(self: GradientBrush): BrushMappingMode =
   ## Microsoft.UI.Xaml.Media.GradientBrush.get_MappingMode
   withIface(self.p, IID_IGradientBrush, "IGradientBrush", it):
-    var tmp: int32
+    var tmp: BrushMappingMode
     vcall(it, Slot_IGradientBrush_get_MappingMode, Fn_IGradientBrush_get_MappingMode)(it, tmp.addr).check("GradientBrush.get_MappingMode")
-    result = BrushMappingMode(tmp)
+    result = tmp
 
 proc `mappingMode=`*(self: GradientBrush, value: BrushMappingMode) =
   ## Microsoft.UI.Xaml.Media.GradientBrush.put_MappingMode
   withIface(self.p, IID_IGradientBrush, "IGradientBrush", it):
-    vcall(it, Slot_IGradientBrush_put_MappingMode, Fn_IGradientBrush_put_MappingMode)(it, int32(value)).check("GradientBrush.put_MappingMode")
+    vcall(it, Slot_IGradientBrush_put_MappingMode, Fn_IGradientBrush_put_MappingMode)(it, value).check("GradientBrush.put_MappingMode")
 
 proc colorInterpolationMode*(self: GradientBrush): ColorInterpolationMode =
   ## Microsoft.UI.Xaml.Media.GradientBrush.get_ColorInterpolationMode
   withIface(self.p, IID_IGradientBrush, "IGradientBrush", it):
-    var tmp: int32
+    var tmp: ColorInterpolationMode
     vcall(it, Slot_IGradientBrush_get_ColorInterpolationMode, Fn_IGradientBrush_get_ColorInterpolationMode)(it, tmp.addr).check("GradientBrush.get_ColorInterpolationMode")
-    result = ColorInterpolationMode(tmp)
+    result = tmp
 
 proc `colorInterpolationMode=`*(self: GradientBrush, value: ColorInterpolationMode) =
   ## Microsoft.UI.Xaml.Media.GradientBrush.put_ColorInterpolationMode
   withIface(self.p, IID_IGradientBrush, "IGradientBrush", it):
-    vcall(it, Slot_IGradientBrush_put_ColorInterpolationMode, Fn_IGradientBrush_put_ColorInterpolationMode)(it, int32(value)).check("GradientBrush.put_ColorInterpolationMode")
+    vcall(it, Slot_IGradientBrush_put_ColorInterpolationMode, Fn_IGradientBrush_put_ColorInterpolationMode)(it, value).check("GradientBrush.put_ColorInterpolationMode")
 
 proc newGradientStop*(): GradientStop =
   ## Activate a `Microsoft.UI.Xaml.Media.GradientStop`.
@@ -43758,38 +43757,38 @@ proc newTileBrush*(): TileBrush =
 proc alignmentX*(self: TileBrush): AlignmentX =
   ## Microsoft.UI.Xaml.Media.TileBrush.get_AlignmentX
   withIface(self.p, IID_ITileBrush, "ITileBrush", it):
-    var tmp: int32
+    var tmp: AlignmentX
     vcall(it, Slot_ITileBrush_get_AlignmentX, Fn_ITileBrush_get_AlignmentX)(it, tmp.addr).check("TileBrush.get_AlignmentX")
-    result = AlignmentX(tmp)
+    result = tmp
 
 proc `alignmentX=`*(self: TileBrush, value: AlignmentX) =
   ## Microsoft.UI.Xaml.Media.TileBrush.put_AlignmentX
   withIface(self.p, IID_ITileBrush, "ITileBrush", it):
-    vcall(it, Slot_ITileBrush_put_AlignmentX, Fn_ITileBrush_put_AlignmentX)(it, int32(value)).check("TileBrush.put_AlignmentX")
+    vcall(it, Slot_ITileBrush_put_AlignmentX, Fn_ITileBrush_put_AlignmentX)(it, value).check("TileBrush.put_AlignmentX")
 
 proc alignmentY*(self: TileBrush): AlignmentY =
   ## Microsoft.UI.Xaml.Media.TileBrush.get_AlignmentY
   withIface(self.p, IID_ITileBrush, "ITileBrush", it):
-    var tmp: int32
+    var tmp: AlignmentY
     vcall(it, Slot_ITileBrush_get_AlignmentY, Fn_ITileBrush_get_AlignmentY)(it, tmp.addr).check("TileBrush.get_AlignmentY")
-    result = AlignmentY(tmp)
+    result = tmp
 
 proc `alignmentY=`*(self: TileBrush, value: AlignmentY) =
   ## Microsoft.UI.Xaml.Media.TileBrush.put_AlignmentY
   withIface(self.p, IID_ITileBrush, "ITileBrush", it):
-    vcall(it, Slot_ITileBrush_put_AlignmentY, Fn_ITileBrush_put_AlignmentY)(it, int32(value)).check("TileBrush.put_AlignmentY")
+    vcall(it, Slot_ITileBrush_put_AlignmentY, Fn_ITileBrush_put_AlignmentY)(it, value).check("TileBrush.put_AlignmentY")
 
 proc stretch*(self: TileBrush): Stretch =
   ## Microsoft.UI.Xaml.Media.TileBrush.get_Stretch
   withIface(self.p, IID_ITileBrush, "ITileBrush", it):
-    var tmp: int32
+    var tmp: Stretch
     vcall(it, Slot_ITileBrush_get_Stretch, Fn_ITileBrush_get_Stretch)(it, tmp.addr).check("TileBrush.get_Stretch")
-    result = Stretch(tmp)
+    result = tmp
 
 proc `stretch=`*(self: TileBrush, value: Stretch) =
   ## Microsoft.UI.Xaml.Media.TileBrush.put_Stretch
   withIface(self.p, IID_ITileBrush, "ITileBrush", it):
-    vcall(it, Slot_ITileBrush_put_Stretch, Fn_ITileBrush_put_Stretch)(it, int32(value)).check("TileBrush.put_Stretch")
+    vcall(it, Slot_ITileBrush_put_Stretch, Fn_ITileBrush_put_Stretch)(it, value).check("TileBrush.put_Stretch")
 
 proc newImageBrush*(): ImageBrush =
   ## Activate a `Microsoft.UI.Xaml.Media.ImageBrush`.
@@ -43874,14 +43873,14 @@ proc newBitmapImage*(): BitmapImage =
 proc createOptions*(self: BitmapImage): BitmapCreateOptions =
   ## Microsoft.UI.Xaml.Media.Imaging.BitmapImage.get_CreateOptions
   withIface(self.p, IID_IBitmapImage, "IBitmapImage", it):
-    var tmp: int32
+    var tmp: BitmapCreateOptions
     vcall(it, Slot_IBitmapImage_get_CreateOptions, Fn_IBitmapImage_get_CreateOptions)(it, tmp.addr).check("BitmapImage.get_CreateOptions")
-    result = BitmapCreateOptions(tmp)
+    result = tmp
 
 proc `createOptions=`*(self: BitmapImage, value: BitmapCreateOptions) =
   ## Microsoft.UI.Xaml.Media.Imaging.BitmapImage.put_CreateOptions
   withIface(self.p, IID_IBitmapImage, "IBitmapImage", it):
-    vcall(it, Slot_IBitmapImage_put_CreateOptions, Fn_IBitmapImage_put_CreateOptions)(it, int32(value)).check("BitmapImage.put_CreateOptions")
+    vcall(it, Slot_IBitmapImage_put_CreateOptions, Fn_IBitmapImage_put_CreateOptions)(it, value).check("BitmapImage.put_CreateOptions")
 
 proc decodePixelWidth*(self: BitmapImage): int32 =
   ## Microsoft.UI.Xaml.Media.Imaging.BitmapImage.get_DecodePixelWidth
@@ -43910,14 +43909,14 @@ proc `decodePixelHeight=`*(self: BitmapImage, value: int32) =
 proc decodePixelType*(self: BitmapImage): DecodePixelType =
   ## Microsoft.UI.Xaml.Media.Imaging.BitmapImage.get_DecodePixelType
   withIface(self.p, IID_IBitmapImage, "IBitmapImage", it):
-    var tmp: int32
+    var tmp: DecodePixelType
     vcall(it, Slot_IBitmapImage_get_DecodePixelType, Fn_IBitmapImage_get_DecodePixelType)(it, tmp.addr).check("BitmapImage.get_DecodePixelType")
-    result = DecodePixelType(tmp)
+    result = tmp
 
 proc `decodePixelType=`*(self: BitmapImage, value: DecodePixelType) =
   ## Microsoft.UI.Xaml.Media.Imaging.BitmapImage.put_DecodePixelType
   withIface(self.p, IID_IBitmapImage, "IBitmapImage", it):
-    vcall(it, Slot_IBitmapImage_put_DecodePixelType, Fn_IBitmapImage_put_DecodePixelType)(it, int32(value)).check("BitmapImage.put_DecodePixelType")
+    vcall(it, Slot_IBitmapImage_put_DecodePixelType, Fn_IBitmapImage_put_DecodePixelType)(it, value).check("BitmapImage.put_DecodePixelType")
 
 proc isAnimatedBitmap*(self: BitmapImage): bool =
   ## Microsoft.UI.Xaml.Media.Imaging.BitmapImage.get_IsAnimatedBitmap
@@ -44121,9 +44120,9 @@ proc removeOpenFailed*(self: SvgImageSource, token: EventRegistrationToken) =
 proc status*(self: SvgImageSourceFailedEventArgs): SvgImageSourceLoadStatus =
   ## Microsoft.UI.Xaml.Media.Imaging.SvgImageSourceFailedEventArgs.get_Status
   withIface(self.p, IID_ISvgImageSourceFailedEventArgs, "ISvgImageSourceFailedEventArgs", it):
-    var tmp: int32
+    var tmp: SvgImageSourceLoadStatus
     vcall(it, Slot_ISvgImageSourceFailedEventArgs_get_Status, Fn_ISvgImageSourceFailedEventArgs_get_Status)(it, tmp.addr).check("SvgImageSourceFailedEventArgs.get_Status")
-    result = SvgImageSourceLoadStatus(tmp)
+    result = tmp
 
 proc newVirtualSurfaceImageSource*(): VirtualSurfaceImageSource =
   ## Activate a `Microsoft.UI.Xaml.Media.Imaging.VirtualSurfaceImageSource`.
@@ -44218,9 +44217,9 @@ proc `endPoint=`*(self: LinearGradientBrush, value: Point) =
 proc status*(self: LoadedImageSourceLoadCompletedEventArgs): LoadedImageSourceLoadStatus =
   ## Microsoft.UI.Xaml.Media.LoadedImageSourceLoadCompletedEventArgs.get_Status
   withIface(self.p, IID_ILoadedImageSourceLoadCompletedEventArgs, "ILoadedImageSourceLoadCompletedEventArgs", it):
-    var tmp: int32
+    var tmp: LoadedImageSourceLoadStatus
     vcall(it, Slot_ILoadedImageSourceLoadCompletedEventArgs_get_Status, Fn_ILoadedImageSourceLoadCompletedEventArgs_get_Status)(it, tmp.addr).check("LoadedImageSourceLoadCompletedEventArgs.get_Status")
-    result = LoadedImageSourceLoadStatus(tmp)
+    result = tmp
 
 proc decodedPhysicalSize*(self: LoadedImageSurface): Size =
   ## Microsoft.UI.Xaml.Media.LoadedImageSurface.get_DecodedPhysicalSize
@@ -44557,14 +44556,14 @@ proc newPathGeometry*(): PathGeometry =
 proc fillRule*(self: PathGeometry): FillRule =
   ## Microsoft.UI.Xaml.Media.PathGeometry.get_FillRule
   withIface(self.p, IID_IPathGeometry, "IPathGeometry", it):
-    var tmp: int32
+    var tmp: FillRule
     vcall(it, Slot_IPathGeometry_get_FillRule, Fn_IPathGeometry_get_FillRule)(it, tmp.addr).check("PathGeometry.get_FillRule")
-    result = FillRule(tmp)
+    result = tmp
 
 proc `fillRule=`*(self: PathGeometry, value: FillRule) =
   ## Microsoft.UI.Xaml.Media.PathGeometry.put_FillRule
   withIface(self.p, IID_IPathGeometry, "IPathGeometry", it):
-    vcall(it, Slot_IPathGeometry_put_FillRule, Fn_IPathGeometry_put_FillRule)(it, int32(value)).check("PathGeometry.put_FillRule")
+    vcall(it, Slot_IPathGeometry_put_FillRule, Fn_IPathGeometry_put_FillRule)(it, value).check("PathGeometry.put_FillRule")
 
 proc newPlaneProjection*(): PlaneProjection =
   ## Activate a `Microsoft.UI.Xaml.Media.PlaneProjection`.
@@ -44817,14 +44816,14 @@ proc `gradientOrigin=`*(self: RadialGradientBrush, value: Point) =
 proc mappingMode*(self: RadialGradientBrush): BrushMappingMode =
   ## Microsoft.UI.Xaml.Media.RadialGradientBrush.get_MappingMode
   withIface(self.p, IID_IRadialGradientBrush, "IRadialGradientBrush", it):
-    var tmp: int32
+    var tmp: BrushMappingMode
     vcall(it, Slot_IRadialGradientBrush_get_MappingMode, Fn_IRadialGradientBrush_get_MappingMode)(it, tmp.addr).check("RadialGradientBrush.get_MappingMode")
-    result = BrushMappingMode(tmp)
+    result = tmp
 
 proc `mappingMode=`*(self: RadialGradientBrush, value: BrushMappingMode) =
   ## Microsoft.UI.Xaml.Media.RadialGradientBrush.put_MappingMode
   withIface(self.p, IID_IRadialGradientBrush, "IRadialGradientBrush", it):
-    vcall(it, Slot_IRadialGradientBrush_put_MappingMode, Fn_IRadialGradientBrush_put_MappingMode)(it, int32(value)).check("RadialGradientBrush.put_MappingMode")
+    vcall(it, Slot_IRadialGradientBrush_put_MappingMode, Fn_IRadialGradientBrush_put_MappingMode)(it, value).check("RadialGradientBrush.put_MappingMode")
 
 proc interpolationSpace*(self: RadialGradientBrush): int32 =
   ## Microsoft.UI.Xaml.Media.RadialGradientBrush.get_InterpolationSpace
@@ -44841,14 +44840,14 @@ proc `interpolationSpace=`*(self: RadialGradientBrush, value: int32) =
 proc spreadMethod*(self: RadialGradientBrush): GradientSpreadMethod =
   ## Microsoft.UI.Xaml.Media.RadialGradientBrush.get_SpreadMethod
   withIface(self.p, IID_IRadialGradientBrush, "IRadialGradientBrush", it):
-    var tmp: int32
+    var tmp: GradientSpreadMethod
     vcall(it, Slot_IRadialGradientBrush_get_SpreadMethod, Fn_IRadialGradientBrush_get_SpreadMethod)(it, tmp.addr).check("RadialGradientBrush.get_SpreadMethod")
-    result = GradientSpreadMethod(tmp)
+    result = tmp
 
 proc `spreadMethod=`*(self: RadialGradientBrush, value: GradientSpreadMethod) =
   ## Microsoft.UI.Xaml.Media.RadialGradientBrush.put_SpreadMethod
   withIface(self.p, IID_IRadialGradientBrush, "IRadialGradientBrush", it):
-    vcall(it, Slot_IRadialGradientBrush_put_SpreadMethod, Fn_IRadialGradientBrush_put_SpreadMethod)(it, int32(value)).check("RadialGradientBrush.put_SpreadMethod")
+    vcall(it, Slot_IRadialGradientBrush_put_SpreadMethod, Fn_IRadialGradientBrush_put_SpreadMethod)(it, value).check("RadialGradientBrush.put_SpreadMethod")
 
 proc newRectangleGeometry*(): RectangleGeometry =
   ## Activate a `Microsoft.UI.Xaml.Media.RectangleGeometry`.
@@ -45160,9 +45159,9 @@ proc `cancel=`*(self: NavigatingCancelEventArgs, value: bool) =
 proc navigationMode*(self: NavigatingCancelEventArgs): NavigationMode =
   ## Microsoft.UI.Xaml.Navigation.NavigatingCancelEventArgs.get_NavigationMode
   withIface(self.p, IID_INavigatingCancelEventArgs, "INavigatingCancelEventArgs", it):
-    var tmp: int32
+    var tmp: NavigationMode
     vcall(it, Slot_INavigatingCancelEventArgs_get_NavigationMode, Fn_INavigatingCancelEventArgs_get_NavigationMode)(it, tmp.addr).check("NavigatingCancelEventArgs.get_NavigationMode")
-    result = NavigationMode(tmp)
+    result = tmp
 
 proc sourcePageType*(self: NavigatingCancelEventArgs): TypeName =
   ## Microsoft.UI.Xaml.Navigation.NavigatingCancelEventArgs.get_SourcePageType
@@ -45216,9 +45215,9 @@ proc sourcePageType*(self: NavigationEventArgs): TypeName =
 proc navigationMode*(self: NavigationEventArgs): NavigationMode =
   ## Microsoft.UI.Xaml.Navigation.NavigationEventArgs.get_NavigationMode
   withIface(self.p, IID_INavigationEventArgs, "INavigationEventArgs", it):
-    var tmp: int32
+    var tmp: NavigationMode
     vcall(it, Slot_INavigationEventArgs_get_NavigationMode, Fn_INavigationEventArgs_get_NavigationMode)(it, tmp.addr).check("NavigationEventArgs.get_NavigationMode")
-    result = NavigationMode(tmp)
+    result = tmp
 
 proc exception*(self: NavigationFailedEventArgs): HRESULT =
   ## Microsoft.UI.Xaml.Navigation.NavigationFailedEventArgs.get_Exception
@@ -45376,7 +45375,7 @@ proc addPagesComplete*(self: PrintDocument) =
 proc setPreviewPageCount*(self: PrintDocument, a1: int32, a2: PreviewPageCountType) =
   ## Microsoft.UI.Xaml.Printing.PrintDocument.SetPreviewPageCount
   withIface(self.p, IID_IPrintDocument, "IPrintDocument", it):
-    vcall(it, Slot_IPrintDocument_SetPreviewPageCount, Fn_IPrintDocument_SetPreviewPageCount)(it, a1, int32(a2)).check("PrintDocument.SetPreviewPageCount")
+    vcall(it, Slot_IPrintDocument_SetPreviewPageCount, Fn_IPrintDocument_SetPreviewPageCount)(it, a1, a2).check("PrintDocument.SetPreviewPageCount")
 
 proc setPreviewPage*(self: PrintDocument, a1: int32, a2: UIElement) =
   ## Microsoft.UI.Xaml.Printing.PrintDocument.SetPreviewPage
@@ -45558,38 +45557,38 @@ proc `strokeThickness=`*(self: Shape, value: float64) =
 proc strokeStartLineCap*(self: Shape): PenLineCap =
   ## Microsoft.UI.Xaml.Shapes.Shape.get_StrokeStartLineCap
   withIface(self.p, IID_IShape, "IShape", it):
-    var tmp: int32
+    var tmp: PenLineCap
     vcall(it, Slot_IShape_get_StrokeStartLineCap, Fn_IShape_get_StrokeStartLineCap)(it, tmp.addr).check("Shape.get_StrokeStartLineCap")
-    result = PenLineCap(tmp)
+    result = tmp
 
 proc `strokeStartLineCap=`*(self: Shape, value: PenLineCap) =
   ## Microsoft.UI.Xaml.Shapes.Shape.put_StrokeStartLineCap
   withIface(self.p, IID_IShape, "IShape", it):
-    vcall(it, Slot_IShape_put_StrokeStartLineCap, Fn_IShape_put_StrokeStartLineCap)(it, int32(value)).check("Shape.put_StrokeStartLineCap")
+    vcall(it, Slot_IShape_put_StrokeStartLineCap, Fn_IShape_put_StrokeStartLineCap)(it, value).check("Shape.put_StrokeStartLineCap")
 
 proc strokeEndLineCap*(self: Shape): PenLineCap =
   ## Microsoft.UI.Xaml.Shapes.Shape.get_StrokeEndLineCap
   withIface(self.p, IID_IShape, "IShape", it):
-    var tmp: int32
+    var tmp: PenLineCap
     vcall(it, Slot_IShape_get_StrokeEndLineCap, Fn_IShape_get_StrokeEndLineCap)(it, tmp.addr).check("Shape.get_StrokeEndLineCap")
-    result = PenLineCap(tmp)
+    result = tmp
 
 proc `strokeEndLineCap=`*(self: Shape, value: PenLineCap) =
   ## Microsoft.UI.Xaml.Shapes.Shape.put_StrokeEndLineCap
   withIface(self.p, IID_IShape, "IShape", it):
-    vcall(it, Slot_IShape_put_StrokeEndLineCap, Fn_IShape_put_StrokeEndLineCap)(it, int32(value)).check("Shape.put_StrokeEndLineCap")
+    vcall(it, Slot_IShape_put_StrokeEndLineCap, Fn_IShape_put_StrokeEndLineCap)(it, value).check("Shape.put_StrokeEndLineCap")
 
 proc strokeLineJoin*(self: Shape): PenLineJoin =
   ## Microsoft.UI.Xaml.Shapes.Shape.get_StrokeLineJoin
   withIface(self.p, IID_IShape, "IShape", it):
-    var tmp: int32
+    var tmp: PenLineJoin
     vcall(it, Slot_IShape_get_StrokeLineJoin, Fn_IShape_get_StrokeLineJoin)(it, tmp.addr).check("Shape.get_StrokeLineJoin")
-    result = PenLineJoin(tmp)
+    result = tmp
 
 proc `strokeLineJoin=`*(self: Shape, value: PenLineJoin) =
   ## Microsoft.UI.Xaml.Shapes.Shape.put_StrokeLineJoin
   withIface(self.p, IID_IShape, "IShape", it):
-    vcall(it, Slot_IShape_put_StrokeLineJoin, Fn_IShape_put_StrokeLineJoin)(it, int32(value)).check("Shape.put_StrokeLineJoin")
+    vcall(it, Slot_IShape_put_StrokeLineJoin, Fn_IShape_put_StrokeLineJoin)(it, value).check("Shape.put_StrokeLineJoin")
 
 proc strokeDashOffset*(self: Shape): float64 =
   ## Microsoft.UI.Xaml.Shapes.Shape.get_StrokeDashOffset
@@ -45606,26 +45605,26 @@ proc `strokeDashOffset=`*(self: Shape, value: float64) =
 proc strokeDashCap*(self: Shape): PenLineCap =
   ## Microsoft.UI.Xaml.Shapes.Shape.get_StrokeDashCap
   withIface(self.p, IID_IShape, "IShape", it):
-    var tmp: int32
+    var tmp: PenLineCap
     vcall(it, Slot_IShape_get_StrokeDashCap, Fn_IShape_get_StrokeDashCap)(it, tmp.addr).check("Shape.get_StrokeDashCap")
-    result = PenLineCap(tmp)
+    result = tmp
 
 proc `strokeDashCap=`*(self: Shape, value: PenLineCap) =
   ## Microsoft.UI.Xaml.Shapes.Shape.put_StrokeDashCap
   withIface(self.p, IID_IShape, "IShape", it):
-    vcall(it, Slot_IShape_put_StrokeDashCap, Fn_IShape_put_StrokeDashCap)(it, int32(value)).check("Shape.put_StrokeDashCap")
+    vcall(it, Slot_IShape_put_StrokeDashCap, Fn_IShape_put_StrokeDashCap)(it, value).check("Shape.put_StrokeDashCap")
 
 proc stretch*(self: Shape): Stretch =
   ## Microsoft.UI.Xaml.Shapes.Shape.get_Stretch
   withIface(self.p, IID_IShape, "IShape", it):
-    var tmp: int32
+    var tmp: Stretch
     vcall(it, Slot_IShape_get_Stretch, Fn_IShape_get_Stretch)(it, tmp.addr).check("Shape.get_Stretch")
-    result = Stretch(tmp)
+    result = tmp
 
 proc `stretch=`*(self: Shape, value: Stretch) =
   ## Microsoft.UI.Xaml.Shapes.Shape.put_Stretch
   withIface(self.p, IID_IShape, "IShape", it):
-    vcall(it, Slot_IShape_put_Stretch, Fn_IShape_put_Stretch)(it, int32(value)).check("Shape.put_Stretch")
+    vcall(it, Slot_IShape_put_Stretch, Fn_IShape_put_Stretch)(it, value).check("Shape.put_Stretch")
 
 proc geometryTransform*(self: Shape): Transform =
   ## Microsoft.UI.Xaml.Shapes.Shape.get_GeometryTransform
@@ -45715,14 +45714,14 @@ proc newPolygon*(): Polygon =
 proc fillRule*(self: Polygon): FillRule =
   ## Microsoft.UI.Xaml.Shapes.Polygon.get_FillRule
   withIface(self.p, IID_IPolygon, "IPolygon", it):
-    var tmp: int32
+    var tmp: FillRule
     vcall(it, Slot_IPolygon_get_FillRule, Fn_IPolygon_get_FillRule)(it, tmp.addr).check("Polygon.get_FillRule")
-    result = FillRule(tmp)
+    result = tmp
 
 proc `fillRule=`*(self: Polygon, value: FillRule) =
   ## Microsoft.UI.Xaml.Shapes.Polygon.put_FillRule
   withIface(self.p, IID_IPolygon, "IPolygon", it):
-    vcall(it, Slot_IPolygon_put_FillRule, Fn_IPolygon_put_FillRule)(it, int32(value)).check("Polygon.put_FillRule")
+    vcall(it, Slot_IPolygon_put_FillRule, Fn_IPolygon_put_FillRule)(it, value).check("Polygon.put_FillRule")
 
 proc newPolyline*(): Polyline =
   ## Activate a `Microsoft.UI.Xaml.Shapes.Polyline`.
@@ -45731,14 +45730,14 @@ proc newPolyline*(): Polyline =
 proc fillRule*(self: Polyline): FillRule =
   ## Microsoft.UI.Xaml.Shapes.Polyline.get_FillRule
   withIface(self.p, IID_IPolyline, "IPolyline", it):
-    var tmp: int32
+    var tmp: FillRule
     vcall(it, Slot_IPolyline_get_FillRule, Fn_IPolyline_get_FillRule)(it, tmp.addr).check("Polyline.get_FillRule")
-    result = FillRule(tmp)
+    result = tmp
 
 proc `fillRule=`*(self: Polyline, value: FillRule) =
   ## Microsoft.UI.Xaml.Shapes.Polyline.put_FillRule
   withIface(self.p, IID_IPolyline, "IPolyline", it):
-    vcall(it, Slot_IPolyline_put_FillRule, Fn_IPolyline_put_FillRule)(it, int32(value)).check("Polyline.put_FillRule")
+    vcall(it, Slot_IPolyline_put_FillRule, Fn_IPolyline_put_FillRule)(it, value).check("Polyline.put_FillRule")
 
 proc newRectangle*(): Rectangle =
   ## Activate a `Microsoft.UI.Xaml.Shapes.Rectangle`.
@@ -45921,14 +45920,14 @@ proc `duration=`*(self: Vector3Transition, value: TimeSpan) =
 proc components*(self: Vector3Transition): Vector3TransitionComponents =
   ## Microsoft.UI.Xaml.Vector3Transition.get_Components
   withIface(self.p, IID_IVector3Transition, "IVector3Transition", it):
-    var tmp: int32
+    var tmp: Vector3TransitionComponents
     vcall(it, Slot_IVector3Transition_get_Components, Fn_IVector3Transition_get_Components)(it, tmp.addr).check("Vector3Transition.get_Components")
-    result = Vector3TransitionComponents(tmp)
+    result = tmp
 
 proc `components=`*(self: Vector3Transition, value: Vector3TransitionComponents) =
   ## Microsoft.UI.Xaml.Vector3Transition.put_Components
   withIface(self.p, IID_IVector3Transition, "IVector3Transition", it):
-    vcall(it, Slot_IVector3Transition_put_Components, Fn_IVector3Transition_put_Components)(it, int32(value)).check("Vector3Transition.put_Components")
+    vcall(it, Slot_IVector3Transition_put_Components, Fn_IVector3Transition_put_Components)(it, value).check("Vector3Transition.put_Components")
 
 proc newVisualState*(): VisualState =
   ## Activate a `Microsoft.UI.Xaml.VisualState`.
@@ -46347,9 +46346,9 @@ proc `handled=`*(self: WindowActivatedEventArgs, value: bool) =
 proc windowActivationState*(self: WindowActivatedEventArgs): WindowActivationState =
   ## Microsoft.UI.Xaml.WindowActivatedEventArgs.get_WindowActivationState
   withIface(self.p, IID_IWindowActivatedEventArgs, "IWindowActivatedEventArgs", it):
-    var tmp: int32
+    var tmp: WindowActivationState
     vcall(it, Slot_IWindowActivatedEventArgs_get_WindowActivationState, Fn_IWindowActivatedEventArgs_get_WindowActivationState)(it, tmp.addr).check("WindowActivatedEventArgs.get_WindowActivationState")
-    result = WindowActivationState(tmp)
+    result = tmp
 
 proc handled*(self: WindowEventArgs): bool =
   ## Microsoft.UI.Xaml.WindowEventArgs.get_Handled

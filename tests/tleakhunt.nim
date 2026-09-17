@@ -33,7 +33,7 @@ when isMainModule:
   start(proc() =
     let window = newWindow()
     window.title = "leak hunt"
-    let host = newStackPanel(Orientation_Vertical)
+    let host = newStackPanel(Orientation.Vertical)
     window.content = host
     window.activate()
 
@@ -115,7 +115,7 @@ when isMainModule:
       discard vcall(ap, Slot_IAutomationPeer_GetPattern,
                     proc(self: pointer, a1: int32,
                          value: ptr pointer): HRESULT {.stdcall.})(
-                      ap, int32(PatternInterface_Invoke), pattern.addr)
+                      ap, int32(PatternInterface.Invoke), pattern.addr)
       release(ap)
       release(pattern))
 

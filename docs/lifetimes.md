@@ -14,7 +14,7 @@ type inherits.
 
 ```nim
 let label = newTextBlock("hello")
-let panel = newStackPanel(Orientation_Vertical)
+let panel = newStackPanel(Orientation.Vertical)
 
 let text = label.text          # HSTRING converted and deleted for you
 let kids = panel.children      # a reference, counted
@@ -64,7 +64,7 @@ children through its own peer system rather than through COM, so an element
 stays alive and usable after every Nim reference to it is gone:
 
 ```nim
-let panel = newStackPanel(Orientation_Vertical)
+let panel = newStackPanel(Orientation.Vertical)
 
 block:
   let label = newTextBlock("parented, then abandoned")

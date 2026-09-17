@@ -39,7 +39,7 @@ when isMainModule:
   start(proc() =
     let window = newWindow()
     window.title = "generic IIDs"
-    let panel = newStackPanel(Orientation_Vertical)
+    let panel = newStackPanel(Orientation.Vertical)
     panel.add newTextBlock("one")
     panel.add newTextBlock("two")
     window.content = panel

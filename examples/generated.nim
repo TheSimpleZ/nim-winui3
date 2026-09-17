@@ -28,7 +28,7 @@ start(proc() =
   window.systemBackdrop = newMicaBackdrop()
 
   let page = newStackPanel()
-  page.orientation = Orientation_Vertical
+  page.orientation = Orientation.Vertical
   page.spacing = 12.0
   page.margin = Thickness(left: 40.0, top: 32.0, right: 40.0, bottom: 32.0)
 
@@ -66,7 +66,7 @@ start(proc() =
   card.padding = Thickness(left: 20.0, top: 16.0, right: 20.0, bottom: 16.0)
 
   let cardBody = newStackPanel()
-  cardBody.orientation = Orientation_Vertical
+  cardBody.orientation = Orientation.Vertical
   cardBody.spacing = 12.0
   cardBody.add count
   cardBody.add button

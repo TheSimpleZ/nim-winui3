@@ -64,7 +64,7 @@ start proc() =
   window.title = "Counter"
   window.backdrop = mica
 
-  let panel = newStackPanel(Orientation_Vertical, spacing = 12.0)
+  let panel = newStackPanel(Orientation.Vertical, spacing = 12.0)
   panel.margin = Thickness(left: 40.0, top: 32.0, right: 40.0, bottom: 32.0)
 
   let label = newTextBlock("Clicked 0 times")
@@ -115,7 +115,7 @@ tells you what to write.
 | property `Slider.Value` | `slider.value` and `slider.value = 0.5` |
 | event `ButtonBase.Click` | `button.onClick(handler)`, undone by `button.removeClick(token)` |
 | method `UIElement.UpdateLayout()` | `element.updateLayout()` |
-| enum member `Orientation.Vertical` | `Orientation_Vertical` |
+| enum member `Orientation.Vertical` | `Orientation.Vertical`, spelled the same |
 | struct `Thickness` | `Thickness(left: 8.0, top: 8.0, right: 8.0, bottom: 8.0)` |
 
 Inheritance is real Nim inheritance, so a `Button` is a `ButtonBase` is a
@@ -155,7 +155,7 @@ start proc() =
   box.onTextChanged proc(sender: pointer, args: TextChangedEventArgs) =
     echoed.text = box.text
 
-  let panel = newStackPanel(Orientation_Vertical, spacing = 8.0)
+  let panel = newStackPanel(Orientation.Vertical, spacing = 8.0)
   panel.add box, echoed
   window.content = panel
   window.activate()
@@ -202,7 +202,7 @@ start proc() =
   window.title = "Layout"
   window.backdrop = mica
 
-  let page = newStackPanel(Orientation_Vertical, spacing = 16.0)
+  let page = newStackPanel(Orientation.Vertical, spacing = 16.0)
   page.margin = Thickness(left: 40.0, top: 32.0, right: 40.0, bottom: 32.0)
 
   let heading = newTextBlock("A card")
@@ -220,7 +220,7 @@ start proc() =
   fill.opacity = 0.06          # on the brush, not the element: Opacity on a
   card.background = fill       # UIElement would fade its own text too
 
-  let body = newStackPanel(Orientation_Vertical, spacing = 12.0)
+  let body = newStackPanel(Orientation.Vertical, spacing = 12.0)
   body.add newTextBlock("Contents"), newButton("Do the thing")
   card.child = body
 
@@ -233,7 +233,7 @@ The pieces you will reach for most:
 
 | | |
 |---|---|
-| `newStackPanel(Orientation_Vertical, spacing = 12.0)` | children in a row or a column |
+| `newStackPanel(Orientation.Vertical, spacing = 12.0)` | children in a row or a column |
 | `newGrid()` | rows and columns, with `newRowDefinition()` / `newColumnDefinition()` |
 | `newBorder()` | one child, a background, a corner radius |
 | `newScrollViewer()` | scrolling |

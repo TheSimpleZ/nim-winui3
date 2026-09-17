@@ -15,7 +15,7 @@ start proc() =
   window.title = "Counter"
   window.backdrop = mica
 
-  let panel = newStackPanel(Orientation_Vertical, spacing = 16.0)
+  let panel = newStackPanel(Orientation.Vertical, spacing = 16.0)
   panel.margin = Thickness(left: 40.0, top: 32.0, right: 40.0, bottom: 32.0)
 
   let label = newTextBlock("Clicked 0 times")

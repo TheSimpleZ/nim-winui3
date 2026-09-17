@@ -8,7 +8,7 @@
 ##   window.title = "Hello from Nim"
 ##   window.backdrop = mica      # the material Windows 11 Settings uses
 ##
-##   let panel = newStackPanel(Orientation_Vertical, spacing = 12.0)
+##   let panel = newStackPanel(Orientation.Vertical, spacing = 12.0)
 ##   let label = newTextBlock("Clicked 0 times")
 ##
 ##   var clicks = 0

@@ -37,7 +37,7 @@ proc buildAndDiscardUi(host: Panel) =
   brush.color = Color(a: 255, r: 32, g: 32, b: 32)
   card.background = brush
 
-  let inner = newStackPanel(Orientation_Vertical, spacing = 4.0)
+  let inner = newStackPanel(Orientation.Vertical, spacing = 4.0)
   let label = newTextBlock("soak")
   label.fontSize = 12.0
   discard label.text
@@ -58,7 +58,7 @@ when isMainModule:
   start(proc() =
     let window = newWindow()
     window.title = "soak"
-    let host = newStackPanel(Orientation_Vertical)
+    let host = newStackPanel(Orientation.Vertical)
     window.content = host
     window.activate()
 

@@ -31,7 +31,7 @@ when isMainModule:
   start(proc() =
     let window = newWindow()
     window.title = "error tests"
-    let panel = newStackPanel(Orientation_Vertical)
+    let panel = newStackPanel(Orientation.Vertical)
     window.content = panel
     window.activate()
 
