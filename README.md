@@ -311,8 +311,16 @@ composited, so `PrintWindow` returns a black client area whenever the display
 is asleep — under a title bar that captures perfectly, because DWM draws that.
 Ask the layout engine instead: `actualSize` inside `onLoaded`.
 
-**32-bit build errors in `nimbase.h`.** WinUI 3 is x64 (and arm64) only. This
-repository pins `--cpu:amd64`; do the same in your own `nim.cfg`.
+**`Pointer size mismatch between Nim and C/C++ backend` in `nimbase.h`.** Your
+Nim is targeting 32-bit while your C compiler builds 64-bit. It usually means
+`nimble` and a direct `nim c` are picking different Nim installations. Put
+
+```
+--cpu:amd64
+```
+
+in your project's `nim.cfg`. Do this regardless: WinUI 3 is x64 and arm64 only,
+so a 32-bit build could not load the runtime even if it compiled.
 
 ## Examples
 
