@@ -72,8 +72,9 @@ exactly one pointer wide.
 
 **Members are emitted per declaring class.** A method lives on whichever
 class's own interfaces declare it, and reaches subclasses through inheritance.
-Emitting the full inherited surface for every class instead would mean 94,521
-procs rather than 4,980, for exactly the same API.
+Emitting the full inherited surface for every class instead costs roughly
+twenty times as many procs — tens of thousands of them — for exactly the same
+API.
 
 **Enum values come from the metadata.** XAML numbers `Orientation` as
 `Vertical = 0, Horizontal = 1`; WPF numbers the same-named enum the other way
@@ -135,7 +136,9 @@ its type arguments rather than declared, so there is nothing in the metadata
 for a generator to emit. It costs less than it sounds: the pointer a property
 like `Children` returns already *is* the correctly-parameterised interface, so
 only the slot is needed, and `IVector<T>` numbers its slots the same way
-whatever `T` is.
+whatever `T` is. Those slot numbers are not written down here either — they
+come from `winrt/foundation`'s `Slot_IVector_1_*`, read out of `Windows.winmd`
+like everything else.
 
 ## Why the WinRT half is a separate package
 

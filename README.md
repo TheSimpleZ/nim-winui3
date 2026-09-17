@@ -36,12 +36,14 @@ nimble install https://github.com/TheSimpleZ/winui3-nim
 Then in your own `.nimble`:
 
 ```
-requires "https://github.com/TheSimpleZ/winui3-nim >= 1.6.0"
+requires "https://github.com/TheSimpleZ/winui3-nim"
 ```
 
 > The dependency names a repository rather than a package because `winui3` and
 > the `winrt` package underneath it are not in the nimble directory yet. Once
-> they are, this becomes `requires "winui3"`.
+> they are, this becomes `requires "winui3"`. A version constraint —
+> `requires "https://github.com/TheSimpleZ/winui3-nim >= 1.6.0"` — works too,
+> and resolves against the repository's release tags.
 
 **Requirements**
 
