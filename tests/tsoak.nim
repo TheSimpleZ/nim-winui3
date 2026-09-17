@@ -6,13 +6,7 @@
 ## realistic UI workload tens of thousands of times and watches what the
 ## operating system says about the process.
 ##
-## Three counters, because they catch different mistakes:
-##
-## * **private bytes** — a missed `Release`, or a Nim closure never collected.
-## * **kernel handles** — an event, a file or a thread handle left open.
-## * **GDI and USER objects** — the classic Win32 leak. These have a hard
-##   per-process ceiling of 10,000, so leaking them kills an app that a memory
-##   leak would only slow down.
+## The counters it watches, and why each one, are in `tests/usage.nim`.
 ##
 ## A single sample proves nothing: allocators keep freed pages, and the first
 ## use of a control type loads resources that are never released by design. So
@@ -26,74 +20,11 @@
 ## go through it, so including it here would measure WinUI rather than this
 ## library, and would hide a real regression behind a constant.
 
-import std/exitprocs
-import ../src/winui3
-
-# --- what Windows says about this process ---------------------------------
-
-type
-  ProcessMemoryCounters {.pure.} = object
-    cb: uint32
-    pageFaultCount: uint32
-    peakWorkingSetSize: uint
-    workingSetSize: uint
-    quotaPeakPagedPoolUsage: uint
-    quotaPagedPoolUsage: uint
-    quotaPeakNonPagedPoolUsage: uint
-    quotaNonPagedPoolUsage: uint
-    pagefileUsage: uint
-    peakPagefileUsage: uint
-    privateUsage: uint
-
-proc getCurrentProcess(): pointer
-  {.importc: "GetCurrentProcess", dynlib: "kernel32", stdcall.}
-proc getProcessMemoryInfo(process: pointer, counters: ptr ProcessMemoryCounters,
-                          cb: uint32): int32
-  {.importc: "K32GetProcessMemoryInfo", dynlib: "kernel32", stdcall.}
-proc getProcessHandleCount(process: pointer, count: ptr uint32): int32
-  {.importc: "GetProcessHandleCount", dynlib: "kernel32", stdcall.}
-proc getGuiResources(process: pointer, flags: uint32): uint32
-  {.importc: "GetGuiResources", dynlib: "user32", stdcall.}
-
-const
-  GR_GDIOBJECTS = 0'u32
-  GR_USEROBJECTS = 1'u32
-
-type
-  Usage = object
-    privateBytes: int
-    handles: int
-    gdi: int
-    user: int
-
-proc sample(): Usage =
-  let me = getCurrentProcess()
-  var mem = ProcessMemoryCounters(cb: uint32(sizeof(ProcessMemoryCounters)))
-  discard getProcessMemoryInfo(me, mem.addr, mem.cb)
-  var handles: uint32
-  discard getProcessHandleCount(me, handles.addr)
-  Usage(privateBytes: int(mem.privateUsage),
-        handles: int(handles),
-        gdi: int(getGuiResources(me, GR_GDIOBJECTS)),
-        user: int(getGuiResources(me, GR_USEROBJECTS)))
-
-proc `$`(u: Usage): string =
-  $(u.privateBytes div 1024) & " KiB, " & $u.handles & " handles, " &
-  $u.gdi & " GDI, " & $u.user & " USER"
+import winui3
+import ./checks
+import ./usage
 
 # --- the workload ----------------------------------------------------------
-
-var failures = 0
-var checks = 0
-
-proc check(name: string, ok: bool, detail = "") =
-  checks.inc
-  if ok:
-    echo "  ok    " & name & (if detail.len > 0: "  (" & detail & ")" else: "")
-  else:
-    failures.inc
-    echo "  FAIL  " & name & (if detail.len > 0: "  (" & detail & ")" else: "")
-  flushFile(stdout)
 
 proc buildAndDiscardUi(host: Panel) =
   ## One round of what an app actually does: build a small subtree, set
@@ -123,7 +54,7 @@ proc buildAndDiscardUi(host: Panel) =
   host.children.clear()
 
 when isMainModule:
-  setProgramResult(1)
+  beginSuite()
   start(proc() =
     let window = newWindow()
     window.title = "soak"
@@ -171,10 +102,5 @@ when isMainModule:
     check("the delegate table did not grow with the workload",
           slots < 64, $slots & " slots, " & $free & " free")
 
-    echo ""
-    echo (if failures == 0: "PASS" else: "FAIL") &
-         ": " & $(checks - failures) & "/" & $checks & " checks"
-    flushFile(stdout)
-    setProgramResult(if failures == 0: 0 else: 1)
-    exitApp()
+    finishSuite()
   )

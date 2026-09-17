@@ -33,12 +33,17 @@ $bin = Join-Path $root "bin"
 
 $suites = @("tui", "tgenerated", "tstructs", "tlifetime", "tgenerics", "terrors", "tsoak")
 
+# tleakhunt prints bytes-per-iteration rather than assertions, so it is built
+# but not run — building it is what stops it rotting.
+$buildOnly = @("tleakhunt")
+
 # Importing winui3 stages the SDK into the output directory and links the
 # manifest, so there is nothing to set up here beyond saying where to build.
 # That is the same path a consumer of this library gets.
-foreach ($s in $suites) {
+foreach ($s in $suites + $buildOnly) {
   Write-Host "building $s..."
-  nim c --outdir:$bin -d:release --hints:off (Join-Path $PSScriptRoot "$s.nim")
+  nim c --path:(Join-Path $root "src") --outdir:$bin -d:release --hints:off `
+    (Join-Path $PSScriptRoot "$s.nim")
   if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
   $stale = Join-Path $bin "$s.exe.manifest"
   if (Test-Path $stale) { Remove-Item -LiteralPath $stale -Force }

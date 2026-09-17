@@ -8,23 +8,11 @@
 ## to own the message loop. Everything else is generated, so the names here
 ## would otherwise collide with the hand-written `Window`, `Button` and friends.
 
-import std/exitprocs
-import ../src/winui3
-
-var failures = 0
-var checks = 0
-
-proc check(name: string, ok: bool, detail = "") =
-  checks.inc
-  if ok:
-    echo "  ok    " & name & (if detail.len > 0: "  (" & detail & ")" else: "")
-  else:
-    failures.inc
-    echo "  FAIL  " & name & (if detail.len > 0: "  (" & detail & ")" else: "")
-  flushFile(stdout)
+import winui3
+import ./checks
 
 when isMainModule:
-  setProgramResult(1)
+  beginSuite()
   start(proc() =
     # Composable types refuse RoActivateInstance; these constructors go through
     # the factory, and the generator worked out which from the metadata.
@@ -91,10 +79,5 @@ when isMainModule:
     window.activate()
     check("window is visible", window.visible, $window.visible)
 
-    echo ""
-    echo (if failures == 0: "PASS" else: "FAIL") &
-         ": " & $(checks - failures) & "/" & $checks & " checks"
-    flushFile(stdout)
-    setProgramResult(if failures == 0: 0 else: 1)
-    exitApp()
+    finishSuite()
   )

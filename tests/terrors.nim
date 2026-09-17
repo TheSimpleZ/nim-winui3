@@ -13,21 +13,9 @@
 ##   The failure mode to avoid is a null dereference, which on this path means
 ##   calling through a vtable at address zero.
 
-import std/exitprocs
 import std/strutils
-import ../src/winui3
-
-var failures = 0
-var checks = 0
-
-proc check(name: string, ok: bool, detail = "") =
-  checks.inc
-  if ok:
-    echo "  ok    " & name & (if detail.len > 0: "  (" & detail & ")" else: "")
-  else:
-    failures.inc
-    echo "  FAIL  " & name & (if detail.len > 0: "  (" & detail & ")" else: "")
-  flushFile(stdout)
+import winui3
+import ./checks
 
 proc raises(body: proc()): string =
   ## The message, or "" if nothing was raised. A crash is not a return value,
@@ -39,7 +27,7 @@ proc raises(body: proc()): string =
     if e.msg.len > 0: e.msg else: "<empty message>"
 
 when isMainModule:
-  setProgramResult(1)
+  beginSuite()
   start(proc() =
     let window = newWindow()
     window.title = "error tests"
@@ -139,10 +127,5 @@ when isMainModule:
             label.text == "still here", label.text)
       check("and the window is still visible", window.visible)
 
-    echo ""
-    echo (if failures == 0: "PASS" else: "FAIL") &
-         ": " & $(checks - failures) & "/" & $checks & " checks"
-    flushFile(stdout)
-    setProgramResult(if failures == 0: 0 else: 1)
-    exitApp()
+    finishSuite()
   )

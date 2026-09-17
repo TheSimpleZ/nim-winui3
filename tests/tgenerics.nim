@@ -13,21 +13,9 @@
 ## is right, the QueryInterface succeeds; if a single character of the
 ## signature string is wrong, it fails.
 
-import std/exitprocs
 import std/strutils
-import ../src/winui3
-
-var failures = 0
-var checks = 0
-
-proc check(name: string, ok: bool, detail = "") =
-  checks.inc
-  if ok:
-    echo "  ok    " & name & (if detail.len > 0: "  (" & detail & ")" else: "")
-  else:
-    failures.inc
-    echo "  FAIL  " & name & (if detail.len > 0: "  (" & detail & ")" else: "")
-  flushFile(stdout)
+import winui3
+import ./checks
 
 # Computed by `tools/piidcheck.nim` from Microsoft.UI.Xaml.winmd. Regenerating
 # against a new SDK should leave these unchanged: the signature string names
@@ -47,7 +35,7 @@ proc implements(p: pointer, iid: string): bool =
   true
 
 when isMainModule:
-  setProgramResult(1)
+  beginSuite()
   start(proc() =
     let window = newWindow()
     window.title = "generic IIDs"
@@ -93,10 +81,5 @@ when isMainModule:
       check("guid() accepts the unbraced form",
             guid("EA4A1AF0-4286-5F11-8142-6B0169F4E9DE") == g)
 
-    echo ""
-    echo (if failures == 0: "PASS" else: "FAIL") &
-         ": " & $(checks - failures) & "/" & $checks & " checks"
-    flushFile(stdout)
-    setProgramResult(if failures == 0: 0 else: 1)
-    exitApp()
+    finishSuite()
   )

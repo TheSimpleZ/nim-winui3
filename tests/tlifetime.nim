@@ -9,20 +9,8 @@
 ## anything. `AddRef` and `Release` both return the resulting count, so
 ## `liveRefs` reads an object's real refcount and the checks are exact.
 
-import std/exitprocs
-import ../src/winui3
-
-var failures = 0
-var checks = 0
-
-proc check(name: string, ok: bool, detail = "") =
-  checks.inc
-  if ok:
-    echo "  ok    " & name & (if detail.len > 0: "  (" & detail & ")" else: "")
-  else:
-    failures.inc
-    echo "  FAIL  " & name & (if detail.len > 0: "  (" & detail & ")" else: "")
-  flushFile(stdout)
+import winui3
+import ./checks
 
 proc liveRefs(p: pointer): int =
   ## The object's current reference count.
@@ -36,7 +24,7 @@ proc liveRefs(p: pointer): int =
 const Iterations = 20_000
 
 when isMainModule:
-  setProgramResult(1)
+  beginSuite()
   start(proc() =
     let window = newWindow()
     window.title = "lifetime tests"
@@ -167,10 +155,5 @@ when isMainModule:
     window.content = panel
     window.activate()
 
-    echo ""
-    echo (if failures == 0: "PASS" else: "FAIL") &
-         ": " & $(checks - failures) & "/" & $checks & " checks"
-    flushFile(stdout)
-    setProgramResult(if failures == 0: 0 else: 1)
-    exitApp()
+    finishSuite()
   )

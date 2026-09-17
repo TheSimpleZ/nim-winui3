@@ -21,26 +21,14 @@
 ## Run it with `tests/run.ps1`, which builds beside the SDK runtime and
 ## launches it on its own desktop.
 
-import std/exitprocs
-import ../src/winui3
-
-var failures = 0
-var checks = 0
-
-proc check(name: string, ok: bool, detail = "") =
-  checks.inc
-  if ok:
-    echo "  ok    " & name & (if detail.len > 0: "  (" & detail & ")" else: "")
-  else:
-    failures.inc
-    echo "  FAIL  " & name & (if detail.len > 0: "  (" & detail & ")" else: "")
-  flushFile(stdout)
+import winui3
+import ./checks
 
 proc approx(a, b: float64, tolerance = 0.5): bool =
   abs(a - b) <= tolerance
 
 when isMainModule:
-  setProgramResult(1)   # until the run completes, treat it as a failure
+  beginSuite()
   start(proc() =
     let window = newWindow()
     window.title = "winui3 tests"
@@ -64,6 +52,12 @@ when isMainModule:
     check("theme merged into Application.Resources",
           mergedDictionaryCount(application()) >= 1,
           "dictionaries: " & $mergedDictionaryCount(application()))
+    # Merging the theme means parsing `generic.xaml`, which means resolving
+    # type names through the `IXamlMetadataProvider` on our aggregated
+    # Application. If XAML never asked, the provider is not reachable and the
+    # theme only appeared to work.
+    check("XAML resolved types through our metadata provider",
+          metadataCalls > 0, $metadataCalls & " lookups")
     check("TextBlock.Text round-trips", label.text == "Clicked 0 times",
           label.text)
 
@@ -107,12 +101,7 @@ when isMainModule:
       except CatchableError as e:
         check("no exception during layout checks", false, e.msg)
 
-      echo ""
-      echo (if failures == 0: "PASS" else: "FAIL") &
-           ": " & $(checks - failures) & "/" & $checks & " checks"
-      flushFile(stdout)
-      setProgramResult(if failures == 0: 0 else: 1)
-      exitApp()
+      finishSuite()
 
     window.activate()
   )

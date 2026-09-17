@@ -5,40 +5,14 @@
 ## prints bytes-per-iteration for each, so the culprit is whichever line is not
 ## ~0.
 ##
-## Run it directly rather than through `tests/run.ps1` — it is a measuring
-## instrument, and its output is numbers to read, not assertions.
+## `tests/run.ps1` builds it but does not run it: it has no assertions to
+## fail, and its output is numbers to read. Building it keeps it from rotting.
+## To use it, build it like any suite and run the executable.
 
 import std/strutils
-import ../src/winui3
-import ../src/winui3/generated/xaml_abi
-
-type
-  ProcessMemoryCounters {.pure.} = object
-    cb: uint32
-    pageFaultCount: uint32
-    peakWorkingSetSize: uint
-    workingSetSize: uint
-    quotaPeakPagedPoolUsage: uint
-    quotaPagedPoolUsage: uint
-    quotaPeakNonPagedPoolUsage: uint
-    quotaNonPagedPoolUsage: uint
-    pagefileUsage: uint
-    peakPagefileUsage: uint
-    privateUsage: uint
-
-proc getCurrentProcess(): pointer
-  {.importc: "GetCurrentProcess", dynlib: "kernel32", stdcall.}
-proc getProcessMemoryInfo(process: pointer, counters: ptr ProcessMemoryCounters,
-                          cb: uint32): int32
-  {.importc: "K32GetProcessMemoryInfo", dynlib: "kernel32", stdcall.}
-
-proc privateBytes(): int =
-  var mem = ProcessMemoryCounters(cb: uint32(sizeof(ProcessMemoryCounters)))
-  discard getProcessMemoryInfo(getCurrentProcess(), mem.addr, mem.cb)
-  int(mem.privateUsage)
-
-template vcall(obj: pointer, slot: int, T: typedesc): untyped =
-  cast[T](cast[ptr ptr UncheckedArray[pointer]](obj)[][slot])
+import winui3
+import winui3/generated/xaml_abi
+import ./usage
 
 const Reps = 20_000
 
@@ -147,10 +121,6 @@ when isMainModule:
 
     measure("  step 3: the whole thing (adds IInvokeProvider.Invoke)", proc() =
       sharedButton.invoke())
-
-    measure("automation peer lookup", proc() =
-      let p = sharedButton.automationPeer()
-      release(p))
 
     echo ""
     echo "done"
