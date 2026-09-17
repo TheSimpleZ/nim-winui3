@@ -14,7 +14,7 @@ nimble bindings
 
 The generators live in the `winrt` package rather than here, because what they
 do is project WinRT metadata and nothing about them is specific to XAML. The
-task therefore expects the [winrt repository](https://github.com/TheSimpleZ/winrt-nim)
+task therefore expects the [winrt repository](https://github.com/TheSimpleZ/nim-winrt)
 checked out beside this one, and runs:
 
 ```

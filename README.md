@@ -1,6 +1,6 @@
 # winui3
 
-[![CI](https://github.com/TheSimpleZ/winui3-nim/actions/workflows/ci.yml/badge.svg)](https://github.com/TheSimpleZ/winui3-nim/actions/workflows/ci.yml)
+[![CI](https://github.com/TheSimpleZ/nim-winui3/actions/workflows/ci.yml/badge.svg)](https://github.com/TheSimpleZ/nim-winui3/actions/workflows/ci.yml)
 
 Build WinUI 3 desktop apps in Nim.
 
@@ -30,19 +30,19 @@ a control, this has it, whether or not this README mentions it.
 ## Install
 
 ```
-nimble install https://github.com/TheSimpleZ/winui3-nim
+nimble install https://github.com/TheSimpleZ/nim-winui3
 ```
 
 Then in your own `.nimble`:
 
 ```
-requires "https://github.com/TheSimpleZ/winui3-nim"
+requires "https://github.com/TheSimpleZ/nim-winui3"
 ```
 
 > The dependency names a repository rather than a package because `winui3` and
 > the `winrt` package underneath it are not in the nimble directory yet. Once
 > they are, this becomes `requires "winui3"`. A version constraint —
-> `requires "https://github.com/TheSimpleZ/winui3-nim >= 1.6.0"` — works too,
+> `requires "https://github.com/TheSimpleZ/nim-winui3 >= 1.6.0"` — works too,
 > and resolves against the repository's release tags.
 
 **Requirements**

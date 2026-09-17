@@ -10,7 +10,7 @@ requires "nim >= 2.0.0"
 # the way `wNim` sits on `winim`. It is not in the nimble directory yet, so the
 # dependency names the repository and nimble resolves `>= 0.2.0` against its
 # tags. Once `winrt` is published this becomes `requires "winrt >= 0.2.0"`.
-requires "https://github.com/TheSimpleZ/winrt-nim >= 0.3.0"
+requires "https://github.com/TheSimpleZ/nim-winrt >= 0.3.0"
 
 task test, "Run the end-to-end UI tests on an isolated desktop":
   exec "powershell -ExecutionPolicy Bypass -File tests/run.ps1"
@@ -30,7 +30,7 @@ task bindings, "Regenerate both generated layers from the winmd":
   ##
   ## The result is checked in, so this is a maintainer's task, not a build
   ## step, and it expects the winrt repository checked out beside this one.
-  const winrt = "../winrt-nim"
+  const winrt = "../nim-winrt"
   exec "nim c -d:release --hints:off -o:bin/generate.exe " & winrt & "/tools/generate.nim"
   exec "nim c -d:release --hints:off -o:bin/wrappers.exe " & winrt & "/tools/wrappers.nim"
   exec "./bin/generate.exe vendor/Microsoft.UI.Xaml.winmd Microsoft.UI.Xaml " &
