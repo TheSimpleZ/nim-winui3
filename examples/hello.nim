@@ -1,15 +1,15 @@
-## A WinUI 3 window, using only the library's public API.
+## The smallest complete WinUI 3 application.
 ##
-## Build:
+## Build and run it from the repository root:
 ##
 ## ```
-## nim c --outdir:bin examples/hello.nim
+## nim c -r --path:src --outdir:bin examples/hello.nim
 ## ```
 ##
-## Then stage the Windows App SDK DLLs and an `hello.exe.manifest` beside the
-## executable — see the README — and run `bin/hello.exe`.
+## Nothing else to set up: importing `winui3` stages the Windows App SDK into
+## the output directory and links the manifest into the executable.
 
-import ../src/winui3
+import winui3
 
 start proc() =
   let window = newWindow()
@@ -19,9 +19,7 @@ start proc() =
 
   let heading = newTextBlock("WinUI 3, from Nim")
   heading.fontSize = 32.0
+  heading.margin = Thickness(left: 40.0, top: 32.0, right: 40.0, bottom: 32.0)
 
-  # v0.1 hosts a single element: panel children need UIElementCollection,
-  # which is not wrapped yet. See the roadmap.
   window.content = heading
-
   window.activate()

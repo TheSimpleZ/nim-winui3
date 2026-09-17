@@ -2,9 +2,13 @@
 ##
 ## Exercises the parts a real GUI needs — a panel with several children, a
 ## composable control, and an event handler calling back into Nim.
+##
+## ```
+## nim c -r --path:src --outdir:bin examples/counter.nim
+## ```
 
 import std/strformat
-import ../src/winui3
+import winui3
 
 start proc() =
   let window = newWindow()

@@ -15,6 +15,12 @@ requires "https://github.com/TheSimpleZ/winrt-nim >= 0.1.0"
 task test, "Run the end-to-end UI tests on an isolated desktop":
   exec "powershell -ExecutionPolicy Bypass -File tests/run.ps1"
 
+task examples, "Build the example programs into bin/":
+  ## `--path:src` so the examples read `import winui3`, the way a program
+  ## outside this repository would.
+  for name in ["hello", "counter", "generated"]:
+    exec "nim c --path:src --outdir:bin --hints:off examples/" & name & ".nim"
+
 task bindings, "Regenerate both generated layers from the winmd":
   ## The generators live in the winrt package, because what they do is project
   ## WinRT metadata and nothing about them is specific to XAML. The extra
