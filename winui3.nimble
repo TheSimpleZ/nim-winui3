@@ -5,7 +5,12 @@ license       = "MIT"
 srcDir        = "src"
 
 requires "nim >= 2.0.0"
-requires "winrt >= 0.1.0"
+
+# The WinRT runtime and the `Windows.*` projections live in their own package,
+# the way `wNim` sits on `winim`. It is not in the nimble directory yet, so the
+# dependency names the repository and nimble resolves `>= 0.1.0` against its
+# tags. Once `winrt` is published this becomes `requires "winrt >= 0.1.0"`.
+requires "https://github.com/TheSimpleZ/winrt-nim >= 0.1.0"
 
 task test, "Run the end-to-end UI tests on an isolated desktop":
   exec "powershell -ExecutionPolicy Bypass -File tests/run.ps1"
@@ -27,8 +32,11 @@ task bindings, "Regenerate both generated layers from the winmd":
   exec "./bin/wrappers.exe vendor/Microsoft.UI.Xaml.winmd Microsoft.UI.Xaml " &
        "src/winui3/generated/xaml_api.nim winrt/core"
 
-task manifest, "Rebuild vendor/app.res from vendor/app.manifest":
+task manifest, "Rebuild src/winui3/app.res from vendor/app.manifest":
   ## An embedded RT_MANIFEST is what lets an app activate WinUI classes without
   ## an external .exe.manifest, which has to be in place before the first run
   ## or Windows caches the failure.
-  exec "windres -I vendor -O coff vendor/app.rc -o vendor/app.res"
+  ##
+  ## The output lands beside `deploy.nim`, which is the module that links it,
+  ## and inside `srcDir` so that an installed package carries it.
+  exec "windres -I vendor -O coff vendor/app.rc -o src/winui3/app.res"
