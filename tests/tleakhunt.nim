@@ -95,8 +95,8 @@ when isMainModule:
       sharedButton.invoke())
     sharedButton.removeClick(token)
 
-    measure("borrowed[] wrapper on its own", proc() =
-      let args = borrowed[RoutedEventArgs](sharedLabel.p)
+    measure("borrow[] wrapper on its own", proc() =
+      let args = borrow[RoutedEventArgs](sharedLabel.p)
       discard args.isNil)
 
     # Split `invoke` into its three steps. Whichever one grows is the answer,

@@ -64,7 +64,7 @@ when isMainModule:
       # `borrowed`, not `Panel(p: ...)`: the raw form adopts the reference, so
       # the temporary would release one this scope never took and corrupt the
       # heap at exit. That is the whole reason `owned` and `borrowed` exist.
-      let msg = raises(proc() = discard borrowed[Panel](label.p).children)
+      let msg = raises(proc() = discard borrow[Panel](label.p).children)
       check("asking a TextBlock for Panel.Children raises", msg.len > 0, msg)
       check("survived the wrong-interface call", not label.isNil)
 

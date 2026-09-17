@@ -10,7 +10,7 @@ requires "nim >= 2.0.0"
 # the way `wNim` sits on `winim`. It is not in the nimble directory yet, so the
 # dependency names the repository and nimble resolves `>= 0.2.0` against its
 # tags. Once `winrt` is published this becomes `requires "winrt >= 0.2.0"`.
-requires "https://github.com/TheSimpleZ/winrt-nim >= 0.2.0"
+requires "https://github.com/TheSimpleZ/winrt-nim >= 0.3.0"
 
 task test, "Run the end-to-end UI tests on an isolated desktop":
   exec "powershell -ExecutionPolicy Bypass -File tests/run.ps1"
