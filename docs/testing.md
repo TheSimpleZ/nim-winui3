@@ -4,7 +4,7 @@
 nimble test
 ```
 
-Seven suites, 78 checks, a few minutes. Each one builds a real WinUI 3
+Seven suites, 81 checks, a few minutes. Each one builds a real WinUI 3
 application, runs it, and exits by itself.
 
 ## The suites

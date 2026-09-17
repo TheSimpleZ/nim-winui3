@@ -127,7 +127,7 @@ nothing to stage from. Installing it is a download and a silent run:
 
 ```yaml
 - run: |
-    curl -L -o wasdk.exe https://aka.ms/windowsappsdk/1.7/latest/windowsappruntimeinstall-x64.exe
+    curl -L -o wasdk.exe https://aka.ms/windowsappsdk/2.4/latest/windowsappruntimeinstall-x64.exe
     ./wasdk.exe --quiet
 ```
 

@@ -1,5 +1,7 @@
 # winui3
 
+[![CI](https://github.com/TheSimpleZ/winui3-nim/actions/workflows/ci.yml/badge.svg)](https://github.com/TheSimpleZ/winui3-nim/actions/workflows/ci.yml)
+
 Build WinUI 3 desktop apps in Nim.
 
 No C++, no C#, no XAML files, no project templates, no bootstrapper. A Nim
@@ -328,7 +330,7 @@ nimble examples
 nimble test
 ```
 
-Seven suites, 78 checks: each builds a real WinUI 3 window and runs it on a
+Seven suites, 81 checks: each builds a real WinUI 3 window and runs it on a
 Windows desktop of its own, so they never take your keyboard, and asserts on
 what the layout engine did rather than on pixels.
 See [docs/testing.md](docs/testing.md).

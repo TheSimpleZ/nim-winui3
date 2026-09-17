@@ -15,21 +15,14 @@ import winrt/delegate
 import ./app
 import ./generated/xaml_abi
 
-# Two signatures the generator leaves unmapped because they involve
-# `IVector<T>`, a parameterised generic. The *pointer* shapes are still
-# knowable: an interface is a pointer however it was declared.
+# Two signatures the generator leaves unmapped because they mention `T`. The
+# *pointer* shapes are still knowable: an interface is a pointer however it was
+# declared. The slots themselves come from `winrt/foundation` — a pointer
+# obtained from `get_MergedDictionaries` already *is* the parameterised
+# interface, so the slot is all that is needed. See `collections.nim`.
 type
   FnGetPtr = proc(self: pointer, value: ptr pointer): HRESULT {.stdcall.}
   FnAppendPtr = proc(self: pointer, value: pointer): HRESULT {.stdcall.}
-
-# `Windows.Foundation.Collections.IVector<T>` numbers its slots the same way
-# whatever `T` is. The IID of a generic instantiation is computed rather than
-# declared, but a pointer obtained from `get_MergedDictionaries` already *is*
-# that interface, so the slot is all that is needed. `collections.nim` says
-# more about why these are hand-written.
-const
-  SlotVectorSize = 7
-  SlotVectorAppend = 13
 
 proc mergedDictionaryCount*(app: pointer): int =
   ## How many dictionaries are merged into `Application.Resources`.
@@ -52,9 +45,8 @@ proc mergedDictionaryCount*(app: pointer): int =
   release(idict)
   if merged.isNil: return -4
   var n: uint32
-  discard vcall(merged, SlotVectorSize,
-                proc(self: pointer, v: ptr uint32): HRESULT {.stdcall.})(
-                  merged, n.addr)
+  discard vcall(merged, Slot_IVector_1_get_Size, Fn_IVector_1_get_Size)(
+    merged, n.addr)
   release(merged)
   int(n)
 
@@ -105,7 +97,7 @@ proc installControlsResources*(app: pointer) =
             raise newException(WinRtError,
               "winui3: XamlControlsResources is not a ResourceDictionary")
           try:
-            vcall(merged, SlotVectorAppend, FnAppendPtr)(merged, dict)
+            vcall(merged, Slot_IVector_1_Append, FnAppendPtr)(merged, dict)
               .check("MergedDictionaries.Append")
           finally:
             release(dict)

@@ -90,4 +90,4 @@ The ECMA-335 reader, the ABI generator covering IIDs, slots, enums, structs and
 99% of signatures, the API generator covering 894 classes and 635 events,
 computed IIDs for parameterised interfaces, compiler-managed lifetimes, system
 backdrops, COM aggregation, Fluent styles, UI Automation, registration-free
-deployment, and 78 checks across seven test binaries.
+deployment, and 81 checks across seven test binaries.

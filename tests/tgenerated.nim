@@ -54,6 +54,24 @@ when isMainModule:
     check("collection indexing returns the children",
           not panel.children[0].isNil and not panel.children[1].isNil)
 
+    # `InsertAt` and `RemoveAt` are adjacent slots on `IVector<T>`, and
+    # transposing them is silent: each is a valid call on the other's
+    # arguments. So both are exercised rather than assumed.
+    block:
+      let inserted = newTextBlock()
+      inserted.text = "inserted"
+      panel.children.insert(0, inserted)
+      check("insert grew the collection", panel.children.len == 3,
+            $panel.children.len & " children")
+
+      let front = queryInterface(panel.children[0].p, IID_ITextBlock)
+      check("insert put the child at the index given",
+            not front.isNil and TextBlock(p: front).text == "inserted")
+
+      panel.children.delete(0)
+      check("delete removed it again", panel.children.len == 2,
+            $panel.children.len & " children")
+
     # Events come out of the metadata too: the handler's shape is read from the
     # delegate's own Invoke, so this closure is typed rather than a raw pointer.
     var clicks = 0

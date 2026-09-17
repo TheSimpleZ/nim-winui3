@@ -9,45 +9,38 @@
 ## That costs less than it sounds. The pointer a property like `Children` hands
 ## back already *is* the correctly-parameterised interface, so no
 ## QueryInterface is needed — only the slot. And the slots are fixed for every
-## `IVector<T>`, because they come from the interface's own definition:
+## `IVector<T>`, because they come from the interface's own definition, which
+## `winrt/foundation` has read out of `Windows.winmd` as `Slot_IVector_1_*`.
 ##
-##   6  GetAt        9  IndexOf      12 InsertAt   15 Clear
-##   7  get_Size    10  SetAt        13 Append     16 GetMany
-##   8  GetView     11  RemoveAt     14 RemoveAtEnd 17 ReplaceAll
+## They are taken from there rather than written down here. `InsertAt` (11) and
+## `RemoveAt` (12) are adjacent, transposing them is silent, and a comment
+## claiming otherwise is exactly how that happened once already.
 ##
 ## Only the useful ones are exposed here; the rest are a slot number away.
 
 import winrt/core
 import ./generated/xaml_api
 
-const
-  SlotGetAt = 6
-  SlotGetSize = 7
-  SlotRemoveAt = 11
-  SlotInsertAt = 12
-  SlotAppend = 13
-  SlotClear = 15
-
+# The signatures `winrt/foundation` leaves unmapped, because they mention the
+# element type `T`. An interface is a pointer however it was declared, so the
+# shapes are still knowable.
 type
   FnItem = proc(self, item: pointer): HRESULT {.stdcall.}
   FnIndexItem = proc(self: pointer, index: uint32,
                      item: pointer): HRESULT {.stdcall.}
   FnIndexOut = proc(self: pointer, index: uint32,
                     value: ptr pointer): HRESULT {.stdcall.}
-  FnIndex = proc(self: pointer, index: uint32): HRESULT {.stdcall.}
-  FnSize = proc(self: pointer, value: ptr uint32): HRESULT {.stdcall.}
-  FnVoid = proc(self: pointer): HRESULT {.stdcall.}
 
 proc add*(collection: UIElementCollection, child: UIElement) =
   ## Append a child to a panel.
   if collection.p.isNil:
     raise newException(WinRtError, "winui3: collection is nil")
-  vcall(collection.p, SlotAppend, FnItem)(collection.p, child.p)
+  vcall(collection.p, Slot_IVector_1_Append, FnItem)(collection.p, child.p)
     .check("UIElementCollection.Append")
 
 proc insert*(collection: UIElementCollection, index: Natural, child: UIElement) =
   ## Insert a child at `index`, shifting the rest along.
-  vcall(collection.p, SlotInsertAt, FnIndexItem)(
+  vcall(collection.p, Slot_IVector_1_InsertAt, FnIndexItem)(
     collection.p, uint32(index), child.p).check("UIElementCollection.InsertAt")
 
 proc delete*(collection: UIElementCollection, index: Natural) =
@@ -55,26 +48,26 @@ proc delete*(collection: UIElementCollection, index: Natural) =
   ##
   ## Named `delete` rather than `remove` to match `system.delete` on a `seq`,
   ## which is what it does.
-  vcall(collection.p, SlotRemoveAt, FnIndex)(collection.p, uint32(index))
-    .check("UIElementCollection.RemoveAt")
+  vcall(collection.p, Slot_IVector_1_RemoveAt, Fn_IVector_1_RemoveAt)(
+    collection.p, uint32(index)).check("UIElementCollection.RemoveAt")
 
 proc clear*(collection: UIElementCollection) =
   ## Remove every child.
-  vcall(collection.p, SlotClear, FnVoid)(collection.p)
+  vcall(collection.p, Slot_IVector_1_Clear, Fn_IVector_1_Clear)(collection.p)
     .check("UIElementCollection.Clear")
 
 proc len*(collection: UIElementCollection): int =
   ## How many children the collection holds.
   if collection.p.isNil: return 0
   var n: uint32
-  vcall(collection.p, SlotGetSize, FnSize)(collection.p, n.addr)
-    .check("UIElementCollection.Size")
+  vcall(collection.p, Slot_IVector_1_get_Size, Fn_IVector_1_get_Size)(
+    collection.p, n.addr).check("UIElementCollection.Size")
   int(n)
 
 proc `[]`*(collection: UIElementCollection, index: Natural): UIElement =
   ## The child at `index`.
   var item: pointer
-  vcall(collection.p, SlotGetAt, FnIndexOut)(
+  vcall(collection.p, Slot_IVector_1_GetAt, FnIndexOut)(
     collection.p, uint32(index), item.addr).check("UIElementCollection.GetAt")
   UIElement(p: item)
 
