@@ -23,7 +23,7 @@
 ## `-d:winui3NoAutoStage` if you would rather stage the runtime yourself, or
 ## are building something that imports this library without shipping a GUI.
 
-import std/[compilesettings, os, strutils]
+import std/os
 import winrt/core
 
 const
@@ -85,6 +85,10 @@ const RuntimeFiles* = [
 ]
 
 when AutoStage:
+  # Only the staging half needs these, and `-d:winui3NoAutoStage` should not
+  # pay for an import it does not use.
+  import std/[compilesettings, strutils]
+
   proc stageRuntime() {.compileTime.} =
     ## Copy the SDK beside whatever is being built.
     let dest = querySetting(SingleValueSetting.outDir)

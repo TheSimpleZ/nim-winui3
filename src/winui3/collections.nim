@@ -28,9 +28,6 @@ const
   SlotAppend = 13
   SlotClear = 15
 
-template vslot(obj: pointer, slot: int, T: typedesc): untyped =
-  cast[T](cast[ptr ptr UncheckedArray[pointer]](obj)[][slot])
-
 type
   FnItem = proc(self, item: pointer): HRESULT {.stdcall.}
   FnIndexItem = proc(self: pointer, index: uint32,
@@ -45,12 +42,12 @@ proc add*(collection: UIElementCollection, child: UIElement) =
   ## Append a child to a panel.
   if collection.p.isNil:
     raise newException(WinRtError, "winui3: collection is nil")
-  vslot(collection.p, SlotAppend, FnItem)(collection.p, child.p)
+  vcall(collection.p, SlotAppend, FnItem)(collection.p, child.p)
     .check("UIElementCollection.Append")
 
 proc insert*(collection: UIElementCollection, index: Natural, child: UIElement) =
   ## Insert a child at `index`, shifting the rest along.
-  vslot(collection.p, SlotInsertAt, FnIndexItem)(
+  vcall(collection.p, SlotInsertAt, FnIndexItem)(
     collection.p, uint32(index), child.p).check("UIElementCollection.InsertAt")
 
 proc delete*(collection: UIElementCollection, index: Natural) =
@@ -58,26 +55,26 @@ proc delete*(collection: UIElementCollection, index: Natural) =
   ##
   ## Named `delete` rather than `remove` to match `system.delete` on a `seq`,
   ## which is what it does.
-  vslot(collection.p, SlotRemoveAt, FnIndex)(collection.p, uint32(index))
+  vcall(collection.p, SlotRemoveAt, FnIndex)(collection.p, uint32(index))
     .check("UIElementCollection.RemoveAt")
 
 proc clear*(collection: UIElementCollection) =
   ## Remove every child.
-  vslot(collection.p, SlotClear, FnVoid)(collection.p)
+  vcall(collection.p, SlotClear, FnVoid)(collection.p)
     .check("UIElementCollection.Clear")
 
 proc len*(collection: UIElementCollection): int =
   ## How many children the collection holds.
   if collection.p.isNil: return 0
   var n: uint32
-  vslot(collection.p, SlotGetSize, FnSize)(collection.p, n.addr)
+  vcall(collection.p, SlotGetSize, FnSize)(collection.p, n.addr)
     .check("UIElementCollection.Size")
   int(n)
 
 proc `[]`*(collection: UIElementCollection, index: Natural): UIElement =
   ## The child at `index`.
   var item: pointer
-  vslot(collection.p, SlotGetAt, FnIndexOut)(
+  vcall(collection.p, SlotGetAt, FnIndexOut)(
     collection.p, uint32(index), item.addr).check("UIElementCollection.GetAt")
   UIElement(p: item)
 

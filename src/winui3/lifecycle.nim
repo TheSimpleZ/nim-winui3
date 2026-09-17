@@ -15,18 +15,19 @@ import winrt/delegate
 import ./app
 import ./generated/xaml_abi
 
+# Two signatures the generator leaves unmapped because they involve
+# `IVector<T>`, a parameterised generic. The *pointer* shapes are still
+# knowable: an interface is a pointer however it was declared.
 type
-  ## Two signatures the generator leaves unmapped because they involve
-  ## `IVector<T>`, a parameterised generic. The *pointer* shapes are still
-  ## knowable: an interface is a pointer however it was declared.
   FnGetPtr = proc(self: pointer, value: ptr pointer): HRESULT {.stdcall.}
   FnAppendPtr = proc(self: pointer, value: pointer): HRESULT {.stdcall.}
 
+# `Windows.Foundation.Collections.IVector<T>` numbers its slots the same way
+# whatever `T` is. The IID of a generic instantiation is computed rather than
+# declared, but a pointer obtained from `get_MergedDictionaries` already *is*
+# that interface, so the slot is all that is needed. `collections.nim` says
+# more about why these are hand-written.
 const
-  ## `Windows.Foundation.Collections.IVector<T>` numbers its slots the same way
-  ## whatever `T` is. The IID of a generic instantiation is computed rather than
-  ## declared, but a pointer obtained from `get_MergedDictionaries` already *is*
-  ## that interface, so the slot is all that is needed.
   SlotVectorSize = 7
   SlotVectorAppend = 13
 

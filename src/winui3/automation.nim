@@ -14,9 +14,6 @@ import winrt/core
 import ./generated/xaml_abi
 import ./generated/xaml_api
 
-template vslot(obj: pointer, slot: int, T: typedesc): untyped =
-  cast[T](cast[ptr ptr UncheckedArray[pointer]](obj)[][slot])
-
 proc automationPeer*(element: UIElement): pointer =
   ## The UI Automation peer for an element, creating one if it has none.
   ##
@@ -35,13 +32,13 @@ proc automationPeer*(element: UIElement): pointer =
     "Microsoft.UI.Xaml.Automation.Peers.FrameworkElementAutomationPeer",
     IID_IFrameworkElementAutomationPeerStatics)
   try:
-    vslot(statics, Slot_IFrameworkElementAutomationPeerStatics_FromElement,
+    vcall(statics, Slot_IFrameworkElementAutomationPeerStatics_FromElement,
           Fn_IFrameworkElementAutomationPeerStatics_FromElement)(
             statics, iel, result.addr)
       .check("FrameworkElementAutomationPeer.FromElement")
     if result.isNil:
       # An element never asked for a peer does not have one yet.
-      vslot(statics, Slot_IFrameworkElementAutomationPeerStatics_CreatePeerForElement,
+      vcall(statics, Slot_IFrameworkElementAutomationPeerStatics_CreatePeerForElement,
             Fn_IFrameworkElementAutomationPeerStatics_CreatePeerForElement)(
               statics, iel, result.addr)
         .check("FrameworkElementAutomationPeer.CreatePeerForElement")
@@ -71,7 +68,7 @@ proc invoke*(element: UIElement) =
 
   var pattern: pointer
   try:
-    vslot(ap, Slot_IAutomationPeer_GetPattern,
+    vcall(ap, Slot_IAutomationPeer_GetPattern,
           proc(self: pointer, a1: int32,
                value: ptr pointer): HRESULT {.stdcall.})(
             ap, int32(PatternInterface_Invoke), pattern.addr)
@@ -86,7 +83,7 @@ proc invoke*(element: UIElement) =
   if provider.isNil:
     raise newException(WinRtError, "winui3: Invoke pattern is not an IInvokeProvider")
   try:
-    vslot(provider, Slot_IInvokeProvider_Invoke,
+    vcall(provider, Slot_IInvokeProvider_Invoke,
           proc(self: pointer): HRESULT {.stdcall.})(provider)
       .check("IInvokeProvider.Invoke")
   finally:

@@ -27,8 +27,13 @@
 ## Almost all of it is generated from `Microsoft.UI.Xaml.winmd` — 894 classes
 ## with their properties, methods and events — so if WinUI 3 has something,
 ## this has it, whether or not the README happens to mention it. The
-## hand-written part is the application lifecycle, the COM callback machinery,
-## generic collections, UI Automation, and a handful of conveniences.
+## hand-written part is the application lifecycle, the aggregated
+## `Application`, generic collections, UI Automation, and a handful of
+## conveniences.
+##
+## The WinRT runtime underneath — strings, GUIDs, apartments, activation,
+## refcounting, and the COM objects WinUI calls back into — is the separate
+## `winrt` package, and this module re-exports it.
 ##
 ## ## Lifetimes
 ##
@@ -50,7 +55,7 @@
 ##
 ## The output directory ends up around 54 MB, almost all of it Microsoft's.
 ## `-d:winui3NoAutoStage` turns the staging off if you would rather do it
-## yourself.
+## yourself; `RuntimeFiles` then names what to copy.
 
 import winui3/deploy
 import winrt/core
@@ -60,8 +65,10 @@ import winui3/generated/xaml_api
 import winui3/collections
 import winui3/automation
 import winui3/controls
+import winui3/app
 import winui3/lifecycle
 
+export deploy
 export core
 export delegate
 export xaml_abi
@@ -69,4 +76,5 @@ export xaml_api
 export collections
 export automation
 export controls
+export app
 export lifecycle
