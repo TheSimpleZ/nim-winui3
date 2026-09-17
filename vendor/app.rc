@@ -1,0 +1,11 @@
+/* Embed the application manifest as an RT_MANIFEST resource.
+ *
+ * Resource id 1, type 24 (RT_MANIFEST) is what Windows looks for in an EXE.
+ * Embedding removes the single worst footgun in deploying this library: an
+ * external `myapp.exe.manifest` has to exist *before* the first run, because
+ * Windows caches the activation context by executable path and timestamp —
+ * including the result when no manifest was found. Adding one afterwards
+ * changes nothing until the executable is rebuilt, and the failure looks
+ * exactly like a broken manifest.
+ */
+1 24 "app.manifest"

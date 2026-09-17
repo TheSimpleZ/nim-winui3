@@ -1,0 +1,28 @@
+# Build output. `bin/` also holds the staged Windows App SDK runtime (~50 MB of
+# DLLs and .pri files), which is not ours to redistribute — see Deployment in
+# README.md for how to obtain it.
+/bin/
+nimcache/
+*.exe
+*.pdb
+*.ilk
+*.obj
+*.o
+*.log
+
+# Nimble's local development state: which checkouts this working copy is wired
+# to, which is a property of one machine and not of the project.
+/nimbledeps/
+nimble.develop
+nimble.paths
+config.nims
+
+# Editors and OS
+.vscode/
+.idea/
+*.swp
+Thumbs.db
+
+# `src/winui3/generated/` is committed on purpose: a consumer should not need
+# the winmd or the generators to build, and a diff on those files is how an SDK
+# upgrade becomes reviewable.
